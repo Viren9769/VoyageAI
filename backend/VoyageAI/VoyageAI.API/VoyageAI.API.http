@@ -1,0 +1,6 @@
+@VoyageAI.API_HostAddress = http://localhost:5157
+
+GET {{VoyageAI.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
