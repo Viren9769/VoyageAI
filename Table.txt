@@ -1,0 +1,192 @@
+Database Tables 
+15 tables 
+
+Users 
+| Column             | Type              | Description        |
+| ------------       | ------------     | ------------------ |
+| UserId            | UUID             | Primary Key        |
+| FirstName       | varchar(100)   |                    |
+| LastName        | varchar(100)   |                    |
+| Email               | varchar(255)   | Unique             |
+| PasswordHash | text                 | Encrypted password |
+| Phone              | varchar(20)     |                    |
+| Country           | varchar(100)   |                    |
+| Currency         | varchar(10)      | USD, INR           |
+| Language         | varchar(20)    | English            |
+| Theme            | varchar(20)     | Dark / Light       |
+| ProfileImage   | text                | Image URL          |
+| CreatedDate    | timestamp    |                    |
+| LastLogin        | timestamp    |                    |
+| IsActive        | boolean      |                    |
+
+
+One user --->  Many Trips 
+
+Trips
+| Column             | Type         |
+| ------------------ | ------------ |
+| TripId             | UUID         |
+| UserId             | UUID         |
+| TripName           | varchar(200) |
+| DestinationCountry | varchar(100) |
+| DestinationCity    | varchar(100) |
+| StartDate          | date         |
+| EndDate            | date         |
+| Budget             | decimal      |
+| Currency           | varchar(10)  |
+| TravelStyle        | varchar(50)  |
+| Description        | text         |
+| CoverImage         | text         |
+| TripStatus         | varchar(30)  |
+| CreatedDate        | timestamp    |
+
+Travelers 
+one trip ---> many Travelers
+
+| Column         |
+| -------------- |
+| TravelerId     |
+| TripId         |
+| FirstName      |
+| LastName       |
+| Age            |
+| Gender         |
+| Nationality    |
+| PassportNumber |
+| Email          |
+| Phone          |
+
+
+Flights 
+| Column           |
+| ---------------- |
+| FlightId         |
+| TripId           |
+| Airline          |
+| FlightNumber     |
+| DepartureAirport |
+| ArrivalAirport   |
+| DepartureTime    |
+| ArrivalTime      |
+| Duration         |
+| Price            |
+| BookingReference |
+| Status           |
+
+
+Hotels 
+| Column           |
+| ---------------- |
+| HotelId          |
+| TripId           |
+| HotelName        |
+| Address          |
+| Latitude         |
+| Longitude        |
+| Rating           |
+| CheckIn          |
+| CheckOut         |
+| RoomType         |
+| Price            |
+| BookingReference |
+
+
+Budget
+Instead of calculating every time,
+store summary 
+
+| Column          |
+| --------------- |
+| BudgetId        |
+| TripId          |
+| TotalBudget     |
+| SpentAmount     |
+| RemainingAmount |
+| Currency        |
+
+
+Expenses
+This will power charts.
+
+| Column        |
+| ------------- |
+| ExpenseId     |
+| TripId        |
+| Category      |
+| Title         |
+| Amount        |
+| ExpenseDate   |
+| PaymentMethod |
+| PaidBy        |
+| ReceiptURL    |
+
+Packing Item
+| Column    |
+| --------- |
+| PackingId |
+| TripId    |
+| ItemName  |
+| Category  |
+| Quantity  |
+| IsPacked  |
+
+Documents
+| Column       |
+| ------------ |
+| DocumentId   |
+| TripId       |
+| DocumentType |
+| DocumentName |
+| FileURL      |
+| UploadedDate |
+
+Saved Places
+Restaurants
+
+Museums
+
+Shopping
+
+Favorites
+| Column    |
+| --------- |
+| PlaceId   |
+| TripId    |
+| Name      |
+| Category  |
+| Latitude  |
+| Longitude |
+| Address   |
+| Notes     |
+
+AIChats
+| Column      |
+| ----------- |
+| ChatId      |
+| UserId      |
+| Question    |
+| Answer      |
+| CreatedDate |
+
+Notifications
+| Column         |
+| -------------- |
+| NotificationId |
+| UserId         |
+| Title          |
+| Message        |
+| Type           |
+| IsRead         |
+| CreatedDate    |
+
+Settings 
+| Column               |
+| -------------------- |
+| SettingId            |
+| UserId               |
+| Theme                |
+| Language             |
+| Currency             |
+| NotificationsEnabled |
+
+
