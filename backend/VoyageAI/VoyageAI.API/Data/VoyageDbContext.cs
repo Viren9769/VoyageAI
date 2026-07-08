@@ -82,10 +82,33 @@ namespace VoyageAI.API.Data
                 entity.Property(e => e.TravelerId).HasDefaultValueSql("gen_random_uuid()");
                 entity.Property(e => e.FirstName).HasMaxLength(100).IsRequired();
                 entity.Property(e => e.LastName).HasMaxLength(100).IsRequired();
-                entity.Property(e => e.Email).HasMaxLength(255).IsRequired();
+                entity.Property(e => e.MiddleName).HasMaxLength(100);
+                entity.Property(e => e.DateOfBirth);
+                entity.Property(e => e.Gender).HasMaxLength(50);
+                entity.Property(e => e.Email).HasMaxLength(255);
                 entity.Property(e => e.Phone).HasMaxLength(20);
                 entity.Property(e => e.Nationality).HasMaxLength(100);
                 entity.Property(e => e.PassportNumber).HasMaxLength(50);
+                entity.Property(e => e.PassportCountry).HasMaxLength(100);
+                entity.Property(e => e.PassportExpiry);
+                entity.Property(e => e.EmergencyContactName).HasMaxLength(200);
+                entity.Property(e => e.EmergencyContactPhone).HasMaxLength(20);
+                entity.Property(e => e.Relationship).HasMaxLength(50);
+                entity.Property(e => e.DietaryPreference).HasMaxLength(500);
+                entity.Property(e => e.SpecialRequirements).HasMaxLength(1000);
+                entity.Property(e => e.FrequentFlyerNumber).HasMaxLength(100);
+                entity.Property(e => e.KnownTravelerNumber).HasMaxLength(100);
+                entity.Property(e => e.IsPrimaryTraveler).HasDefaultValue(false);
+                entity.Property(e => e.IsDeleted).HasDefaultValue(false);
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                // Indexes for performance
+                entity.HasIndex(e => e.TripId);
+                entity.HasIndex(e => new { e.TripId, e.IsDeleted });
+                entity.HasIndex(e => e.PassportNumber);
+                entity.HasIndex(e => e.Email);
+
                 entity.HasOne(e => e.Trip)
                     .WithMany(t => t.Travelers)
                     .HasForeignKey(e => e.TripId)

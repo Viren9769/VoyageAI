@@ -46,6 +46,9 @@ builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 // Register trip repository
 builder.Services.AddScoped<ITripRepository, TripRepository>();
 
+// Register traveler repository
+builder.Services.AddScoped<ITravelerRepository, TravelerRepository>();
+
 // ============================================================
 // 4. SERVICE LAYER
 // ============================================================
@@ -56,6 +59,9 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 // Register trip service
 builder.Services.AddScoped<ITripService, TripService>();
+
+// Register traveler service
+builder.Services.AddScoped<ITravelerService, TravelerService>();
 
 // ============================================================
 // 5. VALIDATION (FluentValidation)

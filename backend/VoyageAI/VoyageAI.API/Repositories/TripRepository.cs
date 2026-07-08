@@ -67,11 +67,13 @@ namespace VoyageAI.API.Repositories
         /// <summary>
         /// Retrieves a trip by its ID.
         /// Includes related User entity for complete trip information.
+        /// Uses AsNoTracking() for read-only queries to avoid entity tracking conflicts.
         /// </summary>
         public async Task<Trip?> GetByIdAsync(Guid tripId, CancellationToken cancellationToken = default)
         {
             return await _dbContext.Trips
                 .Include(t => t.User)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(t => t.TripId == tripId, cancellationToken);
         }
 
