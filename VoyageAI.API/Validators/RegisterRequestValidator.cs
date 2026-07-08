@@ -144,10 +144,8 @@ namespace VoyageAI.API.Validators
             // Country Validation (Optional)
             // ============================================
             RuleFor(x => x.Country)
-                .Length(2, 2)
-                .WithMessage("Country must be a valid 2-character ISO 3166-1 alpha-2 code (e.g., 'IN' for India, 'US' for United States).")
-                .Matches(@"^[A-Z]{2}$")
-                .WithMessage("Country code must be exactly 2 uppercase letters (e.g., 'IN', 'US', 'GB').")
+                .MaximumLength(100)
+                .WithMessage("Country must not exceed 100 characters.")
                 .When(x => !string.IsNullOrWhiteSpace(x.Country));  // Only validate if provided
         }
 

@@ -235,7 +235,6 @@ namespace VoyageAI.API.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error during user registration: {Email}", request.Email);
-                // Generic message for security; details are logged for debugging
                 throw new InvalidOperationException("An error occurred during registration. Please try again.", ex);
             }
         }

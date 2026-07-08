@@ -101,24 +101,16 @@ namespace VoyageAI.API.DTOs.Auth
         public string? Phone { get; set; }
 
         /// <summary>
-        /// Gets or sets the user's country code (optional).
+        /// Gets or sets the user's country (optional).
         /// 
         /// Validation Rules:
         /// - Optional field (can be null or empty)
-        /// - If provided, must be a valid 2-character ISO 3166-1 alpha-2 code
-        /// - Must be uppercase letters only
+        /// - If provided, must be a valid country value
         /// 
-        /// Valid Examples:
-        /// - "IN" for India
-        /// - "US" for United States
-        /// - "GB" for United Kingdom
-        /// - "CA" for Canada
-        /// - "AU" for Australia
-        /// 
-        /// This field is used for localization, currency settings, and travel planning preferences.
-        /// It can be updated later in the user profile settings.
+        /// This field can be updated later in the user profile settings and is used for
+        /// localization, currency, and travel planning preferences.
         /// </summary>
-        [StringLength(2, MinimumLength = 2, ErrorMessage = "Country must be a valid 2-character ISO 3166-1 alpha-2 code.")]
+        [StringLength(100, ErrorMessage = "Country must not exceed 100 characters.")]
         public string? Country { get; set; }
     }
 }
