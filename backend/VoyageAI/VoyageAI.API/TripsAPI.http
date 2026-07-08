@@ -1,0 +1,188 @@
+### VoyageAI Trip API Examples
+
+# ============================================================
+# TRIP MANAGEMENT API USAGE EXAMPLES
+# ============================================================
+
+# Authentication: All requests require JWT Bearer token
+# @token = {JWT_TOKEN_FROM_LOGIN}
+
+### Variables
+@baseUrl = http://localhost:5000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+# ============================================================
+# 1. CREATE A NEW TRIP
+# ============================================================
+
+### Create Trip
+POST {{baseUrl}}/api/trips HTTP/1.1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "tripName": "Summer Europe Adventure 2025",
+  "destinationCountry": "France",
+  "destinationCity": "Paris",
+  "startDate": "2025-06-01T00:00:00Z",
+  "endDate": "2025-06-15T00:00:00Z",
+  "budget": 5000,
+  "currency": "USD",
+  "travelStyle": "Luxury",
+  "description": "Amazing summer trip to Paris",
+  "coverImageUrl": "https://example.com/paris.jpg",
+  "status": "Planning"
+}
+
+# Response: 201 Created
+# Returns the created trip with all details
+
+# ============================================================
+# 2. GET ALL USER'S TRIPS
+# ============================================================
+
+### Get All Trips
+GET {{baseUrl}}/api/trips HTTP/1.1
+Authorization: Bearer {{token}}
+
+# Response: 200 OK
+# Returns array of all trips for the authenticated user
+
+# ============================================================
+# 3. RECOMMENDED UPDATE WORKFLOW
+# ============================================================
+# Step 1: GET CURRENT TRIP DATA (PRE-FILL FORM)
+
+### Step 1: Fetch Current Trip (Pre-fill the update form)
+GET {{baseUrl}}/api/trips/550e8400-e29b-41d4-a716-446655440000 HTTP/1.1
+Authorization: Bearer {{token}}
+
+# Response: 200 OK
+# {
+#   "tripId": "550e8400-e29b-41d4-a716-446655440000",
+#   "userId": "550e8400-e29b-41d4-a716-446655440001",
+#   "tripName": "Summer Europe Adventure 2025",
+#   "destinationCountry": "France",
+#   "destinationCity": "Paris",
+#   "startDate": "2025-06-01T00:00:00Z",
+#   "endDate": "2025-06-15T00:00:00Z",
+#   "budget": 5000,
+#   "currency": "USD",
+#   "travelStyle": "Luxury",
+#   "description": "Amazing summer trip to Paris",
+#   "coverImageUrl": "https://example.com/paris.jpg",
+#   "status": "Planning",
+#   "createdAt": "2025-01-06T14:30:00Z",
+#   "updatedAt": "2025-01-06T14:30:00Z",
+#   "durationDays": 15
+# }
+
+# Step 2: SEND ONLY THE FIELDS YOU WANT TO CHANGE
+
+### Step 2: Update Only Changed Fields (Budget and Status changed)
+PUT {{baseUrl}}/api/trips/550e8400-e29b-41d4-a716-446655440000 HTTP/1.1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "budget": 6000,
+  "status": "Confirmed"
+}
+
+# NOTE: Other fields (tripName, destination, dates, etc.) are NOT included
+# The API will keep the existing values for fields not provided
+# This is much better than having to send everything again!
+
+# Response: 200 OK
+# {
+#   "tripId": "550e8400-e29b-41d4-a716-446655440000",
+#   "tripName": "Summer Europe Adventure 2025",
+#   "destinationCountry": "France",
+#   "destinationCity": "Paris",
+#   "startDate": "2025-06-01T00:00:00Z",
+#   "endDate": "2025-06-15T00:00:00Z",
+#   "budget": 6000,                    # <-- CHANGED ✓
+#   "currency": "USD",
+#   "travelStyle": "Luxury",
+#   "description": "Amazing summer trip to Paris",
+#   "coverImageUrl": "https://example.com/paris.jpg",
+#   "status": "Confirmed",             # <-- CHANGED ✓
+#   "createdAt": "2025-01-06T14:30:00Z",
+#   "updatedAt": "2025-01-06T15:45:00Z",
+#   "durationDays": 15
+# }
+
+# ============================================================
+# EXAMPLE 2: UPDATE ONLY TRIP NAME
+# ============================================================
+
+### Update Only Trip Name
+PUT {{baseUrl}}/api/trips/550e8400-e29b-41d4-a716-446655440000 HTTP/1.1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "tripName": "Summer Europe Adventure 2025 - UPDATED"
+}
+
+# Response: 200 OK
+# All other fields remain unchanged
+
+# ============================================================
+# EXAMPLE 3: UPDATE MULTIPLE FIELDS
+# ============================================================
+
+### Update Trip Description and Image
+PUT {{baseUrl}}/api/trips/550e8400-e29b-41d4-a716-446655440000 HTTP/1.1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "description": "Updated description with more details",
+  "coverImageUrl": "https://example.com/new-paris-image.jpg"
+}
+
+# ============================================================
+# 4. GET SPECIFIC TRIP
+# ============================================================
+
+### Get Trip by ID
+GET {{baseUrl}}/api/trips/550e8400-e29b-41d4-a716-446655440000 HTTP/1.1
+Authorization: Bearer {{token}}
+
+# Response: 200 OK with trip details
+
+# ============================================================
+# 5. DELETE A TRIP
+# ============================================================
+
+### Delete Trip
+DELETE {{baseUrl}}/api/trips/550e8400-e29b-41d4-a716-446655440000 HTTP/1.1
+Authorization: Bearer {{token}}
+
+# Response: 204 No Content
+# Trip is deleted successfully
+# Related Travelers, ItineraryDays, and Activities are cascade deleted
+
+# ============================================================
+# WORKFLOW SUMMARY FOR FRONTEND
+# ============================================================
+#
+# Update Trip Data:
+# ────────────────
+# 1. User clicks "Edit Trip" button
+# 2. Frontend calls: GET /api/trips/{tripId}
+# 3. Frontend receives full current trip data
+# 4. Frontend pre-fills the form with this data
+# 5. User modifies only the fields they want to change
+# 6. Frontend calls: PUT /api/trips/{tripId} with ONLY changed fields
+# 7. Backend merges new values with existing values
+# 8. Response shows updated trip with all fields
+#
+# Benefits:
+# - User doesn't have to re-enter fields they don't want to change
+# - Less data sent over the network
+# - API automatically preserves unchanged fields
+# - Clean, simple, and intuitive UX
+#
+# ============================================================

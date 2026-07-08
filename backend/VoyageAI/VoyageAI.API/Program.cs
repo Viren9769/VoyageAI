@@ -43,6 +43,9 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 // Register refresh token repository
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
+// Register trip repository
+builder.Services.AddScoped<ITripRepository, TripRepository>();
+
 // ============================================================
 // 4. SERVICE LAYER
 // ============================================================
@@ -50,6 +53,9 @@ builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 // Register services for dependency injection
 // IAuthService is the abstraction, AuthService is the implementation
 builder.Services.AddScoped<IAuthService, AuthService>();
+
+// Register trip service
+builder.Services.AddScoped<ITripService, TripService>();
 
 // ============================================================
 // 5. VALIDATION (FluentValidation)
