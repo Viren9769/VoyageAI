@@ -7,10 +7,9 @@
     /// A Trip can contain multiple Travelers.
     /// Users can only manage Travelers belonging to Trips they own.
     /// 
-    /// Soft Delete Pattern:
-    /// - Travelers are never physically deleted
-    /// - Instead, IsDeleted is set to true and DeletedAt records the time
-    /// - Queries must filter out deleted travelers
+    /// Hard Delete Pattern:
+    /// - Travelers are physically deleted from the database
+    /// - Deletion cascades from Trip to Travelers
     /// 
     /// Audit Fields:
     /// - CreatedAt: When the traveler was added to the trip

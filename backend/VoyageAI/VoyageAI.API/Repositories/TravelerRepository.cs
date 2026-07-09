@@ -27,10 +27,10 @@ namespace VoyageAI.API.Repositories
     /// - Queries are executed asynchronously for better scalability
     /// - CancellationTokens are properly propagated to database operations
     /// - AsNoTracking() is used where entities are not modified (read-only queries)
-    /// - Soft delete pattern: Automatically filters IsDeleted = false
+    /// - Hard delete pattern: Rows are physically removed from the database
     /// 
     /// Performance Considerations:
-    /// - Indexes on TripId, (TripId, IsDeleted) for efficient filtering
+    /// - Indexes on TripId for efficient filtering
     /// - Index on PassportNumber for quick lookup
     /// - Index on Email for duplicate detection
     /// </summary>
@@ -72,7 +72,6 @@ namespace VoyageAI.API.Repositories
 
         /// <summary>
         /// Retrieves a traveler by its ID.
-        /// Automatically excludes deleted travelers (soft delete pattern).
         /// Includes related Trip entity for complete traveler information.
         /// </summary>
         public async Task<Traveler?> GetByIdAsync(Guid travelerId, CancellationToken cancellationToken = default)
@@ -80,12 +79,11 @@ namespace VoyageAI.API.Repositories
             return await _dbContext.Travelers
                 .Include(t => t.Trip)
                 .AsNoTracking()
-                .FirstOrDefaultAsync(t => t.TravelerId == travelerId && !t.IsDeleted, cancellationToken);
+                .FirstOrDefaultAsync(t => t.TravelerId == travelerId, cancellationToken);
         }
 
         /// <summary>
         /// Retrieves all travelers for a specific trip.
-        /// Automatically excludes deleted travelers (soft delete pattern).
         /// Ordered by primary traveler first, then by creation date.
         /// Includes related Trip entity.
         /// </summary>
@@ -94,7 +92,7 @@ namespace VoyageAI.API.Repositories
             return await _dbContext.Travelers
                 .Include(t => t.Trip)
                 .AsNoTracking()
-                .Where(t => t.TripId == tripId && !t.IsDeleted)
+                .Where(t => t.TripId == tripId)
                 .OrderByDescending(t => t.IsPrimaryTraveler)
                 .ThenBy(t => t.CreatedAt)
                 .ToListAsync(cancellationToken);
@@ -102,7 +100,6 @@ namespace VoyageAI.API.Repositories
 
         /// <summary>
         /// Checks if a traveler with the given email already exists in a trip.
-        /// Automatically excludes deleted travelers.
         /// Optionally excludes a specific traveler ID from the check (useful for updates).
         /// </summary>
         public async Task<bool> TravelerExistsByEmailAsync(Guid tripId, string email, Guid? excludeTravelerId = null, CancellationToken cancellationToken = default)
@@ -112,7 +109,7 @@ namespace VoyageAI.API.Repositories
 
             var query = _dbContext.Travelers
                 .AsNoTracking()
-                .Where(t => t.TripId == tripId && !t.IsDeleted && t.Email == email);
+                .Where(t => t.TripId == tripId && t.Email == email);
 
             if (excludeTravelerId.HasValue)
             {
@@ -137,17 +134,15 @@ namespace VoyageAI.API.Repositories
         }
 
         /// <summary>
-        /// Soft deletes a traveler from the database.
-        /// Sets IsDeleted = true and DeletedAt = utcNow instead of physically removing the record.
-        /// Maintains data integrity and audit trail.
-        /// All future queries automatically exclude this traveler.
+        /// Hard deletes a traveler from the database.
+        /// Permanently removes the record.
         /// </summary>
         public async Task DeleteAsync(Traveler traveler, CancellationToken cancellationToken = default)
         {
             if (traveler == null)
                 throw new ArgumentNullException(nameof(traveler));
 
-            _dbContext.Travelers.Update(traveler);
+            _dbContext.Travelers.Remove(traveler);
             await Task.CompletedTask;  // Explicit async for future extensibility
         }
 

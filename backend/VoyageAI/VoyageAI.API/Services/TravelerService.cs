@@ -402,9 +402,9 @@ namespace VoyageAI.API.Services
 
                 // Step 3: Fetch traveler from database
                 var traveler = await _travelerRepository.GetByIdAsync(travelerId, cancellationToken);
-                if (traveler == null || traveler.IsDeleted)
+                if (traveler == null)
                 {
-                    _logger.LogWarning($"Traveler {travelerId} not found or already deleted. DeleteTraveler request from user {userId} failed.");
+                    _logger.LogWarning($"Traveler {travelerId} not found. DeleteTraveler request from user {userId} failed.");
                     throw new EntityNotFoundException($"Traveler with ID {travelerId} not found.");
                 }
 
@@ -415,16 +415,11 @@ namespace VoyageAI.API.Services
                     throw new ForbiddenException("This traveler does not belong to the specified trip.");
                 }
 
-                // Step 5: Soft delete the traveler
-                traveler.IsDeleted = true;
-                traveler.DeletedAt = DateTime.UtcNow;
-                traveler.LastModifiedBy = userId;
-
-                // Step 6: Update traveler in database
-                await _travelerRepository.UpdateAsync(traveler, cancellationToken);
+                // Step 5: Hard delete the traveler
+                await _travelerRepository.DeleteAsync(traveler, cancellationToken);
                 await _travelerRepository.SaveChangesAsync(cancellationToken);
 
-                _logger.LogInformation($"Traveler {travelerId} in trip {tripId} soft-deleted by user {userId}");
+                _logger.LogInformation($"Traveler {travelerId} in trip {tripId} deleted by user {userId}");
             }
             catch (EntityNotFoundException ex)
             {

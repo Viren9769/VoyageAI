@@ -99,13 +99,11 @@ namespace VoyageAI.API.Data
                 entity.Property(e => e.FrequentFlyerNumber).HasMaxLength(100);
                 entity.Property(e => e.KnownTravelerNumber).HasMaxLength(100);
                 entity.Property(e => e.IsPrimaryTraveler).HasDefaultValue(false);
-                entity.Property(e => e.IsDeleted).HasDefaultValue(false);
                 entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 // Indexes for performance
                 entity.HasIndex(e => e.TripId);
-                entity.HasIndex(e => new { e.TripId, e.IsDeleted });
                 entity.HasIndex(e => e.PassportNumber);
                 entity.HasIndex(e => e.Email);
 
@@ -121,6 +119,21 @@ namespace VoyageAI.API.Data
                 entity.HasKey(e => e.DayId);
                 entity.Property(e => e.DayId).HasDefaultValueSql("gen_random_uuid()");
                 entity.Property(e => e.Title).HasMaxLength(200).IsRequired();
+                entity.Property(e => e.Summary).HasMaxLength(1000);
+                entity.Property(e => e.Notes).HasMaxLength(3000);
+                entity.Property(e => e.WeatherSummary).HasMaxLength(500);
+                entity.Property(e => e.EstimatedBudget).HasPrecision(10, 2);
+                entity.Property(e => e.ActualBudget).HasPrecision(10, 2);
+                entity.Property(e => e.IsDeleted).HasDefaultValue(false);
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                // Indexes for performance
+                entity.HasIndex(e => e.TripId);
+                entity.HasIndex(e => new { e.TripId, e.DayNumber }).IsUnique();
+                entity.HasIndex(e => new { e.TripId, e.Date });
+                entity.HasIndex(e => new { e.TripId, e.IsDeleted });
+
                 entity.HasOne(e => e.Trip)
                     .WithMany(t => t.ItineraryDays)
                     .HasForeignKey(e => e.TripId)
