@@ -52,6 +52,9 @@ builder.Services.AddScoped<ITravelerRepository, TravelerRepository>();
 // Register itinerary repository
 builder.Services.AddScoped<IItineraryRepository, ItineraryRepository>();
 
+// Register activity repository
+builder.Services.AddScoped<IActivityRepository, ActivityRepository>();
+
 // ============================================================
 // 4. SERVICE LAYER
 // ============================================================
@@ -68,6 +71,9 @@ builder.Services.AddScoped<ITravelerService, TravelerService>();
 
 // Register itinerary service
 builder.Services.AddScoped<IItineraryService, ItineraryService>();
+
+// Register activity service
+builder.Services.AddScoped<IActivityService, ActivityService>();
 
 // ============================================================
 // 5. VALIDATION (FluentValidation)

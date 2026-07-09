@@ -143,14 +143,60 @@ namespace VoyageAI.API.Data
             // Activity Entity Configuration
             modelBuilder.Entity<Activity>(entity =>
             {
+                // Primary Key
                 entity.HasKey(e => e.ActivityId);
                 entity.Property(e => e.ActivityId).HasDefaultValueSql("gen_random_uuid()");
-                entity.Property(e => e.ActivityName).HasMaxLength(200).IsRequired();
-                entity.Property(e => e.Category).HasMaxLength(50);
-                entity.Property(e => e.LocationName).HasMaxLength(200);
-                entity.Property(e => e.Latitude).HasPrecision(10, 8);
-                entity.Property(e => e.Longitude).HasPrecision(11, 8);
-                entity.Property(e => e.EstimatedCost).HasPrecision(10, 2);
+
+                // Required Properties
+                entity.Property(e => e.ActivityName).HasMaxLength(255).IsRequired();
+                entity.Property(e => e.DayId).IsRequired();
+
+                // Optional String Properties with Max Length
+                entity.Property(e => e.Description).HasMaxLength(1000);
+                entity.Property(e => e.LocationName).HasMaxLength(255);
+                entity.Property(e => e.Address).HasMaxLength(500);
+                entity.Property(e => e.BookingReference).HasMaxLength(100);
+                entity.Property(e => e.Website).HasMaxLength(500);
+                entity.Property(e => e.Phone).HasMaxLength(20);
+                entity.Property(e => e.Notes).HasMaxLength(1000);
+                entity.Property(e => e.ImageUrl).HasMaxLength(500);
+
+                // Enum Properties (stored as int in database)
+                entity.Property(e => e.Category);
+                entity.Property(e => e.Priority);
+                entity.Property(e => e.Status);
+
+                // Coordinate Properties with Precision
+                entity.Property(e => e.Latitude).HasPrecision(10, 8).HasDefaultValue(0);
+                entity.Property(e => e.Longitude).HasPrecision(11, 8).HasDefaultValue(0);
+
+                // Currency Properties with Precision
+                entity.Property(e => e.EstimatedCost).HasPrecision(10, 2).HasDefaultValue(0);
+                entity.Property(e => e.ActualCost).HasPrecision(10, 2).HasDefaultValue(0);
+
+                // Time Properties
+                // TimeOnly is stored as time without time zone in PostgreSQL
+                entity.Property(e => e.StartTime);
+                entity.Property(e => e.EndTime);
+
+                // Duration and Meta
+                entity.Property(e => e.DurationMinutes).HasDefaultValue(0);
+                entity.Property(e => e.IsAiGenerated).HasDefaultValue(false);
+
+                // Soft Delete and Audit Fields
+                entity.Property(e => e.IsDeleted).HasDefaultValue(false);
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                // Indexes for Performance
+                entity.HasIndex(e => e.DayId);
+                entity.HasIndex(e => e.Category);
+                entity.HasIndex(e => e.Status);
+                entity.HasIndex(e => e.Priority);
+                entity.HasIndex(e => e.StartTime);
+                entity.HasIndex(e => new { e.DayId, e.IsDeleted });
+
+                // Foreign Key Relationship
                 entity.HasOne(e => e.ItineraryDay)
                     .WithMany(id => id.Activities)
                     .HasForeignKey(e => e.DayId)
