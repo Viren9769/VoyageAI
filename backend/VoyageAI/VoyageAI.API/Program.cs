@@ -208,7 +208,7 @@ builder.Services.AddAuthorizationBuilder()
 
 // Uncomment if you need to allow requests from different origins
 // This is important for frontend-backend separation
-/*
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
@@ -219,7 +219,7 @@ builder.Services.AddCors(options =>
                    .AllowAnyHeader();
         });
 });
-*/
+
 
 // ============================================================
 // 11. SWAGGER / OPENAPI (FOR API DOCUMENTATION)
@@ -299,7 +299,7 @@ app.UseMiddleware<GlobalExceptionMiddleware>();
 // Enable CORS if configured (uncomment if CORS is added above)
 // app.UseRouting();
 // app.UseCors("AllowAll");
-
+app.UseCors("AllowAll");
 // Authentication middleware (extract JWT token from request)
 // Must come before UseAuthorization
 app.UseAuthentication();

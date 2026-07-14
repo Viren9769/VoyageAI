@@ -4,18 +4,19 @@
 
   <div class="login-container">
 
-    <!-- ========================= -->
+    <!-- ===================================== -->
     <!-- LEFT SECTION -->
-    <!-- ========================= -->
+    <!-- ===================================== -->
 
     <div class="left-section">
 
       <div class="logo">
 
         <img
-    src="images/logo.png"
-    alt="VoyageAI Logo"
-    class="logo-icon">
+          src="images/logo.png"
+          alt="VoyageAI Logo"
+          class="logo-icon">
+
         <span>
 
           Voyage<span class="gradient">AI</span>
@@ -39,7 +40,9 @@
       <p class="subtitle">
 
         Plan unforgettable trips using AI-powered itineraries,
-        smart budgeting, expense tracking and seamless collaboration.
+        smart budgeting,
+        expense tracking,
+        and seamless collaboration.
 
       </p>
 
@@ -103,9 +106,9 @@
 
     </div>
 
-    <!-- ========================= -->
+    <!-- ===================================== -->
     <!-- LOGIN CARD -->
-    <!-- ========================= -->
+    <!-- ===================================== -->
 
     <mat-card class="login-card">
 
@@ -140,8 +143,8 @@
           <input
             matInput
             type="email"
-            placeholder="Enter your email"
-            formControlName="email">
+            formControlName="email"
+            placeholder="Enter your email">
 
         </mat-form-field>
 
@@ -160,8 +163,8 @@
           <input
             matInput
             [type]="hidePassword() ? 'password' : 'text'"
-            placeholder="Enter your password"
-            formControlName="password">
+            formControlName="password"
+            placeholder="Enter your password">
 
           <button
             mat-icon-button
@@ -179,12 +182,23 @@
 
         </mat-form-field>
 
+        <!-- ERROR -->
+
+        @if(errorMessage()){
+
+          <div class="error-message">
+
+            {{ errorMessage() }}
+
+          </div>
+
+        }
+
         <!-- OPTIONS -->
 
         <div class="options">
 
-          <mat-checkbox
-            formControlName="rememberMe">
+          <mat-checkbox formControlName="rememberMe">
 
             Remember Me
 
@@ -205,9 +219,18 @@
           color="primary"
           class="login-button"
           type="submit"
-          [disabled]="loginForm.invalid">
+          [disabled]="loading() || loginForm.invalid">
 
-          Sign In
+          @if(loading()){
+
+            Signing In...
+
+          }
+          @else{
+
+            Sign In
+
+          }
 
         </button>
 
@@ -230,28 +253,36 @@
       <div class="social-buttons">
 
         <button
-mat-stroked-button
-type="button"
-(click)="loginWithGoogle()">
+          mat-stroked-button
+          type="button"
+          (click)="loginWithGoogle()">
 
           <img
             src="icons/google.svg"
             alt="Google">
 
-          <span>Continue with Google</span>
+          <span>
+
+            Continue with Google
+
+          </span>
 
         </button>
 
         <button
-mat-stroked-button
-type="button"
-(click)="loginWithApple()">
+          mat-stroked-button
+          type="button"
+          (click)="loginWithApple()">
 
           <img
             src="icons/apple.svg"
             alt="Apple">
 
-          <span>Continue with Apple</span>
+          <span>
+
+            Continue with Apple
+
+          </span>
 
         </button>
 

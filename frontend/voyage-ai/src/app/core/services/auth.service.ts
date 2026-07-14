@@ -9,8 +9,6 @@ import { RegisterRequest } from '../../models/auth/register-request';
 import { LoginResponse } from '../../models/auth/login-response';
 import { RefreshTokenRequest } from '../../models/auth/refresh-token-request';
 
-import { ApiResponse } from '../../models/api-response';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -18,27 +16,27 @@ export class AuthService {
 
   private readonly http = inject(HttpClient);
 
-  login(request: LoginRequest): Observable<ApiResponse<LoginResponse>> {
+  login(request: LoginRequest): Observable<LoginResponse> {
 
-    return this.http.post<ApiResponse<LoginResponse>>(
+    return this.http.post<LoginResponse>(
       ApiConfig.baseUrl + ApiConfig.auth.login,
       request
     );
 
   }
 
-  register(request: RegisterRequest): Observable<ApiResponse<LoginResponse>> {
+  register(request: RegisterRequest): Observable<LoginResponse> {
 
-    return this.http.post<ApiResponse<LoginResponse>>(
+    return this.http.post<LoginResponse>(
       ApiConfig.baseUrl + ApiConfig.auth.register,
       request
     );
 
   }
 
-  refreshToken(request: RefreshTokenRequest): Observable<ApiResponse<LoginResponse>> {
+  refreshToken(request: RefreshTokenRequest): Observable<LoginResponse> {
 
-    return this.http.post<ApiResponse<LoginResponse>>(
+    return this.http.post<LoginResponse>(
       ApiConfig.baseUrl + ApiConfig.auth.refreshToken,
       request
     );

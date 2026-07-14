@@ -16,6 +16,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 
+import { finalize } from 'rxjs';
+
+import { AuthService } from '../../../core/services/auth.service';
+import { TokenService } from '../../../core/authentication/token.service';
+
+import { LoginRequest } from '../../../models/auth/login-request';
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -36,25 +43,31 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class Login {
 
-  //==================================
+  //==================================================
   // Dependency Injection
-  //==================================
+  //==================================================
 
-  private fb = inject(FormBuilder);
+  private readonly fb = inject(FormBuilder);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  //==================================
+  private readonly authService = inject(AuthService);
+
+  private readonly tokenService = inject(TokenService);
+
+  //==================================================
   // Signals
-  //==================================
+  //==================================================
 
   hidePassword = signal(true);
 
   loading = signal(false);
 
-  //==================================
+  errorMessage = signal('');
+
+  //==================================================
   // Login Form
-  //==================================
+  //==================================================
 
   loginForm = this.fb.nonNullable.group({
 
@@ -74,13 +87,13 @@ export class Login {
       ]
     ],
 
-    rememberMe: [false]
+    rememberMe: [true]
 
   });
 
-  //==================================
+  //==================================================
   // Toggle Password
-  //==================================
+  //==================================================
 
   togglePassword(): void {
 
@@ -88,11 +101,13 @@ export class Login {
 
   }
 
-  //==================================
+  //==================================================
   // Login
-  //==================================
+  //==================================================
 
   login(): void {
+
+    this.errorMessage.set('');
 
     if (this.loginForm.invalid) {
 
@@ -104,38 +119,103 @@ export class Login {
 
     this.loading.set(true);
 
-    console.log('Login Request');
+    const request: LoginRequest = {
 
-    console.log(this.loginForm.getRawValue());
+      email: this.loginForm.controls.email.value,
 
-    // TODO:
-    // AuthService.Login()
+      password: this.loginForm.controls.password.value
 
-    setTimeout(() => {
+    };
 
-      this.loading.set(false);
+    this.authService
+      .login(request)
+      .pipe(
+        finalize(() => this.loading.set(false))
+      )
+      .subscribe({
 
-      this.router.navigate(['/dashboard']);
+        next: (response) => {
 
-    },1000);
+          //==================================
+          // Save User
+          //==================================
+
+          localStorage.setItem(
+            'voyage_user',
+            JSON.stringify(response.user)
+          );
+
+          //==================================
+          // Save Tokens
+          //==================================
+
+          this.tokenService.saveTokens(
+            response.accessToken,
+            response.refreshToken,
+            this.loginForm.controls.rememberMe.value
+          );
+
+          console.log('Login Successful');
+
+          console.log(response);
+
+          this.router.navigateByUrl(
+            '/dashboard',
+            {
+              replaceUrl: true
+            }
+          );
+
+        },
+
+        error: (error) => {
+
+          console.error(error);
+
+          if (error.status === 401) {
+
+            this.errorMessage.set(
+              'Invalid email or password.'
+            );
+
+          }
+          else if (error.status === 400) {
+
+            this.errorMessage.set(
+              'Invalid request.'
+            );
+
+          }
+          else {
+
+            this.errorMessage.set(
+              error.error?.message ??
+              'Something went wrong. Please try again.'
+            );
+
+          }
+
+        }
+
+      });
 
   }
 
-  //==================================
+  //==================================================
   // Google Login
-  //==================================
+  //==================================================
 
-  loginWithGoogle(): void{
+  loginWithGoogle(): void {
 
     console.log('Google Login');
 
   }
 
-  //==================================
+  //==================================================
   // Apple Login
-  //==================================
+  //==================================================
 
-  loginWithApple(): void{
+  loginWithApple(): void {
 
     console.log('Apple Login');
 

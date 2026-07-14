@@ -126,11 +126,11 @@ FEATURES
   justify-content: center;
   align-items: center;
 
-  background: linear-gradient(135deg,#4f8cff,#8d5cf6);
+  background: linear-gradient(135deg, #4f8cff, #8d5cf6);
 
   font-size: 26px;
 
-  box-shadow: 0 12px 35px rgba(79,140,255,.35);
+  box-shadow: 0 12px 35px rgba(79, 140, 255, .35);
 }
 
 .feature h3 {
@@ -155,15 +155,15 @@ LOGIN CARD
 
   border-radius: 26px !important;
 
-  background: rgba(15,23,42,.82) !important;
+  background: rgba(15, 23, 42, .82) !important;
 
   backdrop-filter: blur(18px);
 
-  border: 1px solid rgba(255,255,255,.08);
+  border: 1px solid rgba(255, 255, 255, .08);
 
   color: white;
 
-  box-shadow: 0 25px 70px rgba(0,0,0,.45);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, .45);
 
 }
 
@@ -292,7 +292,7 @@ LOGIN BUTTON
 
   font-weight: 600 !important;
 
-  background: linear-gradient(90deg,#4f8cff,#8d5cf6) !important;
+  background: linear-gradient(90deg, #4f8cff, #8d5cf6) !important;
 
   color: white !important;
 
@@ -304,7 +304,7 @@ LOGIN BUTTON
 
   transform: translateY(-2px);
 
-  box-shadow: 0 14px 35px rgba(79,140,255,.45);
+  box-shadow: 0 14px 35px rgba(79, 140, 255, .45);
 
 }
 
@@ -337,7 +337,7 @@ DIVIDER
 
   height: 1px;
 
-  background: rgba(255,255,255,.15);
+  background: rgba(255, 255, 255, .15);
 
 }
 
@@ -364,9 +364,9 @@ SOCIAL BUTTONS
   height: 56px;
 
   border-radius: 14px !important;
-  border: 1px solid rgba(255,255,255,.18) !important;
+  border: 1px solid rgba(255, 255, 255, .18) !important;
 
-  background: rgba(255,255,255,.03);
+  background: rgba(255, 255, 255, .03);
 
   color: #fff !important;
 
@@ -374,7 +374,7 @@ SOCIAL BUTTONS
 }
 
 .social-buttons button:hover {
-  background: rgba(255,255,255,.08);
+  background: rgba(255, 255, 255, .08);
   transform: translateY(-2px);
 }
 
@@ -437,79 +437,80 @@ REGISTER
 RESPONSIVE
 ======================================= */
 
-@media (max-width:1200px){
+@media (max-width:1200px) {
 
-.login-container{
+  .login-container {
 
-flex-direction:column;
+    flex-direction: column;
 
-justify-content:center;
+    justify-content: center;
 
-padding:40px;
+    padding: 40px;
 
-gap:40px;
+    gap: 40px;
 
-}
+  }
 
-.left-section{
+  .left-section {
 
-width:100%;
+    width: 100%;
 
-text-align:center;
+    text-align: center;
 
-}
+  }
 
-.subtitle{
+  .subtitle {
 
-margin:auto;
+    margin: auto;
 
-margin-bottom:50px;
+    margin-bottom: 50px;
 
-}
+  }
 
-.features{
+  .features {
 
-align-items:center;
+    align-items: center;
 
-}
+  }
 
-.login-card{
+  .login-card {
 
-width:100%;
+    width: 100%;
 
-max-width:500px;
+    max-width: 500px;
 
-}
-
-}
-
-@media (max-width:768px){
-
-.left-section{
-
-display:none;
+  }
 
 }
 
-.login-container{
+@media (max-width:768px) {
 
-padding:20px;
+  .left-section {
+
+    display: none;
+
+  }
+
+  .login-container {
+
+    padding: 20px;
+
+  }
+
+  .login-card {
+
+    padding: 28px;
+
+  }
+
+  .login-card h2 {
+
+    font-size: 42px;
+
+  }
 
 }
 
-.login-card{
-
-padding:28px;
-
-}
-
-.login-card h2{
-
-font-size:42px;
-
-}
-
-}
 ::ng-deep mat-icon {
   font-family: "Material Icons" !important;
   font-weight: normal;
@@ -519,6 +520,7 @@ font-size:42px;
   letter-spacing: normal;
   text-transform: none;
 }
+
 /* Remember Me label */
 ::ng-deep .mat-mdc-checkbox .mdc-label {
   color: #ffffff !important;
@@ -536,4 +538,88 @@ font-size:42px;
 ::ng-deep .mat-mdc-checkbox.mat-mdc-checkbox-checked .mdc-checkbox__background {
   background-color: #4f8cff !important;
   border-color: #4f8cff !important;
+}
+
+/* ===========================================================
+   ERROR MESSAGE
+=========================================================== */
+
+.error-message {
+
+  background: rgba(220,38,38,.18);
+
+  border: 1px solid rgba(220,38,38,.45);
+
+  color: #ffffff;
+
+  padding: 14px;
+
+  border-radius: 12px;
+
+  margin-bottom: 20px;
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+}
+
+/* ===========================================================
+   LOGIN BUTTON
+=========================================================== */
+
+.login-button:disabled {
+
+  opacity: .75;
+
+  cursor: not-allowed;
+
+}
+
+/* ===========================================================
+   INPUT FOCUS
+=========================================================== */
+
+::ng-deep .mdc-text-field--focused {
+
+  box-shadow: 0 0 0 2px rgba(79,140,255,.18);
+
+}
+
+/* ===========================================================
+   INPUT BORDER
+=========================================================== */
+
+::ng-deep .mdc-notched-outline__leading,
+::ng-deep .mdc-notched-outline__notch,
+::ng-deep .mdc-notched-outline__trailing {
+
+  border-color: rgba(255,255,255,.18) !important;
+
+}
+
+::ng-deep
+.mdc-text-field--focused
+.mdc-notched-outline__leading,
+
+::ng-deep
+.mdc-text-field--focused
+.mdc-notched-outline__notch,
+
+::ng-deep
+.mdc-text-field--focused
+.mdc-notched-outline__trailing {
+
+  border-color: #4f8cff !important;
+
+}
+
+/* ===========================================================
+   INPUT PLACEHOLDER
+=========================================================== */
+
+::ng-deep input::placeholder {
+
+  color: rgba(255,255,255,.45) !important;
+
 }
