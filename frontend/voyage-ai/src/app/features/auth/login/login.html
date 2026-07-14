@@ -1,1 +1,278 @@
-<p>login works!</p>
+<div class="login-page">
+
+  <div class="overlay"></div>
+
+  <div class="login-container">
+
+    <!-- ========================= -->
+    <!-- LEFT SECTION -->
+    <!-- ========================= -->
+
+    <div class="left-section">
+
+      <div class="logo">
+
+        <img
+    src="images/logo.png"
+    alt="VoyageAI Logo"
+    class="logo-icon">
+        <span>
+
+          Voyage<span class="gradient">AI</span>
+
+        </span>
+
+      </div>
+
+      <h1>
+
+        Your Journey,<br>
+
+        <span class="gradient-text">
+
+          Intelligently Planned
+
+        </span>
+
+      </h1>
+
+      <p class="subtitle">
+
+        Plan unforgettable trips using AI-powered itineraries,
+        smart budgeting, expense tracking and seamless collaboration.
+
+      </p>
+
+      <div class="features">
+
+        <div class="feature">
+
+          <div class="icon">
+
+            ✨
+
+          </div>
+
+          <div>
+
+            <h3>AI Powered Planning</h3>
+
+            <p>Create personalized travel plans instantly.</p>
+
+          </div>
+
+        </div>
+
+        <div class="feature">
+
+          <div class="icon">
+
+            🌍
+
+          </div>
+
+          <div>
+
+            <h3>Explore Anywhere</h3>
+
+            <p>Discover thousands of destinations worldwide.</p>
+
+          </div>
+
+        </div>
+
+        <div class="feature">
+
+          <div class="icon">
+
+            👥
+
+          </div>
+
+          <div>
+
+            <h3>Travel Together</h3>
+
+            <p>Invite friends and manage trips together.</p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- LOGIN CARD -->
+    <!-- ========================= -->
+
+    <mat-card class="login-card">
+
+      <h2>
+
+        Welcome Back
+
+      </h2>
+
+      <p class="card-subtitle">
+
+        Sign in to continue your adventure.
+
+      </p>
+
+      <form
+        [formGroup]="loginForm"
+        (ngSubmit)="login()">
+
+        <!-- EMAIL -->
+
+        <mat-form-field
+          appearance="outline"
+          class="full-width">
+
+          <mat-label>
+
+            Email Address
+
+          </mat-label>
+
+          <input
+            matInput
+            type="email"
+            placeholder="Enter your email"
+            formControlName="email">
+
+        </mat-form-field>
+
+        <!-- PASSWORD -->
+
+        <mat-form-field
+          appearance="outline"
+          class="full-width">
+
+          <mat-label>
+
+            Password
+
+          </mat-label>
+
+          <input
+            matInput
+            [type]="hidePassword() ? 'password' : 'text'"
+            placeholder="Enter your password"
+            formControlName="password">
+
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="togglePassword()">
+
+            <mat-icon>
+
+              {{ hidePassword() ? 'visibility_off' : 'visibility' }}
+
+            </mat-icon>
+
+          </button>
+
+        </mat-form-field>
+
+        <!-- OPTIONS -->
+
+        <div class="options">
+
+          <mat-checkbox
+            formControlName="rememberMe">
+
+            Remember Me
+
+          </mat-checkbox>
+
+          <a href="#">
+
+            Forgot Password?
+
+          </a>
+
+        </div>
+
+        <!-- LOGIN BUTTON -->
+
+        <button
+          mat-raised-button
+          color="primary"
+          class="login-button"
+          type="submit"
+          [disabled]="loginForm.invalid">
+
+          Sign In
+
+        </button>
+
+      </form>
+
+      <!-- DIVIDER -->
+
+      <div class="divider">
+
+        <span>
+
+          OR
+
+        </span>
+
+      </div>
+
+      <!-- SOCIAL -->
+
+      <div class="social-buttons">
+
+        <button
+mat-stroked-button
+type="button"
+(click)="loginWithGoogle()">
+
+          <img
+            src="icons/google.svg"
+            alt="Google">
+
+          <span>Continue with Google</span>
+
+        </button>
+
+        <button
+mat-stroked-button
+type="button"
+(click)="loginWithApple()">
+
+          <img
+            src="icons/apple.svg"
+            alt="Apple">
+
+          <span>Continue with Apple</span>
+
+        </button>
+
+      </div>
+
+      <!-- REGISTER -->
+
+      <p class="register">
+
+        Don't have an account?
+
+        <a routerLink="/register">
+
+          Create Account
+
+        </a>
+
+      </p>
+
+    </mat-card>
+
+  </div>
+
+</div>

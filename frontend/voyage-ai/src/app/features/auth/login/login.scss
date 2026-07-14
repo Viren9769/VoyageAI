@@ -1,0 +1,539 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
+
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.login-page {
+  position: relative;
+  min-height: 100vh;
+
+  background-image: url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=2070&auto=format&fit=crop");
+
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(9, 14, 30, .72);
+  backdrop-filter: blur(2px);
+}
+
+.login-container {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  min-height: 100vh;
+
+  padding: 60px 90px;
+}
+
+/* =======================================
+LEFT SIDE
+======================================= */
+
+.left-section {
+  width: 52%;
+  color: white;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  margin-bottom: 55px;
+}
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+}
+
+.logo span {
+  font-size: 38px;
+  font-weight: 700;
+}
+
+.gradient {
+  color: #63a5ff;
+}
+
+.left-section h1 {
+  font-size: 68px;
+  line-height: 1.08;
+  font-weight: 700;
+
+  margin-bottom: 28px;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #4ea5ff, #8d5cf6);
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  max-width: 650px;
+
+  color: #d7d7d7;
+
+  line-height: 36px;
+  font-size: 21px;
+
+  margin-bottom: 55px;
+}
+
+/* =======================================
+FEATURES
+======================================= */
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.icon {
+  width: 62px;
+  height: 62px;
+
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(135deg,#4f8cff,#8d5cf6);
+
+  font-size: 26px;
+
+  box-shadow: 0 12px 35px rgba(79,140,255,.35);
+}
+
+.feature h3 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.feature p {
+  color: #d6d6d6;
+  margin-top: 3px;
+}
+
+/* =======================================
+LOGIN CARD
+======================================= */
+
+.login-card {
+
+  width: 470px;
+
+  padding: 42px;
+
+  border-radius: 26px !important;
+
+  background: rgba(15,23,42,.82) !important;
+
+  backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(255,255,255,.08);
+
+  color: white;
+
+  box-shadow: 0 25px 70px rgba(0,0,0,.45);
+
+}
+
+.login-card h2 {
+
+  font-size: 50px;
+
+  font-weight: 700;
+
+  margin-bottom: 14px;
+
+}
+
+.card-subtitle {
+
+  color: #b8c3d1;
+  margin-top: 15px;
+
+  margin-bottom: 28px;
+
+}
+
+/* =======================================
+FORM
+======================================= */
+
+.full-width {
+
+  width: 100%;
+
+  margin-bottom: 16px;
+
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+
+  display: none;
+
+}
+
+::ng-deep .mdc-text-field {
+
+  background: #161825 !important;
+
+  border-radius: 14px;
+
+}
+
+::ng-deep input {
+
+  color: white !important;
+
+}
+
+::ng-deep .mat-mdc-floating-label {
+
+  color: #cbd5e1 !important;
+
+}
+
+::ng-deep .mat-mdc-icon-button {
+
+  margin-right: 6px;
+
+}
+
+::ng-deep .mat-mdc-icon-button mat-icon {
+
+  color: #d1d5db;
+
+  font-size: 22px;
+
+}
+
+::ng-deep .mat-mdc-icon-button:hover mat-icon {
+
+  color: white;
+
+}
+
+/* =======================================
+OPTIONS
+======================================= */
+
+.options {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin: 18px 0 28px;
+
+}
+
+.options a {
+
+  color: #61a5ff;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+}
+
+.options a:hover {
+
+  color: white;
+
+}
+
+/* =======================================
+LOGIN BUTTON
+======================================= */
+
+.login-button {
+
+  width: 100% !important;
+
+  height: 58px !important;
+
+  border-radius: 14px !important;
+
+  font-size: 18px !important;
+
+  font-weight: 600 !important;
+
+  background: linear-gradient(90deg,#4f8cff,#8d5cf6) !important;
+
+  color: white !important;
+
+  transition: .3s;
+
+}
+
+.login-button:hover {
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 14px 35px rgba(79,140,255,.45);
+
+}
+
+::ng-deep .login-button .mdc-button__label {
+
+  color: white !important;
+
+}
+
+/* =======================================
+DIVIDER
+======================================= */
+
+.divider {
+
+  display: flex;
+
+  align-items: center;
+
+  margin: 34px 0;
+
+}
+
+.divider::before,
+.divider::after {
+
+  content: "";
+
+  flex: 1;
+
+  height: 1px;
+
+  background: rgba(255,255,255,.15);
+
+}
+
+.divider span {
+
+  padding: 0 16px;
+
+  color: #94a3b8;
+
+}
+
+/* =======================================
+SOCIAL BUTTONS
+======================================= */
+
+.social-buttons {
+  display: flex;
+  gap: 16px;
+  margin-top: 5px;
+}
+
+.social-buttons button {
+  flex: 1;
+  height: 56px;
+
+  border-radius: 14px !important;
+  border: 1px solid rgba(255,255,255,.18) !important;
+
+  background: rgba(255,255,255,.03);
+
+  color: #fff !important;
+
+  transition: .25s;
+}
+
+.social-buttons button:hover {
+  background: rgba(255,255,255,.08);
+  transform: translateY(-2px);
+}
+
+/* Angular Material wrapper */
+::ng-deep .social-buttons .mdc-button__label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Logo */
+.social-buttons img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Text */
+.social-buttons span {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: white;
+}
+
+/* =======================================
+REGISTER
+======================================= */
+
+.register {
+
+  margin-top: 30px;
+
+  text-align: center;
+
+  color: #d4d4d4;
+
+}
+
+.register a {
+
+  color: #63a5ff;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+}
+
+.register a:hover {
+
+  color: white;
+
+}
+
+/* =======================================
+RESPONSIVE
+======================================= */
+
+@media (max-width:1200px){
+
+.login-container{
+
+flex-direction:column;
+
+justify-content:center;
+
+padding:40px;
+
+gap:40px;
+
+}
+
+.left-section{
+
+width:100%;
+
+text-align:center;
+
+}
+
+.subtitle{
+
+margin:auto;
+
+margin-bottom:50px;
+
+}
+
+.features{
+
+align-items:center;
+
+}
+
+.login-card{
+
+width:100%;
+
+max-width:500px;
+
+}
+
+}
+
+@media (max-width:768px){
+
+.left-section{
+
+display:none;
+
+}
+
+.login-container{
+
+padding:20px;
+
+}
+
+.login-card{
+
+padding:28px;
+
+}
+
+.login-card h2{
+
+font-size:42px;
+
+}
+
+}
+::ng-deep mat-icon {
+  font-family: "Material Icons" !important;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+}
+/* Remember Me label */
+::ng-deep .mat-mdc-checkbox .mdc-label {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* Checkbox outline */
+::ng-deep .mat-mdc-checkbox .mdc-checkbox__background {
+  border-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Checked color */
+::ng-deep .mat-mdc-checkbox.mat-mdc-checkbox-checked .mdc-checkbox__background {
+  background-color: #4f8cff !important;
+  border-color: #4f8cff !important;
+}
