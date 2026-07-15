@@ -1,0 +1,99 @@
+:host {
+
+    display: block;
+
+}
+
+.welcome-card {
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    min-height: 150px;
+
+}
+
+.greeting {
+
+    margin: 0;
+
+    color: #E2E8F0;
+
+    font-size: 30px;
+
+    font-weight: 500;
+
+}
+
+h1 {
+
+    margin: 6px 0;
+
+    color: white;
+
+    font-size: 56px;
+
+    font-weight: 700;
+
+    line-height: 1.1;
+
+}
+
+.subtitle {
+
+    margin: 0;
+
+    color: #94A3B8;
+
+    font-size: 20px;
+
+    font-weight: 400;
+
+}
+
+@media (max-width: 992px) {
+
+    .greeting {
+
+        font-size: 24px;
+
+    }
+
+    h1 {
+
+        font-size: 42px;
+
+    }
+
+    .subtitle {
+
+        font-size: 18px;
+
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .greeting {
+
+        font-size: 20px;
+
+    }
+
+    h1 {
+
+        font-size: 34px;
+
+    }
+
+    .subtitle {
+
+        font-size: 16px;
+
+    }
+
+}

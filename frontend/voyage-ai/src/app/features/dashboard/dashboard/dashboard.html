@@ -1,1 +1,55 @@
-<p>dashboard works!</p>
+@if (!isLoading && dashboard) {
+
+<div class="dashboard-container">
+
+    <!-- ========================================= -->
+    <!-- LEFT SECTION -->
+    <!-- ========================================= -->
+
+    <div class="dashboard-left">
+
+        <!-- Welcome -->
+
+        <app-welcome-card
+            [welcome]="dashboard.welcome">
+        </app-welcome-card>
+
+        <!-- Stats -->
+
+        <app-stats-cards
+            [stats]="dashboard.stats">
+        </app-stats-cards>
+
+        <!-- AI Planner -->
+
+        <app-ai-planner-card
+            [planner]="dashboard.aiPlanner">
+        </app-ai-planner-card>
+
+    </div>
+
+    <!-- ========================================= -->
+    <!-- RIGHT SECTION -->
+    <!-- ========================================= -->
+
+    <div class="dashboard-right">
+
+        <!-- Upcoming Trip -->
+        <!-- Weather -->
+        <!-- Reminders -->
+
+    </div>
+
+</div>
+
+}
+
+@else {
+
+<div class="loading">
+
+    Loading Dashboard...
+
+</div>
+
+}

@@ -1,0 +1,62 @@
+<div class="stats-grid">
+
+    @for (card of stats; track card.title) {
+
+    <div class="stat-card">
+
+        <div class="stat-header">
+
+            <div
+                class="icon"
+                [style.background]="card.color">
+
+                <mat-icon>
+
+                    {{ card.icon }}
+
+                </mat-icon>
+
+            </div>
+
+            <div
+                class="trend"
+                [class.up]="card.trend === 'up'"
+                [class.down]="card.trend === 'down'">
+
+                <mat-icon>
+
+                    {{ card.trend === 'up'
+                        ? 'trending_up'
+                        : 'trending_down' }}
+
+                </mat-icon>
+
+                {{ card.change }}%
+
+            </div>
+
+        </div>
+
+        <div class="stat-title">
+
+            {{ card.title }}
+
+        </div>
+
+        <div class="stat-value">
+
+            {{ card.value }}
+
+        </div>
+
+        <div class="stat-footer">
+
+            from last year
+
+        </div>
+
+    </div>
+
+    }
+
+</div>

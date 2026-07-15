@@ -1,0 +1,149 @@
+:host{
+
+    display:block;
+
+}
+
+/* ==========================================
+HEADER
+========================================== */
+
+.header{
+
+    height:72px;
+
+    padding:0 24px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:rgba(15,23,42,.45);
+
+    backdrop-filter:blur(22px);
+
+    -webkit-backdrop-filter:blur(22px);
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+    flex-shrink:0;
+
+}
+
+/* ==========================================
+SEARCH
+========================================== */
+
+.search-box{
+
+    width:clamp(220px,35vw,420px);
+
+    height:44px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:0 18px;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.06);
+
+}
+
+.search-box mat-icon{
+
+    color:#94A3B8;
+
+}
+
+.search-box input{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    background:none;
+
+    color:white;
+
+    font-size:15px;
+
+}
+
+.search-box input::placeholder{
+
+    color:#94A3B8;
+
+}
+
+/* ==========================================
+RIGHT
+========================================== */
+
+.header-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+}
+
+.icon-btn{
+
+    width:42px !important;
+
+    height:42px !important;
+
+    border-radius:50% !important;
+
+    background:rgba(255,255,255,.05);
+
+}
+
+.icon-btn mat-icon{
+
+    color:white;
+
+}
+
+.profile img{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}
+
+/* ==========================================
+RESPONSIVE
+========================================== */
+
+@media(max-width:768px){
+
+    .header{
+
+        padding:0 16px;
+
+    }
+
+    .search-box{
+
+        width:200px;
+
+    }
+
+}

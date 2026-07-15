@@ -1,0 +1,148 @@
+<aside
+    class="sidebar"
+    [class.collapsed]="collapsed">
+
+    <!-- ========================================= -->
+    <!-- HEADER -->
+    <!-- ========================================= -->
+
+    <div class="sidebar-header">
+
+        <div class="logo">
+
+            <img
+                src="images/logo.png"
+                alt="VoyageAI">
+
+            <span>
+
+                Voyage<span class="gradient">AI</span>
+
+            </span>
+
+        </div>
+
+        <button
+            mat-icon-button
+            class="toggle-btn"
+            (click)="toggleSidebar()">
+
+            <mat-icon>
+
+                {{ collapsed ? 'menu_open' : 'menu' }}
+
+            </mat-icon>
+
+        </button>
+
+    </div>
+
+    <!-- ========================================= -->
+    <!-- NAVIGATION -->
+    <!-- ========================================= -->
+
+    <nav class="menu">
+
+        @for(item of menuItems; track item.route){
+
+        <a
+            [routerLink]="item.route"
+            routerLinkActive="active">
+
+            <mat-icon>
+
+                {{ item.icon }}
+
+            </mat-icon>
+
+            <span>
+
+                {{ item.title }}
+
+            </span>
+
+        </a>
+
+        }
+
+    </nav>
+
+    <!-- ========================================= -->
+    <!-- UPGRADE CARD -->
+    <!-- ========================================= -->
+
+    <div class="upgrade-card">
+
+        <div class="upgrade-icon">
+
+            <mat-icon>
+
+                workspace_premium
+
+            </mat-icon>
+
+        </div>
+
+        <h3>
+
+            Upgrade to Pro
+
+        </h3>
+
+        <p>
+
+            Unlimited AI planning
+            for smarter travel.
+
+        </p>
+
+        <button mat-flat-button>
+
+            Upgrade
+
+        </button>
+
+    </div>
+
+    <!-- ========================================= -->
+    <!-- USER -->
+    <!-- ========================================= -->
+
+    <div class="profile">
+
+        <img
+            src="https://i.pravatar.cc/150?img=12"
+            alt="Profile">
+
+        <div class="info">
+
+            <h4>
+
+                {{ userName }}
+
+            </h4>
+
+            <p>
+
+                Voyage Explorer
+
+            </p>
+
+        </div>
+
+        <button
+            mat-icon-button
+            (click)="logout()"
+            aria-label="Logout">
+
+            <mat-icon>
+
+                logout
+
+            </mat-icon>
+
+        </button>
+
+    </div>
+
+</aside>

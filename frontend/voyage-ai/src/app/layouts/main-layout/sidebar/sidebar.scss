@@ -1,0 +1,385 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+/* ==========================================
+SIDEBAR
+========================================== */
+
+.sidebar {
+
+  width: clamp(240px, 18vw, 280px);
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: clamp(12px, 2vh, 22px);
+
+  background: rgba(15, 23, 42, .82);
+
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+
+  border-right: 1px solid rgba(255,255,255,.08);
+
+  box-shadow: 0 15px 40px rgba(0,0,0,.35);
+
+  transition: .35s;
+
+  overflow: hidden;
+
+}
+
+/* ==========================================
+COLLAPSED
+========================================== */
+
+.sidebar.collapsed{
+
+  width:88px;
+
+  padding:18px 10px;
+
+}
+
+.sidebar.collapsed .logo span,
+.sidebar.collapsed .menu span,
+.sidebar.collapsed .upgrade-card,
+.sidebar.collapsed .profile .info{
+
+  display:none;
+
+}
+
+.sidebar.collapsed .menu a{
+
+  justify-content:center;
+  padding:0;
+
+}
+
+.sidebar.collapsed .profile{
+
+  justify-content:center;
+
+}
+
+.sidebar.collapsed .profile button{
+
+  display:none;
+
+}
+
+/* ==========================================
+HEADER
+========================================== */
+
+.sidebar-header{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:clamp(12px,2vh,24px);
+
+}
+
+.logo{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+}
+
+.logo img{
+
+  width:clamp(34px,3vw,44px);
+
+  height:clamp(34px,3vw,44px);
+
+}
+
+.logo span{
+
+  font-size:clamp(24px,2vw,34px);
+
+  font-weight:700;
+
+  color:white;
+
+}
+
+.gradient{
+
+  color:#5E8BFF;
+
+}
+
+.toggle-btn{
+
+  color:white !important;
+
+}
+
+/* ==========================================
+MENU
+========================================== */
+
+.menu{
+
+  flex:1;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:flex-start;
+
+  gap:clamp(4px,.7vh,8px);
+
+}
+
+.menu a{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:14px;
+
+  height:clamp(38px,5vh,48px);
+
+  padding:0 16px;
+
+  border-radius:14px;
+
+  color:#CBD5E1;
+
+  text-decoration:none;
+
+  transition:.25s;
+
+}
+
+.menu a:hover{
+
+  background:rgba(255,255,255,.06);
+
+  color:white;
+
+}
+
+.menu a.active{
+
+  background:linear-gradient(
+      90deg,
+      #4F8CFF,
+      #8D5CF6
+  );
+
+  color:white;
+
+}
+
+.menu mat-icon{
+
+  width:22px;
+
+  height:22px;
+
+  font-size:22px;
+
+}
+
+.menu span{
+
+  font-size:clamp(13px,1vw,15px);
+
+  font-weight:500;
+
+}
+
+/* ==========================================
+UPGRADE
+========================================== */
+
+.upgrade-card{
+
+  margin-top:12px;
+
+  padding:clamp(10px,1.5vh,16px);
+
+  border-radius:18px;
+
+  background:rgba(255,255,255,.05);
+
+  border:1px solid rgba(255,255,255,.08);
+
+  text-align:center;
+
+}
+
+.upgrade-icon{
+
+  display:flex;
+
+  justify-content:center;
+
+  margin-bottom:8px;
+
+}
+
+.upgrade-icon mat-icon{
+
+  width:clamp(36px,3vw,46px);
+
+  height:clamp(36px,3vw,46px);
+
+  line-height:clamp(36px,3vw,46px);
+
+  font-size:clamp(18px,2vw,24px);
+
+  border-radius:50%;
+
+  color:white;
+
+  background:linear-gradient(
+      135deg,
+      #4F8CFF,
+      #8D5CF6
+  );
+
+}
+
+.upgrade-card h3{
+
+  color:white;
+
+  font-size:clamp(15px,1.3vw,18px);
+
+  margin-bottom:6px;
+
+}
+
+.upgrade-card p{
+
+  color:#CBD5E1;
+
+  font-size:clamp(10px,.9vw,12px);
+
+  line-height:1.4;
+
+  margin-bottom:10px;
+
+}
+
+.upgrade-card button{
+
+  width:100%;
+
+  height:34px;
+
+  border-radius:12px !important;
+
+  background:linear-gradient(
+      90deg,
+      #4F8CFF,
+      #8D5CF6
+  ) !important;
+
+  color:white !important;
+
+}
+
+/* ==========================================
+PROFILE
+========================================== */
+
+.profile{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+  margin-top:12px;
+
+  padding-top:12px;
+
+  border-top:1px solid rgba(255,255,255,.08);
+
+}
+
+.profile img{
+
+  width:clamp(38px,3vw,48px);
+
+  height:clamp(38px,3vw,48px);
+
+  border-radius:50%;
+
+}
+
+.profile .info{
+
+  flex:1;
+
+  overflow:hidden;
+
+}
+
+.profile h4{
+
+  color:white;
+
+  font-size:clamp(13px,1vw,15px);
+
+  white-space:nowrap;
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+
+}
+
+.profile p{
+
+  color:#94A3B8;
+
+  font-size:11px;
+
+}
+
+.profile button{
+
+  color:white !important;
+
+}
+
+/* ==========================================
+RESPONSIVE
+========================================== */
+
+@media (max-width:768px){
+
+  .sidebar{
+
+    position:fixed;
+
+    left:-100%;
+
+    top:0;
+
+    z-index:999;
+
+  }
+
+}

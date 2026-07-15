@@ -1,0 +1,110 @@
+:host {
+
+    display: block;
+
+    width: 100%;
+
+}
+
+/* ==========================================================
+DASHBOARD
+========================================================== */
+
+.dashboard-container {
+
+    display: grid;
+
+    grid-template-columns: 2fr 1fr;
+
+    gap: 24px;
+
+    width: 100%;
+
+    align-items: start;
+
+}
+
+/* ==========================================================
+LEFT SECTION
+========================================================== */
+
+.dashboard-left {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 28px;
+
+}
+
+/* ==========================================================
+RIGHT SECTION
+========================================================== */
+
+.dashboard-right {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 24px;
+
+}
+
+/* ==========================================================
+LOADING
+========================================================== */
+
+.loading {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    min-height: 500px;
+
+    color: white;
+
+    font-size: 22px;
+
+    font-weight: 600;
+
+}
+
+/* ==========================================================
+RESPONSIVE
+========================================================== */
+
+@media (max-width: 1400px) {
+
+    .dashboard-container {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+@media (max-width: 992px) {
+
+    .dashboard-left,
+    .dashboard-right {
+
+        gap: 20px;
+
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .dashboard-container {
+
+        gap: 20px;
+
+    }
+
+}

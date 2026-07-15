@@ -1,0 +1,59 @@
+<div class="planner-card">
+
+    <div class="planner-content">
+
+        <div class="planner-header">
+
+            <mat-icon>
+
+                auto_awesome
+
+            </mat-icon>
+
+            <div>
+
+                <h2>
+
+                    {{ planner.title }}
+
+                </h2>
+
+                <p>
+
+                    {{ planner.subtitle }}
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <textarea
+
+            [(ngModel)]="prompt"
+
+            [placeholder]="planner.placeholder">
+
+        </textarea>
+
+        <button
+
+            mat-flat-button
+
+            (click)="generateTrip()">
+
+            {{ planner.buttonText }}
+
+        </button>
+
+    </div>
+
+    <div class="planner-image">
+
+        <img
+            src="images/ai-robot.png"
+            alt="AI Planner">
+
+    </div>
+
+</div>
