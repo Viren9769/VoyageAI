@@ -1,9 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+import { CommonModule } from '@angular/common';
+
+import { MatIconModule } from '@angular/material/icon';
+
+import { WeatherCard as Weather } from '../../../../models/dashboard';
 
 @Component({
   selector: 'app-weather-card',
-  imports: [],
+
+  standalone: true,
+
+  imports: [
+    CommonModule,
+    MatIconModule
+  ],
+
   templateUrl: './weather-card.html',
-  styleUrl: './weather-card.scss',
+
+  styleUrl: './weather-card.scss'
 })
-export class WeatherCard {}
+export class WeatherCard {
+
+  @Input({ required: true })
+
+  weather!: Weather;
+
+}

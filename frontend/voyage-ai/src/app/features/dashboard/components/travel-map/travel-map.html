@@ -1,1 +1,107 @@
-<p>travel-map works!</p>
+<div class="travel-map-card">
+
+    <div class="card-header">
+
+        <h3>
+
+            {{ travelMap.title }}
+
+        </h3>
+
+        <button
+            mat-button
+            class="view-all-btn">
+
+            View All
+
+        </button>
+
+    </div>
+
+    <div class="map-container">
+
+        <!-- ========================= -->
+        <!-- WORLD MAP -->
+        <!-- ========================= -->
+
+        <img
+            class="world-map"
+            [src]="travelMap.image"
+            alt="World Map">
+
+        <!-- ========================= -->
+        <!-- FLIGHT ROUTES -->
+        <!-- ========================= -->
+
+        <svg
+            class="routes"
+            viewBox="0 0 1000 500"
+            preserveAspectRatio="none">
+
+            <!-- USA → Switzerland -->
+
+            <path
+                class="route"
+                d="M170 170 Q350 40 510 150">
+            </path>
+
+            <text
+                class="plane"
+                x="335"
+                y="90">
+
+                ✈
+
+            </text>
+
+            <!-- Switzerland → Japan -->
+
+            <path
+                class="route"
+                d="M510 150 Q690 40 810 210">
+            </path>
+
+            <text
+                class="plane"
+                x="690"
+                y="95">
+
+                ✈
+
+            </text>
+
+            <!-- Japan → Australia -->
+
+            <path
+                class="route"
+                d="M810 210 Q880 300 875 380">
+            </path>
+
+        </svg>
+
+        <!-- ========================= -->
+        <!-- DESTINATION PINS -->
+        <!-- ========================= -->
+
+        @for (destination of travelMap.destinations; track destination.name) {
+
+            <div
+                class="pin"
+                [style.top]="destination.top"
+                [style.left]="destination.left">
+
+                <div class="pulse"></div>
+
+                <mat-icon class="location-pin">
+
+                    location_on
+
+                </mat-icon>
+
+            </div>
+
+        }
+
+    </div>
+
+</div>

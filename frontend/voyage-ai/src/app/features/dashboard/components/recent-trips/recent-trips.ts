@@ -1,9 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+import { CommonModule } from '@angular/common';
+
+import { RecentTrip } from '../../../../models/dashboard';
 
 @Component({
   selector: 'app-recent-trips',
-  imports: [],
+
+  standalone: true,
+
+  imports: [
+    CommonModule
+  ],
+
   templateUrl: './recent-trips.html',
-  styleUrl: './recent-trips.scss',
+
+  styleUrl: './recent-trips.scss'
 })
-export class RecentTrips {}
+export class RecentTrips {
+
+  @Input({ required: true })
+
+  trips!: RecentTrip[];
+
+}

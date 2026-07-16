@@ -1,1 +1,79 @@
-<p>weather-card works!</p>
+<div class="weather-card">
+
+    <h3>
+
+        Current Weather
+
+    </h3>
+
+    <p class="location">
+
+        {{ weather.city }}, {{ weather.country }}
+
+    </p>
+
+    <div class="weather-content">
+
+        <div class="left">
+
+            <mat-icon>
+
+                {{ weather.icon }}
+
+            </mat-icon>
+
+            <div>
+
+                <h1>
+
+                    {{ weather.temperature }}°C
+
+                </h1>
+
+                <span>
+
+                    {{ weather.condition }}
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="right">
+
+            <div class="item">
+
+                <mat-icon>water_drop</mat-icon>
+
+                <span>Humidity</span>
+
+                <strong>{{ weather.humidity }}%</strong>
+
+            </div>
+
+            <div class="item">
+
+                <mat-icon>air</mat-icon>
+
+                <span>Wind</span>
+
+                <strong>{{ weather.windSpeed }} km/h</strong>
+
+            </div>
+
+            <div class="item">
+
+                <mat-icon>thermostat</mat-icon>
+
+                <span>Feels Like</span>
+
+                <strong>{{ weather.feelsLike }}°C</strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

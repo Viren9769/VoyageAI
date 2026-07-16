@@ -26,6 +26,26 @@
             [planner]="dashboard.aiPlanner">
         </app-ai-planner-card>
 
+       <div class="dashboard-row">
+
+    <app-travel-map
+        class="travel-map-section"
+        [travelMap]="dashboard.travelMap">
+    </app-travel-map>
+
+    <!-- Expense Overview goes here -->
+
+   
+    <app-expense-overview
+    [expense]="dashboard.expenseOverview">
+</app-expense-overview>
+    
+
+</div>
+<app-recent-trips
+    [trips]="dashboard.recentTrips">
+</app-recent-trips>
+
     </div>
 
     <!-- ========================================= -->
@@ -35,8 +55,20 @@
     <div class="dashboard-right">
 
         <!-- Upcoming Trip -->
+             <app-upcoming-trip
+        [trip]="dashboard.upcomingTrip">
+    </app-upcoming-trip>
+
         <!-- Weather -->
+         <app-weather-card
+    [weather]="dashboard.weather">
+</app-weather-card>
         <!-- Reminders -->
+         <app-reminders
+    [reminders]="dashboard.reminders">
+</app-reminders>
+
+
 
     </div>
 

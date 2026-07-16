@@ -1,0 +1,143 @@
+.weather-card {
+
+    background: rgb(11 14 55 / 75%);
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    border-radius: 18px;
+
+    padding: 18px;
+
+}
+
+h3 {
+
+    margin: 0;
+
+    color: white;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+}
+
+.location {
+
+    margin-top: 4px;
+
+    margin-bottom: 18px;
+
+    color: #94A3B8;
+
+    font-size: 14px;
+
+}
+
+.weather-content {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 24px;
+
+}
+
+.left {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+}
+
+.left mat-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    font-size: 52px;
+
+    color: #FDBA2D;
+
+}
+
+.left h1 {
+
+    margin: 0;
+
+    color: white;
+
+    font-size: 48px;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+}
+
+.left span {
+
+    color: #CBD5E1;
+
+    font-size: 16px;
+
+}
+
+.right {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    min-width: 140px;
+
+}
+
+.item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+}
+
+.item mat-icon {
+
+    width: 18px;
+
+    height: 18px;
+
+    font-size: 18px;
+
+    color: #94A3B8;
+
+}
+
+.item span {
+
+    flex: 1;
+
+    color: #CBD5E1;
+
+    font-size: 14px;
+
+}
+
+.item strong {
+
+    color: white;
+
+    font-size: 14px;
+
+}

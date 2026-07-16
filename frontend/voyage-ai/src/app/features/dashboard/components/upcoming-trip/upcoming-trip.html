@@ -1,1 +1,71 @@
-<p>upcoming-trip works!</p>
+<div class="trip-card">
+
+    <div class="card-header">
+
+        <h3>Upcoming Trip</h3>
+
+        <button mat-button>
+
+            View Details
+
+        </button>
+
+    </div>
+
+    <div class="trip-content">
+
+        <img
+            class="trip-image"
+            [src]="trip.image"
+            [alt]="trip.title">
+
+        <div class="trip-info">
+
+            <h2>
+
+                {{ trip.title }}
+
+            </h2>
+
+            <p>
+
+                <mat-icon>calendar_month</mat-icon>
+
+                {{ trip.startDate }} - {{ trip.endDate }}
+
+            </p>
+
+            <p>
+
+                <mat-icon>schedule</mat-icon>
+
+                {{ trip.daysLeft }} Days Left
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="progress-section">
+
+        <div class="progress-header">
+
+            <span>Trip Progress</span>
+
+            <span>{{ trip.progress }}%</span>
+
+        </div>
+
+        <div class="progress-bar">
+
+            <div
+                class="progress-fill"
+                [style.width.%]="trip.progress">
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

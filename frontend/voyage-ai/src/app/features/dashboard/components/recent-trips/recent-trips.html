@@ -1,1 +1,69 @@
-<p>recent-trips works!</p>
+<div class="recent-trips-card">
+
+    <div class="card-header">
+
+        <h3>Recent Trips</h3>
+
+        <button class="view-all-btn">
+
+            View All
+
+        </button>
+
+    </div>
+
+    <div class="trip-list">
+
+        @for (trip of trips; track trip.title) {
+
+        <div class="trip-card">
+
+            <div class="image-wrapper">
+
+                <img
+                    [src]="trip.image"
+                    [alt]="trip.title">
+
+                <span
+                    class="status"
+                    [ngClass]="trip.status.toLowerCase()">
+
+                    {{ trip.status }}
+
+                </span>
+
+            </div>
+
+            <div class="trip-body">
+
+                <h4>
+
+                    {{ trip.title }}
+
+                </h4>
+
+                <div class="trip-footer">
+
+                    <span>
+
+                        {{ trip.startDate }} - {{ trip.endDate }}
+
+                    </span>
+
+                    <span>
+
+                        8 Days
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        }
+
+    </div>
+
+</div>

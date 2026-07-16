@@ -1,0 +1,157 @@
+.reminders-card {
+
+    background: rgb(11 14 55 / 75%);
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    border-radius: 18px;
+
+    padding: 18px;
+
+}
+
+.card-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 18px;
+
+}
+
+.card-header h3 {
+
+    margin: 0;
+
+    color: white;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+}
+
+.card-header button {
+
+    color: #8B5CF6;
+
+}
+
+.reminder-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 12px 0;
+
+}
+
+.reminder-item:not(:last-child) {
+
+    border-bottom: 1px solid rgba(255,255,255,.05);
+
+}
+
+.icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex-shrink: 0;
+
+}
+
+.icon mat-icon {
+
+    color: white;
+
+    font-size: 20px;
+
+}
+
+.details {
+
+    flex: 1;
+
+}
+
+.details h4 {
+
+    margin: 0;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+}
+
+.details p {
+
+    margin-top: 4px;
+
+    color: #94A3B8;
+
+    font-size: 13px;
+
+}
+
+.badge {
+
+    background: rgba(139,92,246,.15);
+
+    color: #8B5CF6;
+
+    padding: 5px 12px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+}
+
+.view-all-btn {
+
+    color: #8B5CF6 !important;
+
+    background: transparent !important;
+
+    border: none !important;
+
+    box-shadow: none !important;
+
+    min-width: auto;
+
+    padding: 0;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+}
+
+.view-all-btn:hover {
+
+    background: transparent !important;
+
+    color: #A78BFA;
+
+}

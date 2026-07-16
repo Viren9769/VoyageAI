@@ -1,1 +1,63 @@
-<p>reminders works!</p>
+<div class="reminders-card">
+
+    <div class="card-header">
+
+        <h3>
+
+            Upcoming Reminders
+
+        </h3>
+
+        <button
+    mat-button
+    class="view-all-btn">
+
+    View All
+
+</button>
+
+    </div>
+
+    @for (reminder of reminders; track reminder.title) {
+
+        <div class="reminder-item">
+
+            <div
+                class="icon"
+                [style.background]="reminder.color">
+
+                <mat-icon>
+
+                    {{ reminder.icon }}
+
+                </mat-icon>
+
+            </div>
+
+            <div class="details">
+
+                <h4>
+
+                    {{ reminder.title }}
+
+                </h4>
+
+                <p>
+
+                    {{ reminder.date }}
+
+                </p>
+
+            </div>
+
+            <span class="badge">
+
+                {{ reminder.timeLeft }}
+
+            </span>
+
+        </div>
+
+    }
+
+</div>

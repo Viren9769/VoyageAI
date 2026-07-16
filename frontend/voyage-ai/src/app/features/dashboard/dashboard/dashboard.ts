@@ -10,6 +10,12 @@ import { WelcomeCard } from '../components/welcome-card/welcome-card';
 
 import { StatsCards } from '../components/stats-cards/stats-cards';
 import { AiPlannerCard } from '../components/ai-planner-card/ai-planner-card';
+import { UpcomingTrip } from '../components/upcoming-trip/upcoming-trip';
+import { WeatherCard } from '../components/weather-card/weather-card';
+import { Reminders } from '../components/reminders/reminders';
+import { TravelMapComponent } from '../components/travel-map/travel-map';
+import { ExpenseOverviewComponent } from '../components/expense-overview/expense-overview';
+import { RecentTrips } from '../components/recent-trips/recent-trips';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +26,13 @@ import { AiPlannerCard } from '../components/ai-planner-card/ai-planner-card';
     CommonModule,
     WelcomeCard,
     StatsCards,
-    AiPlannerCard
+    AiPlannerCard,
+    UpcomingTrip,
+    WeatherCard,
+    Reminders,
+    TravelMapComponent,
+    ExpenseOverviewComponent,
+    RecentTrips
   ],
 
   templateUrl: './dashboard.html',

@@ -34,7 +34,7 @@ LEFT SECTION
 
     flex-direction: column;
 
-    gap: 28px;
+    gap: 16px;
 
 }
 
@@ -48,7 +48,7 @@ RIGHT SECTION
 
     flex-direction: column;
 
-    gap: 24px;
+    gap: 16px;
 
 }
 
@@ -106,5 +106,26 @@ RESPONSIVE
         gap: 20px;
 
     }
+
+}
+.dashboard-row {
+
+    display: grid;
+
+    grid-template-columns: 2fr 1fr;
+
+    gap: 24px;
+
+}
+
+.travel-map-section {
+
+    width: 100%;
+
+}
+
+.expense-section {
+
+    width: 100%;
 
 }

@@ -1,1 +1,86 @@
-<p>expense-overview works!</p>
+<div class="expense-card">
+
+    <div class="card-header">
+
+        <h3>
+
+            Expense Overview
+
+        </h3>
+
+        <button
+            class="period-btn">
+
+            {{ expense.period }}
+
+            <mat-icon>keyboard_arrow_down</mat-icon>
+
+        </button>
+
+    </div>
+
+    <div class="expense-content">
+
+        <!-- Donut Chart -->
+
+        <div class="chart">
+
+            <div class="donut">
+
+                <div class="center">
+
+                    <h2>{{ expense.total }}</h2>
+
+                    <span>Total</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Categories -->
+
+        <div class="legend">
+
+            @for (item of expense.categories; track item.name) {
+
+            <div class="legend-item">
+
+                <div class="left">
+
+                    <span
+                        class="color"
+                        [style.background]="item.color">
+
+                    </span>
+
+                    {{ item.name }}
+
+                </div>
+
+                <div class="right">
+
+                    <span>{{ item.amount }}</span>
+
+                    <span>{{ item.percent }}%</span>
+
+                </div>
+
+            </div>
+
+            }
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+
+        <mat-icon>trending_down</mat-icon>
+
+        {{ expense.change }}% compared to last year
+
+    </div>
+
+</div>

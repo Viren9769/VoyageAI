@@ -1,0 +1,227 @@
+.expense-card {
+
+    background: rgba(18, 24, 45, .92);
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    border-radius: 18px;
+
+    padding: 22px;
+
+}
+
+.card-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:22px;
+
+}
+
+.card-header h3{
+
+    margin:0;
+
+    color:white;
+
+    font-size:24px;
+
+    font-weight:700;
+
+}
+
+.period-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:4px;
+
+    padding:8px 14px;
+
+    background:#22283f;
+
+    border:none;
+
+    border-radius:10px;
+
+    color:#bfc7ff;
+
+    cursor:pointer;
+
+}
+
+.period-btn mat-icon{
+
+    font-size:18px;
+
+}
+
+.expense-content{
+
+    display:flex;
+
+    gap:28px;
+
+    align-items:center;
+
+}
+
+.chart{
+
+    width:180px;
+
+    display:flex;
+
+    justify-content:center;
+
+}
+
+.donut{
+
+    width:160px;
+
+    height:160px;
+
+    border-radius:50%;
+
+    background:
+
+    conic-gradient(
+
+        #6D5DFB 0% 37%,
+
+        #8B5CF6 37% 67%,
+
+        #4FD1C5 67% 84%,
+
+        #FBBF24 84% 95%,
+
+        #F87171 95% 100%
+
+    );
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.center{
+
+    width:110px;
+
+    height:110px;
+
+    border-radius:50%;
+
+    background:#171d34;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.center h2{
+
+    margin:0;
+
+    color:white;
+
+    font-size:26px;
+
+    font-weight:700;
+
+}
+
+.center span{
+
+    color:#9fa7c2;
+
+    font-size:14px;
+
+}
+
+.legend{
+
+    flex:1;
+
+}
+
+.legend-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:14px;
+
+}
+
+.left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    color:white;
+
+}
+
+.color{
+
+    width:10px;
+
+    height:10px;
+
+    border-radius:50%;
+
+}
+
+.right{
+
+    display:flex;
+
+    gap:24px;
+
+    color:#cfd5e8;
+
+}
+
+.footer{
+
+    margin-top:20px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:#ff6b6b;
+
+    font-size:14px;
+
+}
+
+.footer mat-icon{
+
+    font-size:18px;
+
+}
