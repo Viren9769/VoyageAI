@@ -14,9 +14,9 @@ GRID
 
     grid-template-columns: repeat(4, 1fr);
 
-    gap: 20px;
+    gap: 18px;
 
-    margin-top: 4px;
+    margin-top: 6px;
 
 }
 
@@ -28,17 +28,13 @@ CARD
 
     background: rgb(11 14 55 / 75%);
 
-    backdrop-filter: blur(0px);
-
-    -webkit-backdrop-filter: blur(0px);
-
     border: 1px solid rgba(255,255,255,.08);
 
-    border-radius: 20px;
+    border-radius: 16px;
 
-    padding: 15px;
+    padding: 12px;
 
-    transition: .30s ease;
+    transition: all .25s ease;
 
 }
 
@@ -46,26 +42,25 @@ CARD
 
     transform: translateY(-4px);
 
-    border-color: rgba(99,102,241,.35);
+    border-color: rgba(139,92,246,.35);
 
-    box-shadow:
-        0 20px 40px rgba(0,0,0,.25);
+    box-shadow: 0 15px 30px rgba(0,0,0,.25);
 
 }
 
 /* ==========================================================
-HEADER
+TOP SECTION
 ========================================================== */
 
-.stat-header {
+.stat-top {
 
     display: flex;
 
-    justify-content: space-between;
-
     align-items: center;
 
-    margin-bottom: 8px;
+    gap: 16px;
+
+    margin-bottom: 12px;
 
 }
 
@@ -75,11 +70,11 @@ ICON
 
 .icon {
 
-    width: 52px;
+    width: 3cap;
 
-    height: 52px;
+    height: 38px;
 
-    border-radius: 16px;
+    border-radius: 14px;
 
     display: flex;
 
@@ -87,17 +82,83 @@ ICON
 
     align-items: center;
 
+    flex-shrink: 0;
+
 }
 
 .icon mat-icon {
 
     color: white;
 
-    font-size: 28px;
+    font-size: 24px;
 
-    width: 28px;
+    width: 24px;
 
-    height: 28px;
+    height: 24px;
+
+}
+
+/* ==========================================================
+CONTENT
+========================================================== */
+
+.stat-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+}
+
+/* ==========================================================
+TITLE
+========================================================== */
+
+.stat-title {
+
+    color: #C8CEDA;
+
+    font-size: 10px;
+
+    font-weight: 500;
+
+    margin-bottom: 6px;
+
+}
+
+/* ==========================================================
+VALUE
+========================================================== */
+
+.stat-value {
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 400;
+
+    line-height: 1;
+
+}
+
+/* ==========================================================
+FOOTER
+========================================================== */
+
+.stat-footer {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #9CA3AF;
+
+    font-size: 14px;
 
 }
 
@@ -111,9 +172,7 @@ TREND
 
     align-items: center;
 
-    gap: 4px;
-
-    font-size: 13px;
+    gap: 3px;
 
     font-weight: 600;
 
@@ -133,53 +192,11 @@ TREND
 
 .trend mat-icon {
 
-    font-size: 18px;
+    font-size: 17px;
 
-    width: 18px;
+    width: 17px;
 
-    height: 18px;
-
-}
-
-/* ==========================================================
-TITLE
-========================================================== */
-
-.stat-title {
-
-    color: #94A3B8;
-
-    font-size: 14px;
-
-    margin-bottom: 10px;
-
-}
-
-/* ==========================================================
-VALUE
-========================================================== */
-
-.stat-value {
-
-    color: white;
-
-    font-size: 34px;
-
-    font-weight: 700;
-
-    margin-bottom: 8px;
-
-}
-
-/* ==========================================================
-FOOTER
-========================================================== */
-
-.stat-footer {
-
-    color: #94A3B8;
-
-    font-size: 13px;
+    height: 17px;
 
 }
 
@@ -187,17 +204,17 @@ FOOTER
 RESPONSIVE
 ========================================================== */
 
-@media (max-width:1400px) {
+@media (max-width: 1400px) {
 
     .stats-grid {
 
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: repeat(2, 1fr);
 
     }
 
 }
 
-@media (max-width:768px) {
+@media (max-width: 768px) {
 
     .stats-grid {
 

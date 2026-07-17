@@ -1,0 +1,121 @@
+.profile-card {
+
+    background: rgb(11 14 55 / 75%);
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    border-radius: 18px;
+
+    padding: 12px;
+
+}
+
+.profile-top {
+
+    display: flex;
+
+    gap: 18px;
+
+    align-items: center;
+
+}
+
+img {
+
+    width: 80px;
+
+    height: 80px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+}
+
+.profile-info {
+
+    flex: 1;
+
+}
+
+.profile-info h3 {
+
+    margin: 0;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 400;
+
+}
+
+.level {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 6px;
+
+    padding: 4px 10px;
+
+    border-radius: 30px;
+
+    background: rgba(139,92,246,.15);
+
+    color: #C084FC;
+
+    font-size: 12px;
+
+    font-weight: 400;
+
+}
+
+.level mat-icon{
+
+    font-size:18px;
+
+    width:18px;
+
+    height:18px;
+
+}
+
+.points{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-top:12px;
+
+}
+
+.points mat-icon{
+
+    color:#FBBF24;
+
+}
+
+.points strong{
+
+    display:block;
+
+    color:white;
+
+    font-size:14px;
+
+}
+
+.points span{
+
+    color:#9CA3AF;
+
+    font-size:14px;
+
+}

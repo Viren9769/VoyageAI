@@ -1,0 +1,43 @@
+<div class="profile-card">
+
+    <div class="profile-top">
+
+        <img
+  [src]="profile.avatar"
+  [alt]="profile.name">
+
+        <div class="profile-info">
+
+            <h3>
+
+                {{ profile.name }}
+
+            </h3>
+
+            <div class="level">
+
+                <mat-icon>star</mat-icon>
+
+                {{ profile.level }}
+
+            </div>
+
+            <div class="points">
+
+                <mat-icon>workspace_premium</mat-icon>
+
+                <div>
+
+                    <strong>{{ profile.voyagePoints | number }}</strong>
+
+                    <span>Voyage Points</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

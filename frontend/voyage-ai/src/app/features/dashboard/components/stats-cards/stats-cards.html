@@ -1,61 +1,69 @@
 <div class="stats-grid">
 
-    @for (card of stats; track card.title) {
+    @for (stat of stats; track stat.title) {
 
-    <div class="stat-card">
+        <div class="stat-card">
 
-        <div class="stat-header">
+            <div class="stat-top">
 
-            <div
-                class="icon"
-                [style.background]="card.color">
+                <div
+                    class="icon"
+                    [style.background]="stat.color">
 
-                <mat-icon>
+                    <mat-icon>
 
-                    {{ card.icon }}
+                        {{ stat.icon }}
 
-                </mat-icon>
+                    </mat-icon>
+
+                </div>
+
+                <div class="stat-content">
+
+                    <div class="stat-title">
+
+                        {{ stat.title }}
+
+                    </div>
+
+                    <div class="stat-value">
+
+                        {{ stat.value }}
+
+                    </div>
+
+                </div>
 
             </div>
 
-            <div
-                class="trend"
-                [class.up]="card.trend === 'up'"
-                [class.down]="card.trend === 'down'">
+            <div class="stat-footer">
 
-                <mat-icon>
+                <div
+                    class="trend"
+                    [class.up]="stat.trend === 'up'"
+                    [class.down]="stat.trend === 'down'">
 
-                    {{ card.trend === 'up'
-                        ? 'trending_up'
-                        : 'trending_down' }}
+                    <mat-icon>
 
-                </mat-icon>
+                        {{ stat.trend === 'up'
+                        ? 'north'
+                        : 'south' }}
 
-                {{ card.change }}%
+                    </mat-icon>
+
+                    {{ stat.change }}%
+
+                </div>
+
+                <span>
+
+                    from last year
+
+                </span>
 
             </div>
 
         </div>
-
-        <div class="stat-title">
-
-            {{ card.title }}
-
-        </div>
-
-        <div class="stat-value">
-
-            {{ card.value }}
-
-        </div>
-
-        <div class="stat-footer">
-
-            from last year
-
-        </div>
-
-    </div>
 
     }
 

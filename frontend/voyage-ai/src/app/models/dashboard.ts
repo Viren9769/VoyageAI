@@ -22,6 +22,8 @@ export interface DashboardData {
 
   recentTrips: RecentTrip[];
 
+  travelerProfile: TravelerProfile;
+
 }
 
 /* ============================================================
@@ -204,5 +206,21 @@ export interface RecentTrip {
   endDate: string;
 
   status: 'Completed' | 'Upcoming' | 'Planning';
+
+}
+
+/* ============================================================
+TRAVELER PROFILE
+============================================================ */
+
+export interface TravelerProfile {
+
+  name: string;
+
+  avatar: string;
+
+  level: number;
+
+  voyagePoints: number;
 
 }

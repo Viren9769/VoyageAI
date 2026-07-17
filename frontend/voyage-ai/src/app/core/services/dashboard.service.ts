@@ -276,6 +276,20 @@ recentTrips: [
   }
 
 ],
+travelerProfile: {
+
+  name: `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim(),
+
+  avatar:
+    user.profilePicture ||
+    user.avatar ||
+    'images/avatar.png',
+
+  level: user.level ?? 12,
+
+  voyagePoints: user.voyagePoints ?? 2450
+
+},
 
     };
 

@@ -16,6 +16,7 @@ import { Reminders } from '../components/reminders/reminders';
 import { TravelMapComponent } from '../components/travel-map/travel-map';
 import { ExpenseOverviewComponent } from '../components/expense-overview/expense-overview';
 import { RecentTrips } from '../components/recent-trips/recent-trips';
+import { TravelerPrfile } from '../components/traveler-prfile/traveler-prfile';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,7 +33,8 @@ import { RecentTrips } from '../components/recent-trips/recent-trips';
     Reminders,
     TravelMapComponent,
     ExpenseOverviewComponent,
-    RecentTrips
+    RecentTrips,
+    TravelerPrfile
   ],
 
   templateUrl: './dashboard.html',

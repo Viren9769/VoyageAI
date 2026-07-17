@@ -54,6 +54,11 @@
 
     <div class="dashboard-right">
 
+        <!-- Traveler Profile -->
+         <app-traveler-profile
+    [profile]="dashboard.travelerProfile">
+</app-traveler-profile>
+
         <!-- Upcoming Trip -->
              <app-upcoming-trip
         [trip]="dashboard.upcomingTrip">
@@ -67,6 +72,8 @@
          <app-reminders
     [reminders]="dashboard.reminders">
 </app-reminders>
+
+        
 
 
 
