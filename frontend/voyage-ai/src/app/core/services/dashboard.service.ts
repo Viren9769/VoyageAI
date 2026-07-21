@@ -260,7 +260,7 @@ recentTrips: [
   {
     title: 'Tokyo Explorer',
     country: 'Japan',
-    image: 'images/japan.jpg',
+    image: 'images/japan.jpeg',
     startDate: 'Sep 10, 2026',
     endDate: 'Sep 18, 2026',
     status: 'Upcoming'
@@ -269,7 +269,7 @@ recentTrips: [
   {
     title: 'Sydney Escape',
     country: 'Australia',
-    image: 'images/australia.jpg',
+    image: 'images/australia.jpeg',
     startDate: 'Nov 5, 2026',
     endDate: 'Nov 14, 2026',
     status: 'Planning'

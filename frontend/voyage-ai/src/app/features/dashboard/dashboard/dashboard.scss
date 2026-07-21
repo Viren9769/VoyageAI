@@ -14,9 +14,9 @@ DASHBOARD
 
     display: grid;
 
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 10fr 3fr;
 
-    gap: 24px;
+    gap: 14px;
 
     width: 100%;
 
@@ -34,7 +34,7 @@ LEFT SECTION
 
     flex-direction: column;
 
-    gap: 16px;
+    gap: 10px;
 
 }
 
@@ -48,7 +48,7 @@ RIGHT SECTION
 
     flex-direction: column;
 
-    gap: 16px;
+    gap: 10px;
 
 }
 
