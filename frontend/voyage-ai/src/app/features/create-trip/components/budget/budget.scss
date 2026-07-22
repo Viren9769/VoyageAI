@@ -1,0 +1,93 @@
+.budget {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 24px;
+
+}
+
+.subtitle {
+
+    margin-top: -10px;
+
+    color: #94a3b8;
+
+}
+
+.grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2,1fr);
+
+    gap: 20px;
+
+}
+
+mat-form-field {
+
+    width: 100%;
+
+}
+
+.budget-summary {
+
+    background: #1e293b;
+
+    border-radius: 16px;
+
+    padding: 20px;
+
+    border: 1px solid rgba(255,255,255,.08);
+
+}
+
+.budget-summary h3 {
+
+    margin: 0 0 20px;
+
+}
+
+.summary-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 16px;
+
+}
+
+.summary-row:last-child {
+
+    margin-bottom: 0;
+
+}
+
+.summary-row span {
+
+    color: #94a3b8;
+
+}
+
+.summary-row strong {
+
+    font-size: 18px;
+
+    color: white;
+
+}
+
+@media (max-width:768px){
+
+    .grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}

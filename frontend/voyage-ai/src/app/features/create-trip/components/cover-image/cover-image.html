@@ -1,0 +1,56 @@
+<div
+    class="cover-image"
+    [formGroup]="form">
+
+    <h2>
+
+        Cover Image
+
+    </h2>
+
+    <p class="subtitle">
+
+        Add a beautiful cover image for your trip.
+
+    </p>
+
+    <mat-form-field appearance="outline">
+
+        <mat-label>
+
+            Cover Image URL
+
+        </mat-label>
+
+        <input
+            matInput
+            formControlName="coverImageUrl"
+            placeholder="https://example.com/image.jpg">
+
+    </mat-form-field>
+
+    <div class="preview-card">
+
+        <img
+            [src]="form.value.coverImageUrl || defaultImage"
+            alt="Trip Cover">
+
+    </div>
+
+    <div class="info">
+
+        <mat-icon>
+
+            info
+
+        </mat-icon>
+
+        <span>
+
+            Paste a public image URL. A preview will appear automatically.
+
+        </span>
+
+    </div>
+
+</div>

@@ -1,12 +1,14 @@
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 @import "@fortawesome/fontawesome-free/css/all.min.css";
+
+/* ============================================================
+   Angular Material Theme
+============================================================ */
+
 html {
+
   height: 100%;
+
   @include mat.theme(
     (
       color: (
@@ -17,23 +19,249 @@ html {
       density: 0,
     )
   );
+
 }
+
+/* ============================================================
+   Body
+============================================================ */
 
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
 
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
+  color-scheme: dark;
 
-  // Reset the user agent margin.
   margin: 0;
+
   height: 100%;
+
+  font-family: Roboto, sans-serif;
+
+  background: #090E22;
+
+  color: #FFFFFF;
+
 }
-/* You can add global styles to this file, and also import other style files */
+
+/* ============================================================
+   Scrollbar
+============================================================ */
+
+::-webkit-scrollbar {
+
+  width: 8px;
+
+}
+
+::-webkit-scrollbar-track {
+
+  background: #090E22;
+
+}
+
+::-webkit-scrollbar-thumb {
+
+  background: #3F3F5C;
+
+  border-radius: 20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+
+  background: #8B5CF6;
+
+}
+
+/* ============================================================
+   Material Form Field
+============================================================ */
+
+.mat-mdc-form-field {
+
+  --mdc-outlined-text-field-container-shape: 12px;
+
+  --mdc-outlined-text-field-outline-color: rgba(255,255,255,.10);
+
+  --mdc-outlined-text-field-hover-outline-color: #8B5CF6;
+
+  --mdc-outlined-text-field-focus-outline-color: #8B5CF6;
+
+  --mdc-filled-text-field-container-color: transparent;
+
+}
+
+/* Select Value */
+
+.mat-mdc-select-value {
+
+  color: #E5E7EB !important;
+
+  font-size: 14px;
+
+}
+
+/* Arrow */
+
+.mat-mdc-select-arrow {
+
+  color: #8B5CF6 !important;
+
+}
+
+/* Label */
+
+.mat-mdc-floating-label {
+
+  color: #94A3B8 !important;
+
+}
+
+/* ============================================================
+   Dropdown
+============================================================ */
+
+.cdk-overlay-pane .mat-mdc-select-panel {
+
+  background: #10172F !important;
+
+  border: 1px solid rgba(255,255,255,.08);
+
+  border-radius: 14px !important;
+
+  overflow: hidden;
+
+  box-shadow:
+      0 20px 40px rgba(0,0,0,.45);
+
+}
+
+/* ============================================================
+   Dropdown Options
+============================================================ */
+
+.mat-mdc-option {
+
+  color: #E5E7EB !important;
+
+  min-height: 46px;
+
+  font-size: 14px;
+
+}
+
+/* Hover */
+
+.mat-mdc-option:hover {
+
+  background: rgba(139,92,246,.12) !important;
+
+}
+
+/* Selected */
+
+.mat-mdc-option.mdc-list-item--selected {
+
+  background: rgba(139,92,246,.18) !important;
+
+  color: white !important;
+
+}
+
+/* Focus */
+
+.mat-mdc-option.mat-mdc-option-active {
+
+  background: rgba(139,92,246,.12) !important;
+
+}
+
+/* Remove Checkmark */
+
+.mat-pseudo-checkbox {
+
+  display: none !important;
+
+}
+
+/* Remove Ripple */
+
+.mat-ripple-element {
+
+  display: none !important;
+
+}
+
+/* ============================================================
+   Menu
+============================================================ */
+
+.mat-mdc-menu-panel {
+
+  background: #10172F !important;
+
+  border-radius: 14px !important;
+
+  border: 1px solid rgba(255,255,255,.08);
+
+}
+
+.mat-mdc-menu-item {
+
+  color: #E5E7EB !important;
+
+}
+
+.mat-mdc-menu-item:hover {
+
+  background: rgba(139,92,246,.12);
+
+}
+
+/* ============================================================
+   Dialog
+============================================================ */
+
+.mat-mdc-dialog-container {
+
+  --mdc-dialog-container-color: #10172F;
+
+  --mdc-dialog-supporting-text-color: white;
+
+}
+
+/* ============================================================
+   Snackbar
+============================================================ */
+
+.mat-mdc-snack-bar-container {
+
+  --mdc-snackbar-container-color: #10172F;
+
+  --mdc-snackbar-supporting-text-color: white;
+
+}
+
+/* ============================================================
+   Tooltip
+============================================================ */
+
+.mat-mdc-tooltip {
+
+  background: #10172F !important;
+
+  color: white !important;
+
+}
+.trip-dialog .mat-mdc-dialog-container {
+    padding: 0;
+}
+
+.trip-dialog .mdc-dialog__surface {
+    overflow: hidden;
+    border-radius: 22px;
+}
+
+.trip-dialog .mat-mdc-dialog-content {
+    overflow: hidden;
+    max-height: none;
+}

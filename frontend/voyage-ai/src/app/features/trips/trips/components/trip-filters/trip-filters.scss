@@ -1,0 +1,129 @@
+:host {
+
+    display: block;
+
+}
+
+/* ===========================================
+   Filters Layout
+=========================================== */
+
+.filters-container {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 24px;
+
+}
+
+/* ===========================================
+   Tabs
+=========================================== */
+
+.tabs {
+
+    display: flex;
+
+    gap: 12px;
+
+}
+
+.tab-btn {
+
+    color: #94A3B8;
+
+    background: transparent;
+
+    border-radius: 12px;
+
+    padding: 8px 18px;
+
+    transition: .25s;
+
+}
+
+.tab-btn:hover {
+
+    color: white;
+
+}
+
+.tab-btn.active {
+
+    background: linear-gradient(90deg,#6366F1,#8B5CF6);
+
+    color: white;
+
+}
+
+/* ===========================================
+   Sort Dropdown
+=========================================== */
+
+.sort-dropdown {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    width: 245px;
+
+    height: 46px;
+
+    padding: 0 16px;
+
+    background: #111827;
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    border-radius: 12px;
+
+}
+
+.sort-label {
+
+    color: #94A3B8;
+
+    font-size: 14px;
+
+    white-space: nowrap;
+
+}
+
+.sort-dropdown mat-select {
+
+    flex: 1;
+
+    color: white;
+
+    font-size: 14px;
+
+}
+
+.sort-dropdown ::ng-deep .mat-mdc-select-trigger {
+
+    height: 46px;
+
+    display: flex;
+
+    align-items: center;
+
+}
+
+.sort-dropdown ::ng-deep .mat-mdc-select-value {
+
+    color: white;
+
+}
+
+.sort-dropdown ::ng-deep .mat-mdc-select-arrow {
+
+    color: #8B5CF6;
+
+}

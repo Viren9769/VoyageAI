@@ -1,0 +1,210 @@
+<div class="dialog-container">
+
+    <!-- ==========================================
+         Header
+    =========================================== -->
+
+    <div class="dialog-header">
+
+        <h2>{{ trip.title }}</h2>
+
+        <button
+            mat-icon-button
+            (click)="close()">
+
+            <mat-icon>close</mat-icon>
+
+        </button>
+
+    </div>
+
+    <!-- ==========================================
+         Scrollable Content
+    =========================================== -->
+
+    <div class="dialog-content">
+
+        <!-- Cover Image -->
+
+        <img
+            class="cover-image"
+            [src]="trip.image"
+            [alt]="trip.title">
+
+        <!-- Trip Information -->
+
+        <div class="info-grid">
+
+            <div class="info-card">
+
+                <mat-icon>location_on</mat-icon>
+
+                <div>
+
+                    <span class="label">Destination</span>
+
+                    <span class="value">{{ trip.destination }}</span>
+
+                </div>
+
+            </div>
+
+            <div class="info-card">
+
+                <mat-icon>calendar_month</mat-icon>
+
+                <div>
+
+                    <span class="label">Start Date</span>
+
+                    <span class="value">{{ trip.startDate }}</span>
+
+                </div>
+
+            </div>
+
+            <div class="info-card">
+
+                <mat-icon>event</mat-icon>
+
+                <div>
+
+                    <span class="label">End Date</span>
+
+                    <span class="value">{{ trip.endDate }}</span>
+
+                </div>
+
+            </div>
+
+            <div class="info-card">
+
+                <mat-icon>schedule</mat-icon>
+
+                <div>
+
+                    <span class="label">Duration</span>
+
+                    <span class="value">{{ trip.days }} Days</span>
+
+                </div>
+
+            </div>
+
+            <div class="info-card">
+
+                <mat-icon>group</mat-icon>
+
+                <div>
+
+                    <span class="label">Travelers</span>
+
+                    <span class="value">{{ trip.travelers }}</span>
+
+                </div>
+
+            </div>
+
+            <div class="info-card">
+
+                <mat-icon>flag</mat-icon>
+
+                <div>
+
+                    <span class="label">Status</span>
+
+                    <span
+                        class="status"
+                        [ngClass]="trip.status.toLowerCase()">
+
+                        {{ trip.status }}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        @if (trip.status === 'Active') {
+
+            <div class="progress-section">
+
+                <div class="progress-title">
+
+                    <span>Trip Progress</span>
+
+                    <strong>{{ trip.progress }}%</strong>
+
+                </div>
+
+                <mat-progress-bar
+                    mode="determinate"
+                    [value]="trip.progress">
+                </mat-progress-bar>
+
+            </div>
+
+        }
+
+        <div class="section">
+
+            <h3>Trip Notes</h3>
+
+            <p>
+                This trip is currently in your itinerary. Once connected to the backend,
+                trip notes, hotel information, flight details, transportation,
+                activities, and reminders will appear here.
+            </p>
+
+        </div>
+
+        <div class="section">
+
+            <h3>Planned Activities</h3>
+
+            <ul>
+
+                <li>✔ City Tour</li>
+
+                <li>✔ Local Food Experience</li>
+
+                <li>✔ Photography Spots</li>
+
+                <li>✔ Shopping</li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    <!-- ==========================================
+         Footer (Always Visible)
+    =========================================== -->
+
+    <div class="dialog-footer">
+
+        <button
+            mat-stroked-button
+            (click)="close()">
+
+            Close
+
+        </button>
+
+        <button
+    mat-flat-button
+    color="primary"
+    (click)="openEditDialog()">
+
+    <mat-icon>edit</mat-icon>
+
+    Edit Trip
+
+</button>
+
+    </div>
+
+</div>

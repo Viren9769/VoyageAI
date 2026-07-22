@@ -1,0 +1,269 @@
+<div class="trip-card">
+
+    <!-- ==========================================
+         Trip Image
+    =========================================== -->
+
+    <img
+        class="trip-image"
+        [src]="trip.image"
+        [alt]="trip.title">
+
+    <!-- ==========================================
+         Trip Content
+    =========================================== -->
+
+    <div class="trip-content">
+
+        <h2>{{ trip.title }}</h2>
+
+        <div class="trip-details">
+
+            <span>
+
+                <mat-icon>calendar_month</mat-icon>
+
+                {{ trip.startDate }} - {{ trip.endDate }}
+
+            </span>
+
+            <span>
+
+                <mat-icon>schedule</mat-icon>
+
+                {{ trip.days }} Days
+
+            </span>
+
+            <span>
+
+                <mat-icon>group</mat-icon>
+
+                {{ trip.travelers }} Travelers
+
+            </span>
+
+        </div>
+
+        @if (trip.status === 'Active') {
+
+            <div class="progress-row">
+
+                <mat-progress-bar
+                    mode="determinate"
+                    [value]="trip.progress">
+
+                </mat-progress-bar>
+
+                <span>{{ trip.progress }}%</span>
+
+            </div>
+
+        }
+
+    </div>
+
+    <!-- ==========================================
+         Right Side
+    =========================================== -->
+
+    <div class="trip-right">
+
+        <div class="trip-header-right">
+
+            <span
+                class="status"
+                [ngClass]="trip.status.toLowerCase()">
+
+                {{ trip.status }}
+
+            </span>
+
+            <button
+                mat-icon-button
+                class="menu-btn"
+                [matMenuTriggerFor]="tripMenu">
+
+                <mat-icon>more_horiz</mat-icon>
+
+            </button>
+
+        </div>
+
+        <div class="trip-actions">
+
+            <!-- View -->
+
+            <button
+                mat-stroked-button
+                class="view-btn"
+                (click)="openViewDialog()">
+
+                <mat-icon>visibility</mat-icon>
+
+                View
+
+            </button>
+
+            <!-- Edit -->
+
+            <button
+                mat-flat-button
+                class="edit-btn"
+                (click)="openEditDialog()">
+
+                <mat-icon>edit</mat-icon>
+
+                Edit
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     Three Dot Menu
+========================================== -->
+
+<mat-menu #tripMenu="matMenu">
+
+    <!-- View -->
+
+    <button
+        mat-menu-item
+        (click)="openViewDialog()">
+
+        <mat-icon>visibility</mat-icon>
+
+        <span>View Details</span>
+
+    </button>
+
+    <!-- Edit -->
+
+    <button
+        mat-menu-item
+        (click)="openEditDialog()">
+
+        <mat-icon>edit</mat-icon>
+
+        <span>Edit Trip</span>
+
+    </button>
+
+    <!-- Share -->
+
+    <button mat-menu-item>
+
+        <mat-icon>share</mat-icon>
+
+        <span>Share Itinerary</span>
+
+    </button>
+
+    <!-- Invite -->
+
+    <button mat-menu-item>
+
+        <mat-icon>group_add</mat-icon>
+
+        <span>Invite Travelers</span>
+
+    </button>
+
+    <!-- Maps -->
+
+    <button mat-menu-item>
+
+        <mat-icon>map</mat-icon>
+
+        <span>Open in Maps</span>
+
+    </button>
+
+    <!-- PDF -->
+
+    <button mat-menu-item>
+
+        <mat-icon>picture_as_pdf</mat-icon>
+
+        <span>Export PDF</span>
+
+    </button>
+
+    <!-- Download -->
+
+    <button mat-menu-item>
+
+        <mat-icon>download</mat-icon>
+
+        <span>Download Trip</span>
+
+    </button>
+
+    <!-- Duplicate -->
+
+    <button mat-menu-item>
+
+        <mat-icon>content_copy</mat-icon>
+
+        <span>Duplicate Trip</span>
+
+    </button>
+
+    <!-- Favorite -->
+
+    <button mat-menu-item>
+
+        <mat-icon>favorite_border</mat-icon>
+
+        <span>Add to Favorites</span>
+
+    </button>
+
+    <!-- Pin -->
+
+    <button mat-menu-item>
+
+        <mat-icon>push_pin</mat-icon>
+
+        <span>Pin Trip</span>
+
+    </button>
+
+    <!-- Archive -->
+
+    <button mat-menu-item>
+
+        <mat-icon>archive</mat-icon>
+
+        <span>Archive Trip</span>
+
+    </button>
+
+    <mat-divider></mat-divider>
+
+    <!-- Delete -->
+
+    <button
+        mat-menu-item
+        class="delete-menu">
+
+        <mat-icon color="warn">
+
+            delete
+
+        </mat-icon>
+
+        <span>
+
+            Delete Trip
+
+        </span>
+
+    </button>
+
+</mat-menu>

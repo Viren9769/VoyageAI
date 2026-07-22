@@ -1,0 +1,56 @@
+<div class="trips-page">
+
+    <!-- Hero Header -->
+    <app-hero-header></app-hero-header>
+
+    <div class="trips-content">
+
+        <!-- Left Side -->
+        <div class="trip-list">
+
+            <!-- Filters -->
+            <app-trip-filters></app-trip-filters>
+
+            <!-- Trip Cards -->
+            @if (filteredTrips$ | async; as trips) {
+
+                @if (trips.length > 0) {
+
+                    @for (trip of trips; track trip.id) {
+
+                        <app-trip-card
+                            [trip]="trip">
+                        </app-trip-card>
+
+                    }
+
+                } @else {
+
+                    <div class="empty-state">
+
+                        <h3>No trips found</h3>
+
+                        <p>There are no trips available for the selected filter.</p>
+
+                    </div>
+
+                }
+
+            }
+
+        </div>
+
+        <!-- Right Sidebar -->
+        <div class="right-sidebar">
+
+            <app-trip-summary
+                [summary]="tripService.tripSummary">
+            </app-trip-summary>
+
+            <app-quick-actions></app-quick-actions>
+
+        </div>
+
+    </div>
+
+</div>

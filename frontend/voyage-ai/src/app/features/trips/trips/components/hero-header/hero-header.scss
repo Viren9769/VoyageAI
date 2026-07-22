@@ -1,0 +1,59 @@
+:host{
+
+    display:block;
+
+}
+
+.hero-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+  //  margin-bottom:24px;
+
+}
+
+.left h1{
+
+    color:#fff;
+
+    font-size:22px;
+
+    font-weight:400;
+
+    margin:0;
+
+}
+
+.left p{
+
+    color:#94A3B8;
+
+    margin-top:6px;
+
+    font-size:16px;
+
+}
+
+.create-btn{
+
+    background:linear-gradient(90deg,#6366F1,#8B5CF6);
+
+    color:white;
+
+    border-radius:14px;
+
+    padding:12px 22px;
+
+    font-weight:600;
+
+}
+
+.create-btn mat-icon{
+
+    margin-right:6px;
+
+}

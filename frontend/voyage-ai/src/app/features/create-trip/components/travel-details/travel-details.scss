@@ -1,0 +1,69 @@
+.travel-details {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 24px;
+
+}
+
+.subtitle {
+
+    color: #94a3b8;
+
+    margin-top: -10px;
+
+}
+
+.grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2,1fr);
+
+    gap: 20px;
+
+}
+
+mat-form-field {
+
+    width: 100%;
+
+}
+
+.info-card {
+
+    background: #1e293b;
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    border-radius: 16px;
+
+    padding: 20px;
+
+}
+
+.info-card h3 {
+
+    margin: 0 0 10px;
+
+}
+
+.info-card p {
+
+    color: #94a3b8;
+
+    margin: 0;
+
+}
+
+@media (max-width:768px){
+
+    .grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}

@@ -1,0 +1,140 @@
+<div
+    class="basic-info"
+    [formGroup]="form">
+
+    <h2>Basic Information</h2>
+
+    <p class="subtitle">
+
+        Tell us about your trip.
+
+    </p>
+
+    <div class="grid">
+
+        <mat-form-field appearance="outline">
+
+            <mat-label>
+
+                Trip Name
+
+            </mat-label>
+
+            <input
+                matInput
+                formControlName="tripName"
+                placeholder="European Adventure">
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+
+            <mat-label>
+
+                Destination Country
+
+            </mat-label>
+
+            <input
+                matInput
+                formControlName="destinationCountry"
+                placeholder="Switzerland">
+
+        </mat-form-field>
+
+    </div>
+
+    <div class="grid">
+
+        <mat-form-field appearance="outline">
+
+            <mat-label>
+
+                Destination City
+
+            </mat-label>
+
+            <input
+                matInput
+                formControlName="destinationCity"
+                placeholder="Zurich">
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+
+            <mat-label>
+
+                Travel Style
+
+            </mat-label>
+
+            <mat-select formControlName="travelStyle">
+
+                @for(style of travelStyles; track style){
+
+                    <mat-option
+                        [value]="style">
+
+                        {{style}}
+
+                    </mat-option>
+
+                }
+
+            </mat-select>
+
+        </mat-form-field>
+
+    </div>
+
+    <div class="grid">
+
+        <mat-form-field appearance="outline">
+
+            <mat-label>
+
+                Trip Status
+
+            </mat-label>
+
+            <mat-select formControlName="status">
+
+                @for(status of tripStatus; track status){
+
+                    <mat-option
+                        [value]="status">
+
+                        {{status}}
+
+                    </mat-option>
+
+                }
+
+            </mat-select>
+
+        </mat-form-field>
+
+    </div>
+
+    <mat-form-field
+        appearance="outline"
+        class="full-width">
+
+        <mat-label>
+
+            Description
+
+        </mat-label>
+
+        <textarea
+            matInput
+            rows="6"
+            formControlName="description"
+            placeholder="Describe your trip...">
+
+        </textarea>
+
+    </mat-form-field>
+
+</div>

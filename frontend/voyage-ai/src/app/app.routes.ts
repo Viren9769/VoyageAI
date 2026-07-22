@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 
 import { authGuard } from './core/guards/auth.guard';
 import {MainLayout} from './layouts/main-layout/main-layout';
-
+import {Trips} from './features/trips/trips/trips';
 export const routes: Routes = [
 
   {
@@ -44,12 +44,18 @@ export const routes: Routes = [
             .then(c => c.Dashboard)
       },
 
-      // {
-      //   path: 'trips',
-      //   loadComponent: () =>
-      //     import('./features/trips/trips')
-      //       .then(c => c.Trips)
-      // },
+       {
+        path: 'trips',
+         loadComponent: () =>
+         import('./features/trips/trips/trips')
+             .then(c => c.Trips)
+       },
+       {
+    path:'trips/create',
+    loadComponent:()=>
+        import('./features/create-trip/create-trip')
+        .then(c=>c.CreateTripComponent)
+},
 
       // {
       //   path: 'itinerary',

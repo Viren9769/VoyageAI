@@ -1,0 +1,46 @@
+<div class="summary-card">
+
+    <h3>
+
+        Trips Summary
+
+    </h3>
+
+    @for(item of summary; track item.title){
+
+        <div class="summary-item">
+
+            <div
+                class="icon"
+                [style.background]="item.color + '20'">
+
+                <mat-icon
+                    [style.color]="item.color">
+
+                    {{ item.icon }}
+
+                </mat-icon>
+
+            </div>
+
+            <div class="content">
+
+                <span class="title">
+
+                    {{ item.title }}
+
+                </span>
+
+                <span class="value">
+
+                    {{ item.value }}
+
+                </span>
+
+            </div>
+
+        </div>
+
+    }
+
+</div>

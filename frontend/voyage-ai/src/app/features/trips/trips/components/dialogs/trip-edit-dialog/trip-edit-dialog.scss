@@ -1,0 +1,354 @@
+:host {
+
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+
+}
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+/* ==================================================
+   Dialog Container
+================================================== */
+
+.dialog-container {
+
+    display: flex;
+
+    flex-direction: column;
+
+    width: 100%;
+
+    height: 100%;
+
+    overflow: hidden;
+
+    background: rgb(11 14 55 / 75%);
+
+    color: #FFFFFF;
+
+    border-radius: 22px;
+
+    padding: 24px;
+
+}
+
+/* ==================================================
+   Header
+================================================== */
+
+.dialog-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 24px;
+
+    flex-shrink: 0;
+
+}
+
+.dialog-header h2 {
+
+    margin: 0;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+}
+
+.dialog-header p {
+
+    margin: 4px 0 0;
+
+    color: #94A3B8;
+
+    font-size: 14px;
+
+}
+
+.dialog-header button {
+
+    color: white;
+
+}
+
+/* ==================================================
+   Scrollable Content
+================================================== */
+
+.dialog-content {
+
+    flex: 1;
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+    padding-right: 8px;
+
+}
+
+/* ==================================================
+   Image
+================================================== */
+
+.image-section {
+
+    margin-bottom: 30px;
+
+}
+
+.cover-image {
+
+    width: 100%;
+
+    height: 260px;
+
+    object-fit: cover;
+
+    border-radius: 18px;
+
+    display: block;
+
+}
+
+/* ==================================================
+   Sections
+================================================== */
+
+.section {
+
+    margin-bottom: 32px;
+
+}
+
+.section h3 {
+
+    margin: 0 0 18px;
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+}
+
+/* ==================================================
+   Grids
+================================================== */
+
+.grid-2 {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 18px;
+
+}
+
+.grid-3 {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 18px;
+
+}
+
+.full-width {
+
+    width: 100%;
+
+}
+
+/* ==================================================
+   Material Fields
+================================================== */
+
+mat-form-field {
+
+    width: 100%;
+
+}
+
+/* Material MDC variables */
+
+::ng-deep .mat-mdc-form-field {
+
+    --mdc-filled-text-field-container-color: #1E293B;
+
+    --mdc-outlined-text-field-container-shape: 14px;
+
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+
+    background: rgba(255,255,255,.04);
+
+    border-radius: 14px;
+
+}
+
+::ng-deep .mdc-notched-outline__leading,
+::ng-deep .mdc-notched-outline__notch,
+::ng-deep .mdc-notched-outline__trailing {
+
+    border-color: rgba(255,255,255,.12) !important;
+
+}
+
+::ng-deep .mat-mdc-input-element {
+
+    color: white !important;
+
+}
+
+::ng-deep textarea {
+
+    resize: vertical;
+
+    min-height: 140px;
+
+}
+
+::ng-deep .mat-mdc-select-value {
+
+    color: white;
+
+}
+
+::ng-deep .mat-mdc-form-field-label {
+
+    color: #94A3B8 !important;
+
+}
+
+/* ==================================================
+   Footer
+================================================== */
+
+.dialog-footer {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 16px;
+
+    margin-top: 18px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid rgba(255,255,255,.08);
+
+    flex-shrink: 0;
+
+}
+
+.dialog-footer button {
+
+    min-width: 170px;
+
+    height: 46px;
+
+    border-radius: 12px;
+
+}
+
+/* ==================================================
+   Scrollbar
+================================================== */
+
+.dialog-content::-webkit-scrollbar {
+
+    width: 8px;
+
+}
+
+.dialog-content::-webkit-scrollbar-thumb {
+
+    background: #475569;
+
+    border-radius: 20px;
+
+}
+
+.dialog-content::-webkit-scrollbar-track {
+
+    background: transparent;
+
+}
+
+/* ==================================================
+   Responsive
+================================================== */
+
+@media (max-width: 992px) {
+
+    .grid-3 {
+
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .dialog-container {
+
+        padding: 18px;
+
+    }
+
+    .cover-image {
+
+        height: 200px;
+
+    }
+
+    .grid-2,
+    .grid-3 {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .dialog-header {
+
+        align-items: flex-start;
+
+    }
+
+    .dialog-header h2 {
+
+        font-size: 24px;
+
+    }
+
+    .dialog-footer {
+
+        flex-direction: column-reverse;
+
+    }
+
+    .dialog-footer button {
+
+        width: 100%;
+
+    }
+
+}

@@ -1,0 +1,255 @@
+<div class="dialog-container">
+
+    <!-- ==========================================
+         Header
+    =========================================== -->
+
+    <div class="dialog-header">
+
+        <div>
+
+            <h2>Edit Trip</h2>
+
+            <p>Update your trip information</p>
+
+        </div>
+
+        <button
+            mat-icon-button
+            (click)="close()">
+
+            <mat-icon>close</mat-icon>
+
+        </button>
+
+    </div>
+
+    <!-- ==========================================
+         Form
+    =========================================== -->
+
+    <form
+        class="dialog-content"
+        [formGroup]="tripForm">
+
+        <!-- ======================================
+             Cover Image
+        ======================================= -->
+
+        <div class="image-section">
+
+            <img
+                class="cover-image"
+                [src]="tripForm.get('image')?.value"
+                alt="Trip Image">
+
+        </div>
+
+        <!-- ======================================
+             Basic Information
+        ======================================= -->
+
+        <div class="section">
+
+            <h3>Basic Information</h3>
+
+            <div class="grid-2">
+
+                <mat-form-field appearance="outline">
+
+                    <mat-label>Trip Name</mat-label>
+
+                    <input
+                        matInput
+                        formControlName="title">
+
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+
+                    <mat-label>Destination</mat-label>
+
+                    <input
+                        matInput
+                        formControlName="destination">
+
+                </mat-form-field>
+
+            </div>
+
+        </div>
+
+        <!-- ======================================
+             Schedule
+        ======================================= -->
+
+        <div class="section">
+
+            <h3>Schedule</h3>
+
+            <div class="grid-3">
+
+                <mat-form-field appearance="outline">
+
+                    <mat-label>Start Date</mat-label>
+
+                    <input
+                        matInput
+                        formControlName="startDate">
+
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+
+                    <mat-label>End Date</mat-label>
+
+                    <input
+                        matInput
+                        formControlName="endDate">
+
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+
+                    <mat-label>Travelers</mat-label>
+
+                    <input
+                        type="number"
+                        matInput
+                        formControlName="travelers">
+
+                </mat-form-field>
+
+            </div>
+
+        </div>
+
+        <!-- ======================================
+             Status
+        ======================================= -->
+
+        <div class="section">
+
+            <h3>Status</h3>
+
+            <div class="grid-2">
+
+                <mat-form-field appearance="outline">
+
+                    <mat-label>Status</mat-label>
+
+                    <mat-select formControlName="status">
+
+                        @for(status of statuses; track status){
+
+                            <mat-option [value]="status">
+
+                                {{status}}
+
+                            </mat-option>
+
+                        }
+
+                    </mat-select>
+
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+
+                    <mat-label>Cover Image URL</mat-label>
+
+                    <input
+                        matInput
+                        formControlName="image">
+
+                </mat-form-field>
+
+            </div>
+
+        </div>
+
+        <!-- ======================================
+             Progress
+        ======================================= -->
+
+        @if(trip.status === 'Active'){
+
+            <div class="section">
+
+                <h3>Trip Progress</h3>
+
+                <mat-form-field appearance="outline">
+
+                    <mat-label>Progress (%)</mat-label>
+
+                    <input
+                        type="number"
+                        matInput
+                        min="0"
+                        max="100"
+                        formControlName="progress">
+
+                </mat-form-field>
+
+            </div>
+
+        }
+
+        <!-- ======================================
+             Notes
+        ======================================= -->
+
+        <div class="section">
+
+            <h3>Trip Notes</h3>
+
+            <mat-form-field
+                appearance="outline"
+                class="full-width">
+
+                <mat-label>Notes</mat-label>
+
+                <textarea
+                    matInput
+                    rows="6"
+                    formControlName="notes">
+
+                </textarea>
+
+            </mat-form-field>
+
+        </div>
+
+    </form>
+
+    <!-- ==========================================
+         Footer
+    =========================================== -->
+
+    <div class="dialog-footer">
+
+        <button
+            mat-stroked-button
+            type="button"
+            (click)="close()">
+
+            Cancel
+
+        </button>
+
+        <button
+            mat-flat-button
+            color="primary"
+            type="button"
+            (click)="save()"
+            [disabled]="tripForm.invalid">
+
+            <mat-icon>save</mat-icon>
+
+            Save Changes
+
+        </button>
+
+    </div>
+
+</div>

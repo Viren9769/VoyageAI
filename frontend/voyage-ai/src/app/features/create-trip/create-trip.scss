@@ -1,0 +1,331 @@
+:host {
+    display: block;
+    min-height: 100vh;
+    background: #0f172a;
+    color: #fff;
+}
+
+/* =====================================================
+   Page
+===================================================== */
+
+.create-trip-page {
+
+    padding: 32px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 24px;
+}
+
+/* =====================================================
+   Header
+===================================================== */
+
+.page-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 20px;
+}
+
+.page-header h1 {
+
+    margin: 0;
+
+    font-size: 34px;
+
+    font-weight: 700;
+}
+
+.page-header p {
+
+    margin-top: 8px;
+
+    color: #94a3b8;
+
+    font-size: 15px;
+}
+
+/* =====================================================
+   Layout
+===================================================== */
+
+.page-content {
+
+    display: grid;
+
+    grid-template-columns: 2fr 420px;
+
+    gap: 28px;
+
+    align-items: start;
+}
+
+/* =====================================================
+   Cards
+===================================================== */
+
+.stepper-card,
+.preview-card {
+
+    background: #1e293b;
+
+    border-radius: 22px;
+
+    padding: 28px;
+
+    border: 1px solid rgba(255,255,255,.05);
+
+    box-shadow: 0 20px 60px rgba(0,0,0,.35);
+}
+
+/* =====================================================
+   Stepper
+===================================================== */
+
+::ng-deep .mat-stepper-horizontal {
+
+    background: transparent !important;
+}
+
+::ng-deep .mat-horizontal-content-container {
+
+    padding: 32px 0 0 !important;
+}
+
+::ng-deep .mat-step-header {
+
+    border-radius: 12px;
+}
+
+::ng-deep .mat-step-header:hover {
+
+    background: rgba(255,255,255,.05);
+}
+
+::ng-deep .mat-step-icon {
+
+    background: #2563eb !important;
+
+    color: white;
+}
+
+::ng-deep .mat-step-icon-selected {
+
+    background: #3b82f6 !important;
+}
+
+::ng-deep .mat-step-label {
+
+    color: white !important;
+
+    font-weight: 600;
+}
+
+/* =====================================================
+   Buttons
+===================================================== */
+
+.step-actions {
+
+    margin-top: 40px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 16px;
+}
+
+.step-actions button {
+
+    min-width: 140px;
+
+    border-radius: 12px;
+
+    height: 48px;
+}
+
+/* =====================================================
+   Preview
+===================================================== */
+
+.preview-card {
+
+    position: sticky;
+
+    top: 24px;
+}
+
+.preview-card h2 {
+
+    margin: 0 0 24px;
+
+    font-size: 24px;
+}
+
+.cover-preview {
+
+    width: 100%;
+
+    height: 240px;
+
+    object-fit: cover;
+
+    border-radius: 18px;
+
+    background: #334155;
+
+    margin-bottom: 20px;
+}
+
+.preview-card h3 {
+
+    margin-bottom: 16px;
+
+    font-size: 26px;
+}
+
+.preview-card p {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin: 14px 0;
+
+    color: #cbd5e1;
+}
+
+.preview-card mat-icon {
+
+    color: #60a5fa;
+}
+
+/* =====================================================
+   Status Chip
+===================================================== */
+
+mat-chip {
+
+    margin-top: 16px;
+
+    font-weight: 600;
+
+    border-radius: 18px;
+}
+
+/* =====================================================
+   Material Fields
+===================================================== */
+
+::ng-deep .mat-mdc-form-field {
+
+    width: 100%;
+
+    margin-bottom: 18px;
+}
+
+::ng-deep .mdc-text-field {
+
+    border-radius: 14px !important;
+
+    background: #111827 !important;
+}
+
+::ng-deep .mdc-floating-label {
+
+    color: #94a3b8 !important;
+}
+
+::ng-deep input,
+::ng-deep textarea {
+
+    color: white !important;
+}
+
+::ng-deep .mat-mdc-select-value {
+
+    color: white !important;
+}
+
+/* =====================================================
+   Scrollbar
+===================================================== */
+
+::-webkit-scrollbar {
+
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+
+    background: #475569;
+
+    border-radius: 20px;
+}
+
+/* =====================================================
+   Responsive
+===================================================== */
+
+@media (max-width: 1200px) {
+
+    .page-content {
+
+        grid-template-columns: 1fr;
+    }
+
+    .preview-card {
+
+        position: relative;
+
+        top: auto;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .create-trip-page {
+
+        padding: 20px;
+    }
+
+    .page-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .page-header h1 {
+
+        font-size: 28px;
+    }
+
+    .step-actions {
+
+        flex-direction: column;
+    }
+
+    .step-actions button {
+
+        width: 100%;
+    }
+
+    .cover-preview {
+
+        height: 200px;
+    }
+}

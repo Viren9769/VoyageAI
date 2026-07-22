@@ -1,0 +1,169 @@
+<div class="review">
+
+    <h2>
+
+        Review Your Trip
+
+    </h2>
+
+    <p class="subtitle">
+
+        Verify your trip details before creating it.
+
+    </p>
+
+    <mat-card class="review-card">
+
+        <img
+            class="cover-image"
+            [src]="form.value.coverImageUrl || 'images/default-trip.jpg'"
+            alt="Trip Cover">
+
+        <div class="review-content">
+
+            <h2>
+
+                {{ form.value.tripName || 'Trip Name' }}
+
+            </h2>
+
+            <div class="review-grid">
+
+                <div class="item">
+
+                    <mat-icon>location_on</mat-icon>
+
+                    <div>
+
+                        <label>Destination</label>
+
+                        <span>
+
+                            {{ form.value.destinationCity }},
+                            {{ form.value.destinationCountry }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="item">
+
+                    <mat-icon>calendar_month</mat-icon>
+
+                    <div>
+
+                        <label>Travel Dates</label>
+
+                        <span>
+
+                            {{ form.value.startDate }}
+
+                            -
+
+                            {{ form.value.endDate }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="item">
+
+                    <mat-icon>schedule</mat-icon>
+
+                    <div>
+
+                        <label>Duration</label>
+
+                        <span>
+
+                            {{ duration }} Days
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="item">
+
+                    <mat-icon>payments</mat-icon>
+
+                    <div>
+
+                        <label>Budget</label>
+
+                        <span>
+
+                            {{ form.value.currency }}
+
+                            {{ form.value.budget }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="item">
+
+                    <mat-icon>explore</mat-icon>
+
+                    <div>
+
+                        <label>Travel Style</label>
+
+                        <span>
+
+                            {{ form.value.travelStyle }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="item">
+
+                    <mat-icon>flag</mat-icon>
+
+                    <div>
+
+                        <label>Status</label>
+
+                        <span>
+
+                            {{ form.value.status }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="description">
+
+                <h3>
+
+                    Description
+
+                </h3>
+
+                <p>
+
+                    {{ form.value.description || 'No description provided.' }}
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </mat-card>
+
+</div>

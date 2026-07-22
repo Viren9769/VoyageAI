@@ -1,0 +1,338 @@
+<div class="create-trip-page">
+
+    <!-- =======================================================
+         Header
+    ======================================================== -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>Create New Trip</h1>
+
+            <p>
+                Plan your next adventure with VoyageAI.
+            </p>
+
+        </div>
+
+        <button
+            mat-stroked-button
+            color="primary"
+            (click)="cancel()">
+
+            <mat-icon>arrow_back</mat-icon>
+
+            Back to Trips
+
+        </button>
+
+    </div>
+
+    <!-- =======================================================
+         Main Content
+    ======================================================== -->
+
+    <div class="page-content">
+
+        <!-- ===========================
+             Left Panel
+        ============================ -->
+
+        <mat-card class="stepper-card">
+
+            <mat-horizontal-stepper
+                linear
+                #stepper>
+
+                <!-- ===========================================
+                     STEP 1
+                ============================================ -->
+
+                <mat-step
+                    [stepControl]="tripForm">
+
+                    <ng-template matStepLabel>
+
+                        Basic Information
+
+                    </ng-template>
+
+                    <app-basic-info
+                        [form]="tripForm">
+
+                    </app-basic-info>
+
+                    <div class="step-actions">
+
+                        <button
+                            mat-flat-button
+                            color="primary"
+                            matStepperNext>
+
+                            Next
+
+                        </button>
+
+                    </div>
+
+                </mat-step>
+
+                <!-- ===========================================
+                     STEP 2
+                ============================================ -->
+
+                <mat-step
+                    [stepControl]="tripForm">
+
+                    <ng-template matStepLabel>
+
+                        Travel Details
+
+                    </ng-template>
+
+                    <app-travel-details
+                        [form]="tripForm">
+
+                    </app-travel-details>
+
+                    <div class="step-actions">
+
+                        <button
+                            mat-button
+                            matStepperPrevious>
+
+                            Back
+
+                        </button>
+
+                        <button
+                            mat-flat-button
+                            color="primary"
+                            matStepperNext>
+
+                            Next
+
+                        </button>
+
+                    </div>
+
+                </mat-step>
+
+                <!-- ===========================================
+                     STEP 3
+                ============================================ -->
+
+                <mat-step>
+
+                    <ng-template matStepLabel>
+
+                        Budget
+
+                    </ng-template>
+
+                    <app-budget
+                        [form]="tripForm">
+
+                    </app-budget>
+
+                    <div class="step-actions">
+
+                        <button
+                            mat-button
+                            matStepperPrevious>
+
+                            Back
+
+                        </button>
+
+                        <button
+                            mat-flat-button
+                            color="primary"
+                            matStepperNext>
+
+                            Next
+
+                        </button>
+
+                    </div>
+
+                </mat-step>
+
+                <!-- ===========================================
+                     STEP 4
+                ============================================ -->
+
+                <mat-step>
+
+                    <ng-template matStepLabel>
+
+                        Cover Image
+
+                    </ng-template>
+
+                    <app-cover-image
+                        [form]="tripForm">
+
+                    </app-cover-image>
+
+                    <div class="step-actions">
+
+                        <button
+                            mat-button
+                            matStepperPrevious>
+
+                            Back
+
+                        </button>
+
+                        <button
+                            mat-flat-button
+                            color="primary"
+                            matStepperNext>
+
+                            Next
+
+                        </button>
+
+                    </div>
+
+                </mat-step>
+
+                <!-- ===========================================
+                     STEP 5
+                ============================================ -->
+
+                <mat-step>
+
+                    <ng-template matStepLabel>
+
+                        Review
+
+                    </ng-template>
+
+                    <app-review
+                        [form]="tripForm"
+                        [duration]="duration">
+
+                    </app-review>
+
+                    <div class="step-actions">
+
+                        <button
+                            mat-button
+                            matStepperPrevious>
+
+                            Back
+
+                        </button>
+
+                        <button
+                            mat-flat-button
+                            color="primary"
+                            [disabled]="loading"
+                            (click)="submit()">
+
+                            <mat-icon>
+
+                                flight_takeoff
+
+                            </mat-icon>
+
+                            Create Trip
+
+                        </button>
+
+                    </div>
+
+                </mat-step>
+
+            </mat-horizontal-stepper>
+
+        </mat-card>
+
+        <!-- ===========================
+             Live Preview
+        ============================ -->
+
+        <mat-card class="preview-card">
+
+            <h2>
+
+                Live Preview
+
+            </h2>
+
+            <img
+                class="cover-preview"
+                [src]="tripForm.value.coverImageUrl || 'images/default-trip.jpg'"
+                alt="Trip Cover">
+
+            <h3>
+
+                {{ tripForm.value.tripName || 'Trip Name' }}
+
+            </h3>
+
+            <p>
+
+                <mat-icon>location_on</mat-icon>
+
+                {{ tripForm.value.destinationCity || 'City' }},
+                {{ tripForm.value.destinationCountry || 'Country' }}
+
+            </p>
+
+            <p>
+
+                <mat-icon>calendar_month</mat-icon>
+
+                {{ tripForm.value.startDate || '--' }}
+
+                -
+
+                {{ tripForm.value.endDate || '--' }}
+
+            </p>
+
+            <p>
+
+                <mat-icon>schedule</mat-icon>
+
+                {{ duration }} Days
+
+            </p>
+
+            <p>
+
+                <mat-icon>payments</mat-icon>
+
+                {{ tripForm.value.currency }}
+
+                {{ tripForm.value.budget }}
+
+            </p>
+
+            <p>
+
+                <mat-icon>explore</mat-icon>
+
+                {{ tripForm.value.travelStyle }}
+
+            </p>
+
+            <mat-chip-set>
+
+                <mat-chip>
+
+                    {{ tripForm.value.status }}
+
+                </mat-chip>
+
+            </mat-chip-set>
+
+        </mat-card>
+
+    </div>
+
+</div>

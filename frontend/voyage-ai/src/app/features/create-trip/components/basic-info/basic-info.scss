@@ -1,0 +1,55 @@
+.basic-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 24px;
+
+}
+
+.subtitle {
+
+    color: #94a3b8;
+
+    margin-top: -10px;
+
+}
+
+.grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2,1fr);
+
+    gap: 20px;
+
+}
+
+.full-width {
+
+    width: 100%;
+
+}
+
+mat-form-field {
+
+    width: 100%;
+
+}
+
+textarea {
+
+    resize: vertical;
+
+}
+
+@media (max-width:768px){
+
+    .grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}

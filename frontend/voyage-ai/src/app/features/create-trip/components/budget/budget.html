@@ -1,0 +1,105 @@
+<div
+    class="budget"
+    [formGroup]="form">
+
+    <h2>
+
+        Budget Planning
+
+    </h2>
+
+    <p class="subtitle">
+
+        Estimate your travel budget.
+
+    </p>
+
+    <div class="grid">
+
+        <mat-form-field appearance="outline">
+
+            <mat-label>
+
+                Estimated Budget
+
+            </mat-label>
+
+            <input
+                matInput
+                type="number"
+                min="0"
+                formControlName="budget"
+                placeholder="5000">
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+
+            <mat-label>
+
+                Currency
+
+            </mat-label>
+
+            <mat-select formControlName="currency">
+
+                @for(currency of currencies; track currency){
+
+                    <mat-option
+                        [value]="currency">
+
+                        {{currency}}
+
+                    </mat-option>
+
+                }
+
+            </mat-select>
+
+        </mat-form-field>
+
+    </div>
+
+    <div class="budget-summary">
+
+        <h3>
+
+            Budget Summary
+
+        </h3>
+
+        <div class="summary-row">
+
+            <span>
+
+                Currency
+
+            </span>
+
+            <strong>
+
+                {{ form.value.currency || '-' }}
+
+            </strong>
+
+        </div>
+
+        <div class="summary-row">
+
+            <span>
+
+                Estimated Budget
+
+            </span>
+
+            <strong>
+
+                {{ form.value.budget || 0 }}
+
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>

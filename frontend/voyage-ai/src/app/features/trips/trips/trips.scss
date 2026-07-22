@@ -1,0 +1,60 @@
+:host {
+    display: block;
+}
+
+.trips-page {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+
+/* =====================================
+   Main Content
+===================================== */
+
+.trips-content {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 14px;
+    align-items: start;
+}
+
+/* =====================================
+   Left Side
+===================================== */
+
+.trip-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+
+/* =====================================
+   Right Side
+===================================== */
+
+.right-sidebar {
+    position: sticky;
+    top: 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;   // Increase or decrease as needed
+
+    margin-bottom: 20px;
+}
+/* =====================================
+   Responsive
+===================================== */
+
+@media (max-width: 1200px) {
+
+    .trips-content {
+        grid-template-columns: 1fr;
+    }
+
+    .right-sidebar {
+        position: static;
+    }
+}

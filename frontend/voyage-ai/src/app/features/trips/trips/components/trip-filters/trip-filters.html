@@ -1,0 +1,48 @@
+<div class="filters-container">
+
+    <!-- Tabs -->
+    <div class="tabs">
+
+        @for (tab of tabs; track tab) {
+
+            <button
+                mat-button
+                class="tab-btn"
+                [class.active]="selectedTab === tab"
+                (click)="selectTab(tab)">
+
+                {{ tab }}
+
+            </button>
+
+        }
+
+    </div>
+
+    <!-- Sort Dropdown -->
+    <div class="sort-dropdown">
+
+        <span class="sort-label">
+            Sort by:
+        </span>
+
+        <mat-select
+            [(value)]="sortBy"
+            (valueChange)="changeSort($event)"
+            panelClass="voyage-dropdown">
+
+            @for (option of sortOptions; track option) {
+
+                <mat-option [value]="option">
+
+                    {{ option }}
+
+                </mat-option>
+
+            }
+
+        </mat-select>
+
+    </div>
+
+</div>
