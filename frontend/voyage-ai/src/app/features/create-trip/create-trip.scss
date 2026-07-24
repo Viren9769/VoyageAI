@@ -1,23 +1,25 @@
-:host {
-    display: block;
-    min-height: 100vh;
-    background: #0f172a;
-    color: #fff;
-}
+:host{
 
+    display:block;
+
+    width:100%;
+
+    min-height:100%;
+
+}
 /* =====================================================
    Page
 ===================================================== */
 
-.create-trip-page {
+.create-trip-page{
 
-    padding: 32px;
+  //  width:100%;
 
-    display: flex;
+   // min-height:100%;
 
-    flex-direction: column;
+    padding:32px;
 
-    gap: 24px;
+    background: rgb(11 14 55 / 75%);
 }
 
 /* =====================================================
@@ -59,17 +61,19 @@
    Layout
 ===================================================== */
 
-.page-content {
+.page-content{
 
-    display: grid;
+    display:grid;
 
-    grid-template-columns: 2fr 420px;
+    grid-template-columns:minmax(0,2fr) minmax(320px,380px);
 
-    gap: 28px;
+    gap:24px;
 
-    align-items: start;
+    width:100%;
+
+    align-items:start;
+
 }
-
 /* =====================================================
    Cards
 ===================================================== */
@@ -159,11 +163,20 @@
    Preview
 ===================================================== */
 
-.preview-card {
+.preview-card{
 
     position: sticky;
 
-    top: 24px;
+    top:24px;
+
+    width:100%;
+
+    max-width:380px;
+
+    height: fit-content;
+
+    align-self:start;
+
 }
 
 .preview-card h2 {
@@ -173,21 +186,19 @@
     font-size: 24px;
 }
 
-.cover-preview {
+.cover-preview{
 
-    width: 100%;
+    width:100%;
 
-    height: 240px;
+    height:220px;
 
-    object-fit: cover;
+    object-fit:cover;
 
-    border-radius: 18px;
+    border-radius:16px;
 
-    background: #334155;
+    display:block;
 
-    margin-bottom: 20px;
 }
-
 .preview-card h3 {
 
     margin-bottom: 16px;
@@ -280,19 +291,26 @@ mat-chip {
    Responsive
 ===================================================== */
 
-@media (max-width: 1200px) {
+@media (max-width:1200px){
 
-    .page-content {
+    .page-content{
 
-        grid-template-columns: 1fr;
+        grid-template-columns:1fr;
+
     }
 
-    .preview-card {
+    .preview-card{
 
-        position: relative;
+        position:relative;
 
-        top: auto;
+        top:0;
+
+        max-width:100%;
+
+        justify-self:stretch;
+
     }
+
 }
 
 @media (max-width: 768px) {
@@ -328,4 +346,12 @@ mat-chip {
 
         height: 200px;
     }
+}
+
+img{
+
+    max-width:100%;
+
+    display:block;
+
 }
