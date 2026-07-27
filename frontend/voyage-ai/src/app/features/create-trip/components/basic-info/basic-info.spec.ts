@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BasicInfo } from './basic-info';
+import { BasicInfoComponent } from './basic-info';
 
 describe('BasicInfo', () => {
-  let component: BasicInfo;
-  let fixture: ComponentFixture<BasicInfo>;
+  let component: BasicInfoComponent;
+  let fixture: ComponentFixture<BasicInfoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BasicInfo],
+      declarations: [BasicInfoComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(BasicInfo);
+    fixture = TestBed.createComponent(BasicInfoComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
