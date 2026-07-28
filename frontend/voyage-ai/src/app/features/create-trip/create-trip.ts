@@ -93,9 +93,12 @@ export class CreateTripComponent implements OnInit  {
 
       destinationCity: ['', Validators.required],
 
-      startDate: ['', Validators.required],
+      // startDate: ['', Validators.required],
 
-      endDate: ['', Validators.required],
+      // endDate: ['', Validators.required],
+      startDate: [''],
+
+      endDate: [''],
 
       budget: [0, [Validators.required, Validators.min(0)]],
 
