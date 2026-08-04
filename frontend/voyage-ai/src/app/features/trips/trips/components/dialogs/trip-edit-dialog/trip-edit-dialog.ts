@@ -31,6 +31,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 
 import { MatSliderModule } from '@angular/material/slider';
 
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 import { TripData } from '../../../../../../models/trip';
 
 @Component({
@@ -49,7 +51,8 @@ import { TripData } from '../../../../../../models/trip';
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSliderModule
+    MatSliderModule,
+    MatSlideToggleModule
   ],
 
   templateUrl: './trip-edit-dialog.html',
@@ -68,6 +71,34 @@ export class TripEditDialog implements OnInit {
     'Completed'
   ];
 
+  readonly currencies = [
+    'USD',
+    'CHF',
+    'EUR',
+    'GBP'
+  ];
+
+  readonly travelStyles = [
+    'Adventure',
+    'Relaxed',
+    'Luxury',
+    'Family'
+  ];
+
+  readonly accommodationTypes = [
+    '4 Star Hotels',
+    'Boutique Stay',
+    'Apartment',
+    'Hostel'
+  ];
+
+  readonly transportationTypes = [
+    'Public Transport',
+    'Rental Car',
+    'Private Transfer',
+    'Mixed'
+  ];
+
   constructor(
 
     private fb: FormBuilder,
@@ -79,6 +110,51 @@ export class TripEditDialog implements OnInit {
     public trip: TripData
 
   ) {}
+
+  get tripId(): string {
+
+    return `TRP-${String(this.trip.id).padStart(6, '0')}`;
+
+  }
+
+  get coverImage(): string {
+
+    return this.tripForm?.get('image')?.value || this.trip.image;
+
+  }
+
+  get travelerAvatars(): string[] {
+
+    return this.previewNames.slice(0, this.tripForm.get('travelers')?.value || 1);
+
+  }
+
+  get previewTags(): string[] {
+
+    const tagValue = this.tripForm?.get('tags')?.value as string;
+
+    if (!tagValue?.trim()) {
+
+      return ['Mountains', 'Nature', 'Adventure'];
+
+    }
+
+    return tagValue
+      .split(',')
+      .map(tag => tag.trim())
+      .filter(Boolean)
+      .slice(0, 6);
+
+  }
+
+  readonly previewNames = [
+    'RS',
+    'PP',
+    'JD',
+    'MK',
+    'AR',
+    'SK'
+  ];
 
   ngOnInit(): void {
 
@@ -126,12 +202,71 @@ export class TripEditDialog implements OnInit {
       ],
 
       notes: [
+        'We prefer mountain views and hotel near city center.'
+      ],
+
+      totalBudget: [
+        Math.max(1500, (this.trip.days * 280) + (this.trip.travelers * 170)),
+        [Validators.min(0)]
+      ],
+
+      currency: [
+        'USD',
+        Validators.required
+      ],
+
+      flightsBudget: [650],
+
+      hotelsBudget: [500],
+
+      foodBudget: [250],
+
+      activitiesBudget: [350],
+
+      transportBudget: [200],
+
+      otherBudget: [150],
+
+      travelStyle: [
+        'Adventure',
+        Validators.required
+      ],
+
+      accommodationType: [
+        '4 Star Hotels',
+        Validators.required
+      ],
+
+      transportationType: [
+        'Public Transport',
+        Validators.required
+      ],
+
+      specialRequests: [
         ''
-      ]
+      ],
+
+      tags: [
+        'Mountains, Nature, Adventure, Photography'
+      ],
+
+      allowTravelersEdit: [true],
+
+      shareExpenses: [true],
+
+      emailNotifications: [true],
+
+      makeTripPublic: [false]
 
     });
 
     this.applyBusinessRules();
+
+  }
+
+  isActiveStatus(): boolean {
+
+    return this.tripForm?.get('status')?.value === 'Active';
 
   }
 

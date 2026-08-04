@@ -1,232 +1,490 @@
-<div class="dialog-container">
+<div class="dialog-shell">
 
-    <!-- ==========================================
-         Header
-    =========================================== -->
-
-    <div class="dialog-header">
+    <header class="dialog-header">
 
         <div>
 
             <h2>Edit Trip</h2>
 
-            <p>Update your trip information</p>
+            <p>Update your trip details and preferences</p>
 
         </div>
 
-        <button
-            mat-icon-button
-            (click)="close()">
+        <div class="header-actions">
 
-            <mat-icon>close</mat-icon>
+            <button
+                mat-stroked-button
+                type="button"
+                (click)="close()">
 
-        </button>
+                Cancel
 
-    </div>
+            </button>
 
-    <!-- ==========================================
-         Form
-    =========================================== -->
+            <button
+                mat-flat-button
+                color="primary"
+                type="button"
+                (click)="save()"
+                [disabled]="tripForm.invalid">
+
+                Save Changes
+
+            </button>
+
+            <button
+                mat-icon-button
+                type="button"
+                (click)="close()">
+
+                <mat-icon>close</mat-icon>
+
+            </button>
+
+        </div>
+
+    </header>
 
     <form
         class="dialog-content"
         [formGroup]="tripForm">
 
-        <!-- ======================================
-             Cover Image
-        ======================================= -->
+        <section class="content-grid">
 
-        <div class="image-section">
+            <div class="left-column">
 
-            <img
-                class="cover-image"
-                [src]="tripForm.get('image')?.value"
-                alt="Trip Image">
+                <article class="section-card">
 
-        </div>
+                    <h3>Basic Information</h3>
 
-        <!-- ======================================
-             Basic Information
-        ======================================= -->
+                    <div class="grid-2">
 
-        <div class="section">
+                        <mat-form-field appearance="outline">
 
-            <h3>Basic Information</h3>
+                            <mat-label>Trip Name</mat-label>
 
-            <div class="grid-2">
+                            <input
+                                matInput
+                                formControlName="title">
 
-                <mat-form-field appearance="outline">
+                        </mat-form-field>
 
-                    <mat-label>Trip Name</mat-label>
+                        <mat-form-field appearance="outline">
 
-                    <input
-                        matInput
-                        formControlName="title">
+                            <mat-label>Trip Status</mat-label>
 
-                </mat-form-field>
+                            <mat-select formControlName="status">
 
-                <mat-form-field appearance="outline">
+                                @for(status of statuses; track status){
 
-                    <mat-label>Destination</mat-label>
+                                    <mat-option [value]="status">
 
-                    <input
-                        matInput
-                        formControlName="destination">
+                                        {{status}}
 
-                </mat-form-field>
+                                    </mat-option>
+
+                                }
+
+                            </mat-select>
+
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="grid-2">
+
+                        <mat-form-field appearance="outline">
+
+                            <mat-label>Destination</mat-label>
+
+                            <input
+                                matInput
+                                formControlName="destination">
+
+                        </mat-form-field>
+
+                        <div class="info-tile">
+
+                            <span>Trip ID</span>
+
+                            <strong>{{ tripId }}</strong>
+
+                        </div>
+
+                    </div>
+
+                    <mat-form-field appearance="outline" class="full-width">
+
+                        <mat-label>Description</mat-label>
+
+                        <textarea
+                            matInput
+                            rows="4"
+                            maxlength="500"
+                            formControlName="notes">
+                        </textarea>
+
+                    </mat-form-field>
+
+                </article>
+
+                <article class="section-card">
+
+                    <h3>Budget and Currency</h3>
+
+                    <div class="grid-2">
+
+                        <mat-form-field appearance="outline">
+
+                            <mat-label>Total Budget</mat-label>
+
+                            <input
+                                type="number"
+                                matInput
+                                min="0"
+                                formControlName="totalBudget">
+
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+
+                            <mat-label>Currency</mat-label>
+
+                            <mat-select formControlName="currency">
+
+                                @for(currency of currencies; track currency){
+
+                                    <mat-option [value]="currency">
+
+                                        {{ currency }}
+
+                                    </mat-option>
+
+                                }
+
+                            </mat-select>
+
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="budget-grid">
+
+                        <mat-form-field appearance="outline">
+
+                            <mat-label>Flights</mat-label>
+
+                            <input type="number" matInput formControlName="flightsBudget">
+
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+
+                            <mat-label>Hotels</mat-label>
+
+                            <input type="number" matInput formControlName="hotelsBudget">
+
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+
+                            <mat-label>Food</mat-label>
+
+                            <input type="number" matInput formControlName="foodBudget">
+
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+
+                            <mat-label>Activities</mat-label>
+
+                            <input type="number" matInput formControlName="activitiesBudget">
+
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+
+                            <mat-label>Transport</mat-label>
+
+                            <input type="number" matInput formControlName="transportBudget">
+
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+
+                            <mat-label>Other</mat-label>
+
+                            <input type="number" matInput formControlName="otherBudget">
+
+                        </mat-form-field>
+
+                    </div>
+
+                </article>
+
+                <article class="section-card">
+
+                    <h3>Preferences</h3>
+
+                    <div class="grid-3">
+
+                        <mat-form-field appearance="outline">
+
+                            <mat-label>Travel Style</mat-label>
+
+                            <mat-select formControlName="travelStyle">
+
+                                @for(style of travelStyles; track style){
+
+                                    <mat-option [value]="style">{{ style }}</mat-option>
+
+                                }
+
+                            </mat-select>
+
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+
+                            <mat-label>Accommodation</mat-label>
+
+                            <mat-select formControlName="accommodationType">
+
+                                @for(option of accommodationTypes; track option){
+
+                                    <mat-option [value]="option">{{ option }}</mat-option>
+
+                                }
+
+                            </mat-select>
+
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+
+                            <mat-label>Transportation</mat-label>
+
+                            <mat-select formControlName="transportationType">
+
+                                @for(option of transportationTypes; track option){
+
+                                    <mat-option [value]="option">{{ option }}</mat-option>
+
+                                }
+
+                            </mat-select>
+
+                        </mat-form-field>
+
+                    </div>
+
+                    @if (isActiveStatus()) {
+
+                        <mat-form-field appearance="outline">
+
+                            <mat-label>Trip Progress (%)</mat-label>
+
+                            <input
+                                type="number"
+                                min="0"
+                                max="100"
+                                matInput
+                                formControlName="progress">
+
+                        </mat-form-field>
+
+                    }
+
+                    <mat-form-field appearance="outline" class="full-width">
+
+                        <mat-label>Special Requests</mat-label>
+
+                        <textarea
+                            matInput
+                            rows="3"
+                            maxlength="300"
+                            formControlName="specialRequests">
+                        </textarea>
+
+                    </mat-form-field>
+
+                </article>
 
             </div>
 
-        </div>
+            <div class="right-column">
 
-        <!-- ======================================
-             Schedule
-        ======================================= -->
+                <article class="section-card">
 
-        <div class="section">
+                    <h3>Trip Dates</h3>
 
-            <h3>Schedule</h3>
+                    <div class="grid-2">
 
-            <div class="grid-3">
+                        <mat-form-field appearance="outline">
 
-                <mat-form-field appearance="outline">
+                            <mat-label>Start Date</mat-label>
 
-                    <mat-label>Start Date</mat-label>
+                            <input
+                                matInput
+                                formControlName="startDate">
 
-                    <input
-                        matInput
-                        formControlName="startDate">
+                        </mat-form-field>
 
-                </mat-form-field>
+                        <mat-form-field appearance="outline">
 
-                <mat-form-field appearance="outline">
+                            <mat-label>End Date</mat-label>
 
-                    <mat-label>End Date</mat-label>
+                            <input
+                                matInput
+                                formControlName="endDate">
 
-                    <input
-                        matInput
-                        formControlName="endDate">
+                        </mat-form-field>
 
-                </mat-form-field>
+                    </div>
 
-                <mat-form-field appearance="outline">
+                    <div class="duration-pill">
 
-                    <mat-label>Travelers</mat-label>
+                        <span>Duration</span>
 
-                    <input
-                        type="number"
-                        matInput
-                        formControlName="travelers">
+                        <strong>{{ trip.days }} Days</strong>
 
-                </mat-form-field>
+                    </div>
 
-            </div>
+                </article>
 
-        </div>
+                <article class="section-card">
 
-        <!-- ======================================
-             Status
-        ======================================= -->
+                    <h3>Cover Photo</h3>
 
-        <div class="section">
+                    <img
+                        class="cover-image"
+                        [src]="coverImage"
+                        [alt]="tripForm.get('title')?.value || 'Trip image'">
 
-            <h3>Status</h3>
+                    <mat-form-field appearance="outline" class="full-width">
 
-            <div class="grid-2">
+                        <mat-label>Cover Image URL</mat-label>
 
-                <mat-form-field appearance="outline">
+                        <input
+                            matInput
+                            formControlName="image">
 
-                    <mat-label>Status</mat-label>
+                    </mat-form-field>
 
-                    <mat-select formControlName="status">
+                </article>
 
-                        @for(status of statuses; track status){
+                <article class="section-card">
 
-                            <mat-option [value]="status">
+                    <h3>Travelers</h3>
 
-                                {{status}}
+                    <div class="traveler-row">
 
-                            </mat-option>
+                        @for (avatar of travelerAvatars; track avatar) {
+
+                            <span class="avatar">{{ avatar }}</span>
 
                         }
 
-                    </mat-select>
+                        <button
+                            mat-icon-button
+                            type="button"
+                            class="add-avatar">
 
-                </mat-form-field>
+                            <mat-icon>add</mat-icon>
 
-                <mat-form-field appearance="outline">
+                        </button>
 
-                    <mat-label>Cover Image URL</mat-label>
+                    </div>
 
-                    <input
-                        matInput
-                        formControlName="image">
+                    <mat-form-field appearance="outline" class="full-width">
 
-                </mat-form-field>
+                        <mat-label>Traveler Count</mat-label>
+
+                        <input
+                            type="number"
+                            min="1"
+                            matInput
+                            formControlName="travelers">
+
+                    </mat-form-field>
+
+                </article>
+
+                <article class="section-card">
+
+                    <h3>Tags</h3>
+
+                    <div class="tag-list">
+
+                        @for (tag of previewTags; track tag) {
+
+                            <span class="tag">{{ tag }}</span>
+
+                        }
+
+                    </div>
+
+                    <mat-form-field appearance="outline" class="full-width">
+
+                        <mat-label>Add tags (comma separated)</mat-label>
+
+                        <input
+                            matInput
+                            formControlName="tags">
+
+                    </mat-form-field>
+
+                </article>
+
+                <article class="section-card">
+
+                    <h3>Additional Settings</h3>
+
+                    <div class="toggle-list">
+
+                        <div class="toggle-item">
+
+                            <span>Allow Travelers to Edit</span>
+
+                            <mat-slide-toggle formControlName="allowTravelersEdit"></mat-slide-toggle>
+
+                        </div>
+
+                        <div class="toggle-item">
+
+                            <span>Share Expenses</span>
+
+                            <mat-slide-toggle formControlName="shareExpenses"></mat-slide-toggle>
+
+                        </div>
+
+                        <div class="toggle-item">
+
+                            <span>Email Notifications</span>
+
+                            <mat-slide-toggle formControlName="emailNotifications"></mat-slide-toggle>
+
+                        </div>
+
+                        <div class="toggle-item">
+
+                            <span>Make Trip Public</span>
+
+                            <mat-slide-toggle formControlName="makeTripPublic"></mat-slide-toggle>
+
+                        </div>
+
+                    </div>
+
+                </article>
 
             </div>
 
-        </div>
-
-        <!-- ======================================
-             Progress
-        ======================================= -->
-
-        @if(trip.status === 'Active'){
-
-            <div class="section">
-
-                <h3>Trip Progress</h3>
-
-                <mat-form-field appearance="outline">
-
-                    <mat-label>Progress (%)</mat-label>
-
-                    <input
-                        type="number"
-                        matInput
-                        min="0"
-                        max="100"
-                        formControlName="progress">
-
-                </mat-form-field>
-
-            </div>
-
-        }
-
-        <!-- ======================================
-             Notes
-        ======================================= -->
-
-        <div class="section">
-
-            <h3>Trip Notes</h3>
-
-            <mat-form-field
-                appearance="outline"
-                class="full-width">
-
-                <mat-label>Notes</mat-label>
-
-                <textarea
-                    matInput
-                    rows="6"
-                    formControlName="notes">
-
-                </textarea>
-
-            </mat-form-field>
-
-        </div>
+        </section>
 
     </form>
 
-    <!-- ==========================================
-         Footer
-    =========================================== -->
-
-    <div class="dialog-footer">
+    <footer class="dialog-footer">
 
         <button
             mat-stroked-button
@@ -245,11 +503,10 @@
             [disabled]="tripForm.invalid">
 
             <mat-icon>save</mat-icon>
-
             Save Changes
 
         </button>
 
-    </div>
+    </footer>
 
 </div>

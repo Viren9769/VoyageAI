@@ -1,137 +1,83 @@
-<div class="dialog-container">
+<div class="dialog-shell">
 
-    <!-- ==========================================
-         Header
-    =========================================== -->
+    <header class="hero-header">
 
-    <div class="dialog-header">
+        <div class="hero-content">
 
-        <h2>{{ trip.title }}</h2>
+            <p class="hero-kicker">Trip Overview</p>
 
-        <button
-            mat-icon-button
-            (click)="close()">
+            <div class="title-row">
 
-            <mat-icon>close</mat-icon>
+                <h2>{{ trip.title }}</h2>
 
-        </button>
+                <span
+                    class="status-badge"
+                    [ngClass]="trip.status.toLowerCase()">
 
-    </div>
+                    {{ trip.status }}
 
-    <!-- ==========================================
-         Scrollable Content
-    =========================================== -->
-
-    <div class="dialog-content">
-
-        <!-- Cover Image -->
-
-        <img
-            class="cover-image"
-            [src]="trip.image"
-            [alt]="trip.title">
-
-        <!-- Trip Information -->
-
-        <div class="info-grid">
-
-            <div class="info-card">
-
-                <mat-icon>location_on</mat-icon>
-
-                <div>
-
-                    <span class="label">Destination</span>
-
-                    <span class="value">{{ trip.destination }}</span>
-
-                </div>
+                </span>
 
             </div>
 
-            <div class="info-card">
-
-                <mat-icon>calendar_month</mat-icon>
-
-                <div>
-
-                    <span class="label">Start Date</span>
-
-                    <span class="value">{{ trip.startDate }}</span>
-
-                </div>
-
-            </div>
-
-            <div class="info-card">
-
-                <mat-icon>event</mat-icon>
-
-                <div>
-
-                    <span class="label">End Date</span>
-
-                    <span class="value">{{ trip.endDate }}</span>
-
-                </div>
-
-            </div>
-
-            <div class="info-card">
-
-                <mat-icon>schedule</mat-icon>
-
-                <div>
-
-                    <span class="label">Duration</span>
-
-                    <span class="value">{{ trip.days }} Days</span>
-
-                </div>
-
-            </div>
-
-            <div class="info-card">
-
-                <mat-icon>group</mat-icon>
-
-                <div>
-
-                    <span class="label">Travelers</span>
-
-                    <span class="value">{{ trip.travelers }}</span>
-
-                </div>
-
-            </div>
-
-            <div class="info-card">
-
-                <mat-icon>flag</mat-icon>
-
-                <div>
-
-                    <span class="label">Status</span>
-
-                    <span
-                        class="status"
-                        [ngClass]="trip.status.toLowerCase()">
-
-                        {{ trip.status }}
-
-                    </span>
-
-                </div>
-
-            </div>
+            <p class="meta-row">
+                {{ trip.startDate }} - {{ trip.endDate }}
+                <span class="dot">•</span>
+                {{ trip.days }} Days
+                <span class="dot">•</span>
+                {{ trip.travelers }} Travelers
+                <span class="dot">•</span>
+                Trip ID: {{ tripId }}
+            </p>
 
         </div>
 
-        @if (trip.status === 'Active') {
+        <div class="hero-actions">
 
-            <div class="progress-section">
+            <button
+                mat-stroked-button
+                type="button">
 
-                <div class="progress-title">
+                <mat-icon>share</mat-icon>
+                Share
+
+            </button>
+
+            @if (trip.status !== 'Completed') {
+
+                <button
+                    mat-flat-button
+                    color="primary"
+                    type="button"
+                    (click)="openEditDialog()">
+
+                    <mat-icon>edit</mat-icon>
+                    Edit Trip
+
+                </button>
+
+            }
+
+            <button
+                mat-icon-button
+                type="button"
+                (click)="close()">
+
+                <mat-icon>close</mat-icon>
+
+            </button>
+
+        </div>
+
+    </header>
+
+    <div class="dialog-content">
+
+        <section class="stats-grid">
+
+            <article class="stat-card progress-card">
+
+                <div class="stat-header">
 
                     <span>Trip Progress</span>
 
@@ -144,67 +90,276 @@
                     [value]="trip.progress">
                 </mat-progress-bar>
 
+                <p>{{ completedDays }} / {{ trip.days }} days completed</p>
+
+            </article>
+
+            <article class="stat-card">
+
+                <span class="card-label">Total Budget</span>
+
+                <strong>{{ totalBudget | currency:'USD':'symbol':'1.0-0' }}</strong>
+
+                <p>
+                    {{ spentBudget | currency:'USD':'symbol':'1.0-0' }} spent
+                    <span class="accent">{{ remainingBudget | currency:'USD':'symbol':'1.0-0' }} remaining</span>
+                </p>
+
+            </article>
+
+            <article class="stat-card">
+
+                <span class="card-label">Travelers</span>
+
+                <strong>{{ trip.travelers }}</strong>
+
+                <p>{{ trip.travelers > 1 ? '2 editors' : '1 editor' }} • Team trip</p>
+
+            </article>
+
+            <article class="stat-card">
+
+                <span class="card-label">Next Event</span>
+
+                <strong>{{ nextEventLabel }}</strong>
+
+                <p>Flight to {{ trip.destination }} ({{ airportCode }})</p>
+
+            </article>
+
+            <article class="stat-card weather-card">
+
+                <span class="card-label">Weather in {{ trip.destination }}</span>
+
+                <strong>{{ weatherTemp }}</strong>
+
+                <p>Partly cloudy • H:{{ weatherHigh }} / L:{{ weatherLow }}</p>
+
+            </article>
+
+        </section>
+
+        <section class="content-grid">
+
+            <div class="left-column">
+
+                <article class="panel itinerary-panel">
+
+                    <div class="panel-header">
+
+                        <h3>Itinerary Overview</h3>
+
+                        <button
+                            mat-button
+                            type="button">
+
+                            View Full Itinerary
+
+                        </button>
+
+                    </div>
+
+                    <ul class="timeline">
+
+                        @for (stop of itinerary; track stop.day) {
+
+                            <li>
+
+                                <span class="day">Day {{ stop.day }}</span>
+
+                                <span class="date">{{ stop.date }}</span>
+
+                                <p>{{ stop.activity }}</p>
+
+                            </li>
+
+                        }
+
+                    </ul>
+
+                </article>
+
+                <article class="panel map-panel">
+
+                    <img
+                        class="map-image"
+                        [src]="trip.image"
+                        [alt]="trip.title">
+
+                    <div class="thumb-strip">
+
+                        @for (image of galleryImages; track image) {
+
+                            <img
+                                [src]="image"
+                                alt="Trip scene">
+
+                        }
+
+                    </div>
+
+                </article>
+
             </div>
 
-        }
+            <div class="right-column">
 
-        <div class="section">
+                <article class="panel budget-panel">
 
-            <h3>Trip Notes</h3>
+                    <div class="panel-header">
 
-            <p>
-                This trip is currently in your itinerary. Once connected to the backend,
-                trip notes, hotel information, flight details, transportation,
-                activities, and reminders will appear here.
-            </p>
+                        <h3>Budget Summary</h3>
 
-        </div>
+                        <button
+                            mat-button
+                            type="button">
 
-        <div class="section">
+                            View Details
 
-            <h3>Planned Activities</h3>
+                        </button>
 
-            <ul>
+                    </div>
 
-                <li>✔ City Tour</li>
+                    <ul class="budget-list">
 
-                <li>✔ Local Food Experience</li>
+                        @for (budget of budgetBreakdown; track budget.name) {
 
-                <li>✔ Photography Spots</li>
+                            <li>
 
-                <li>✔ Shopping</li>
+                                <div>
 
-            </ul>
+                                    <span>{{ budget.name }}</span>
 
-        </div>
+                                    <small>{{ budget.share }}%</small>
+
+                                </div>
+
+                                <strong>{{ budget.amount | currency:'USD':'symbol':'1.0-0' }}</strong>
+
+                            </li>
+
+                        }
+
+                    </ul>
+
+                    <div class="budget-total">
+
+                        <span>Total Budget {{ totalBudget | currency:'USD':'symbol':'1.0-0' }}</span>
+
+                        <strong>Remaining {{ remainingBudget | currency:'USD':'symbol':'1.0-0' }}</strong>
+
+                    </div>
+
+                </article>
+
+                <article class="panel quick-panel">
+
+                    <h3>Quick Info</h3>
+
+                    <div class="quick-grid">
+
+                        <div>
+
+                            <span>Destination</span>
+
+                            <strong>{{ trip.destination }}</strong>
+
+                        </div>
+
+                        <div>
+
+                            <span>Currency</span>
+
+                            <strong>USD</strong>
+
+                        </div>
+
+                        <div>
+
+                            <span>Time Zone</span>
+
+                            <strong>UTC +1</strong>
+
+                        </div>
+
+                        <div>
+
+                            <span>Emergency</span>
+
+                            <strong>112</strong>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article class="panel activity-panel">
+
+                    <div class="panel-header">
+
+                        <h3>Recent Activity</h3>
+
+                        <button
+                            mat-button
+                            type="button">
+
+                            View All
+
+                        </button>
+
+                    </div>
+
+                    <ul class="activity-list">
+
+                        @for (activity of recentActivity; track activity.text) {
+
+                            <li>
+
+                                <p>{{ activity.text }}</p>
+
+                                <span>{{ activity.time }}</span>
+
+                            </li>
+
+                        }
+
+                    </ul>
+
+                </article>
+
+            </div>
+
+        </section>
 
     </div>
 
-    <!-- ==========================================
-         Footer (Always Visible)
-    =========================================== -->
-
-    <div class="dialog-footer">
+    <footer class="dialog-footer">
 
         <button
             mat-stroked-button
+            type="button"
             (click)="close()">
 
             Close
 
         </button>
 
-        <button
-    mat-flat-button
-    color="primary"
-    (click)="openEditDialog()">
+        @if (trip.status !== 'Completed') {
 
-    <mat-icon>edit</mat-icon>
+            <button
+                mat-flat-button
+                color="primary"
+                type="button"
+                (click)="openEditDialog()">
 
-    Edit Trip
+                <mat-icon>edit</mat-icon>
+                Edit Trip
 
-</button>
+            </button>
 
-    </div>
+        }
+
+    </footer>
 
 </div>

@@ -105,18 +105,22 @@
 
             </button>
 
-            <!-- Edit -->
+            @if (trip.status !== 'Completed') {
 
-            <button
-                mat-flat-button
-                class="edit-btn"
-                (click)="openEditDialog()">
+                <!-- Edit -->
 
-                <mat-icon>edit</mat-icon>
+                <button
+                    mat-flat-button
+                    class="edit-btn"
+                    (click)="openEditDialog()">
 
-                Edit
+                    <mat-icon>edit</mat-icon>
 
-            </button>
+                    Edit
+
+                </button>
+
+            }
 
         </div>
 

@@ -54,11 +54,11 @@ export class TripCard {
 
     this.dialog.open(TripViewDialog, {
 
-      width: '1100px',
+      width: '1280px',
 
-      height: '85vh',
+      height: '92vh',
 
-      maxWidth: '95vw',
+      maxWidth: '96vw',
 
       autoFocus: false,
 
@@ -72,13 +72,19 @@ export class TripCard {
 
   openEditDialog(): void {
 
+    if (this.trip.status === 'Completed') {
+
+      return;
+
+    }
+
     const dialogRef = this.dialog.open(TripEditDialog, {
 
-      width: '1100px',
+      width: '1280px',
 
-      height: '90vh',
+      height: '92vh',
 
-      maxWidth: '95vw',
+      maxWidth: '96vw',
 
       autoFocus: false,
 
