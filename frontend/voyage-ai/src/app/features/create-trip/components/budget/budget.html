@@ -31,6 +31,26 @@
                 formControlName="budget"
                 placeholder="5000">
 
+            @if (form.get('budget')?.touched && form.get('budget')?.hasError('required')) {
+
+                <mat-error>
+
+                    Budget is required.
+
+                </mat-error>
+
+            }
+
+            @if (form.get('budget')?.touched && form.get('budget')?.hasError('min')) {
+
+                <mat-error>
+
+                    Budget cannot be negative.
+
+                </mat-error>
+
+            }
+
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -55,6 +75,16 @@
                 }
 
             </mat-select>
+
+            @if (form.get('currency')?.touched && form.get('currency')?.hasError('required')) {
+
+                <mat-error>
+
+                    Currency is required.
+
+                </mat-error>
+
+            }
 
         </mat-form-field>
 
@@ -94,7 +124,7 @@
 
             <strong>
 
-                {{ form.value.budget || 0 }}
+                {{ (form.value.budget ?? 0) | number:'1.0-0' }}
 
             </strong>
 

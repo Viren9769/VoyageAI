@@ -29,6 +29,16 @@
                 [matDatepicker]="startPicker"
                 formControlName="startDate">
 
+            @if (form.get('startDate')?.touched && form.get('startDate')?.hasError('required')) {
+
+                <mat-error>
+
+                    Start date is required.
+
+                </mat-error>
+
+            }
+
             <mat-datepicker-toggle
                 matSuffix
                 [for]="startPicker">
@@ -55,6 +65,26 @@
                 [matDatepicker]="endPicker"
                 formControlName="endDate">
 
+            @if (form.get('endDate')?.touched && form.get('endDate')?.hasError('required')) {
+
+                <mat-error>
+
+                    End date is required.
+
+                </mat-error>
+
+            }
+
+            @if ((form.get('startDate')?.touched || form.get('endDate')?.touched) && form.hasError('dateRange')) {
+
+                <mat-error>
+
+                    End date must be on or after the start date.
+
+                </mat-error>
+
+            }
+
             <mat-datepicker-toggle
                 matSuffix
                 [for]="endPicker">
@@ -80,7 +110,15 @@
 
         <p>
 
-            Duration will be calculated automatically once both dates are selected.
+            @if (form.value.startDate && form.value.endDate && !form.hasError('dateRange')) {
+
+                {{ form.value.startDate | date:'MMM d, y' }} - {{ form.value.endDate | date:'MMM d, y' }}
+
+            } @else {
+
+                Duration will be calculated automatically once both dates are selected.
+
+            }
 
         </p>
 

@@ -16,16 +16,21 @@
 
         </div>
 
-        <button
-            mat-stroked-button
-            color="primary"
-            (click)="cancel()">
+        <div class="header-actions">
 
-            <mat-icon>arrow_back</mat-icon>
+            <button
+                mat-stroked-button
+                color="primary"
+                type="button"
+                (click)="cancel()">
 
-            Back to Trips
+                <mat-icon>arrow_back</mat-icon>
 
-        </button>
+                Back to Trips
+
+            </button>
+
+        </div>
 
     </div>
 
@@ -50,7 +55,7 @@
                 ============================================ -->
 
                 <mat-step
-                    [stepControl]="tripForm">
+                    [completed]="isBasicInformationComplete()">
 
                     <ng-template matStepLabel>
 
@@ -68,6 +73,7 @@
                         <button
                             mat-flat-button
                             color="primary"
+                            [disabled]="!isBasicInformationComplete()"
                             matStepperNext>
 
                             Next
@@ -83,7 +89,7 @@
                 ============================================ -->
 
                 <mat-step
-                    [stepControl]="tripForm">
+                    [completed]="isTravelDetailsComplete()">
 
                     <ng-template matStepLabel>
 
@@ -109,6 +115,7 @@
                         <button
                             mat-flat-button
                             color="primary"
+                            [disabled]="!isTravelDetailsComplete()"
                             matStepperNext>
 
                             Next
@@ -123,7 +130,7 @@
                      STEP 3
                 ============================================ -->
 
-                <mat-step>
+                <mat-step [completed]="isBudgetComplete()">
 
                     <ng-template matStepLabel>
 
@@ -149,6 +156,7 @@
                         <button
                             mat-flat-button
                             color="primary"
+                            [disabled]="!isBudgetComplete()"
                             matStepperNext>
 
                             Next
@@ -212,7 +220,9 @@
                     </ng-template>
 
                     <app-review
-                        [form]="tripForm"
+                        [tripData]="tripForm.getRawValue()"
+                        [hasDateRangeError]="tripForm.hasError('dateRange')"
+                        [fallbackImage]="previewFallbackImage"
                         [duration]="duration">
 
                     </app-review>
@@ -230,7 +240,7 @@
                         <button
                             mat-flat-button
                             color="primary"
-                            [disabled]="loading"
+                            [disabled]="!canSubmit() || isSubmitting"
                             (click)="submit()">
 
                             <mat-icon>
@@ -239,7 +249,7 @@
 
                             </mat-icon>
 
-                            Create Trip
+                            {{ isSubmitting ? 'Creating...' : 'Create Trip' }}
 
                         </button>
 
@@ -265,8 +275,18 @@
 
             <img
                 class="cover-preview"
-                [src]="tripForm.value.coverImageUrl || 'images/default-trip.jpg'"
+                [src]="tripForm.value.coverImageUrl || previewFallbackImage"
                 alt="Trip Cover">
+
+            @if (!tripForm.value.coverImageUrl) {
+
+                <p class="preview-hint">
+
+                    Add your cover image in Step 4 (Cover Image).
+
+                </p>
+
+            }
 
             <h3>
 
@@ -287,11 +307,11 @@
 
                 <mat-icon>calendar_month</mat-icon>
 
-                {{ tripForm.value.startDate || '--' }}
+                {{ formatPreviewDate(tripForm.value.startDate) }}
 
                 -
 
-                {{ tripForm.value.endDate || '--' }}
+                {{ formatPreviewDate(tripForm.value.endDate) }}
 
             </p>
 
@@ -307,9 +327,9 @@
 
                 <mat-icon>payments</mat-icon>
 
-                {{ tripForm.value.currency }}
+                {{ tripForm.value.currency || 'USD' }}
 
-                {{ tripForm.value.budget }}
+                {{ (tripForm.value.budget ?? 0) | number:'1.0-0' }}
 
             </p>
 
@@ -317,7 +337,7 @@
 
                 <mat-icon>explore</mat-icon>
 
-                {{ tripForm.value.travelStyle }}
+                {{ tripForm.value.travelStyle || 'Travel style not selected' }}
 
             </p>
 
@@ -325,7 +345,7 @@
 
                 <mat-chip>
 
-                    {{ tripForm.value.status }}
+                    {{ tripForm.value.status || 'Draft' }}
 
                 </mat-chip>
 

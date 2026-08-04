@@ -13,12 +13,41 @@
     margin-top: -10px;
 
     color: #94a3b8;
+    margin-bottom: 0;
+
+}
+
+.review-warning {
+
+    background: rgba(245, 158, 11, 0.1);
+
+    border: 1px solid rgba(245, 158, 11, 0.35);
+
+    border-radius: 14px;
+
+    padding: 16px 18px;
+
+}
+
+.review-warning h3 {
+
+    margin: 0 0 6px;
+
+    font-size: 14px;
+
+}
+
+.review-warning p {
+
+    margin: 0;
+
+    color: #fef3c7;
 
 }
 
 .review-card {
 
-    background: #1e293b;
+    background: rgba(30, 41, 59, 0.65);
 
     color: white;
 
@@ -42,7 +71,7 @@
 
 .review-content {
 
-    padding: 30px;
+    padding: 22px;
 
 }
 

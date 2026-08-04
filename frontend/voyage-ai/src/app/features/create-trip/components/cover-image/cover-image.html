@@ -27,6 +27,16 @@
             formControlName="coverImageUrl"
             placeholder="https://example.com/image.jpg">
 
+        @if (form.get('coverImageUrl')?.touched && form.get('coverImageUrl')?.hasError('pattern')) {
+
+            <mat-error>
+
+                Enter a valid image URL starting with http:// or https://
+
+            </mat-error>
+
+        }
+
     </mat-form-field>
 
     <div class="preview-card">
@@ -47,7 +57,7 @@
 
         <span>
 
-            Paste a public image URL. A preview will appear automatically.
+            Paste a public image URL. This is the same image used by the live preview in all previous steps.
 
         </span>
 

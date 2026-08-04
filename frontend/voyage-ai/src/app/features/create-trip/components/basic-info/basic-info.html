@@ -25,6 +25,16 @@
                 formControlName="tripName"
                 placeholder="European Adventure">
 
+            @if (form.get('tripName')?.touched && form.get('tripName')?.hasError('required')) {
+
+                <mat-error>
+
+                    Trip name is required.
+
+                </mat-error>
+
+            }
+
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -39,6 +49,16 @@
                 matInput
                 formControlName="destinationCountry"
                 placeholder="Switzerland">
+
+            @if (form.get('destinationCountry')?.touched && form.get('destinationCountry')?.hasError('required')) {
+
+                <mat-error>
+
+                    Destination country is required.
+
+                </mat-error>
+
+            }
 
         </mat-form-field>
 
@@ -58,6 +78,16 @@
                 matInput
                 formControlName="destinationCity"
                 placeholder="Zurich">
+
+            @if (form.get('destinationCity')?.touched && form.get('destinationCity')?.hasError('required')) {
+
+                <mat-error>
+
+                    Destination city is required.
+
+                </mat-error>
+
+            }
 
         </mat-form-field>
 
@@ -84,13 +114,23 @@
 
             </mat-select>
 
+            @if (form.get('travelStyle')?.touched && form.get('travelStyle')?.hasError('required')) {
+
+                <mat-error>
+
+                    Travel style is required.
+
+                </mat-error>
+
+            }
+
         </mat-form-field>
 
     </div>
 
-    <div class="grid">
-
-        <mat-form-field appearance="outline">
+    <mat-form-field
+        appearance="outline"
+        class="full-width">
 
             <mat-label>
 
@@ -113,9 +153,17 @@
 
             </mat-select>
 
-        </mat-form-field>
+            @if (form.get('status')?.touched && form.get('status')?.hasError('required')) {
 
-    </div>
+                <mat-error>
+
+                    Trip status is required.
+
+                </mat-error>
+
+            }
+
+    </mat-form-field>
 
     <mat-form-field
         appearance="outline"
@@ -130,10 +178,17 @@
         <textarea
             matInput
             rows="6"
+            maxlength="500"
             formControlName="description"
             placeholder="Describe your trip...">
 
         </textarea>
+
+        <mat-hint align="end">
+
+            {{ (form.get('description')?.value?.length || 0) }}/500
+
+        </mat-hint>
 
     </mat-form-field>
 

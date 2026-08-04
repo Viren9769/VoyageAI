@@ -12,18 +12,48 @@
 
     </p>
 
+    @if (missingRequiredFields.length > 0 || hasDateRangeError) {
+
+        <div class="review-warning">
+
+            <h3>
+
+                Please fix the following before submit
+
+            </h3>
+
+            <p>
+
+                @if (missingRequiredFields.length > 0) {
+
+                    Missing required fields: {{ missingRequiredFields.join(', ') }}.
+
+                }
+
+                @if (hasDateRangeError) {
+
+                    End Date must be on or after Start Date.
+
+                }
+
+            </p>
+
+        </div>
+
+    }
+
     <mat-card class="review-card">
 
         <img
             class="cover-image"
-            [src]="form.value.coverImageUrl || 'images/default-trip.jpg'"
+            [src]="getTextValue('coverImageUrl', fallbackImage)"
             alt="Trip Cover">
 
         <div class="review-content">
 
             <h2>
 
-                {{ form.value.tripName || 'Trip Name' }}
+                {{ getTextValue('tripName', 'Trip Name') }}
 
             </h2>
 
@@ -39,8 +69,8 @@
 
                         <span>
 
-                            {{ form.value.destinationCity }},
-                            {{ form.value.destinationCountry }}
+                            {{ getTextValue('destinationCity', 'City') }},
+                            {{ getTextValue('destinationCountry', 'Country') }}
 
                         </span>
 
@@ -58,11 +88,11 @@
 
                         <span>
 
-                            {{ form.value.startDate }}
+                            {{ getDateValue('startDate') ? (getDateValue('startDate') | date:'MMM d, y') : '--' }}
 
                             -
 
-                            {{ form.value.endDate }}
+                            {{ getDateValue('endDate') ? (getDateValue('endDate') | date:'MMM d, y') : '--' }}
 
                         </span>
 
@@ -98,9 +128,9 @@
 
                         <span>
 
-                            {{ form.value.currency }}
+                            {{ getTextValue('currency', 'USD') }}
 
-                            {{ form.value.budget }}
+                            {{ getNumericValue('budget', 0) | number:'1.0-0' }}
 
                         </span>
 
@@ -118,7 +148,7 @@
 
                         <span>
 
-                            {{ form.value.travelStyle }}
+                            {{ getTextValue('travelStyle', '--') }}
 
                         </span>
 
@@ -136,7 +166,7 @@
 
                         <span>
 
-                            {{ form.value.status }}
+                            {{ getTextValue('status', '--') }}
 
                         </span>
 
@@ -156,7 +186,7 @@
 
                 <p>
 
-                    {{ form.value.description || 'No description provided.' }}
+                    {{ getTextValue('description', 'No description provided.') }}
 
                 </p>
 
