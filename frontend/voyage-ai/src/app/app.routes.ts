@@ -57,12 +57,12 @@ export const routes: Routes = [
         .then(c=>c.CreateTripComponent)
 },
 
-      // {
-      //   path: 'itinerary',
-      //   loadComponent: () =>
-      //     import('./features/itinerary/itinerary')
-      //       .then(c => c.Itinerary)
-      // },
+      {
+        path: 'itinerary',
+        loadComponent: () =>
+          import('./features/itinerary/itinerary/itinerary')
+            .then(c => c.Itinerary)
+      },
 
       // {
       //   path: 'expenses',

@@ -21,3 +21,33 @@ export interface TripData {
     status: 'Active' | 'Upcoming' | 'Completed' | 'Draft';
 
 }
+
+export interface Trip {
+
+    id: number;
+
+    name: string;
+
+    destinationCountry: string;
+
+    destinationCity: string;
+
+    coverImageUrl: string;
+
+    startDateUtc: string;
+
+    endDateUtc: string;
+
+    totalDays: number;
+
+    travelerCount: number;
+
+    budgetCurrency: string;
+
+    budgetAmount: number;
+
+    status: 'Active' | 'Upcoming' | 'Completed' | 'Draft';
+
+    lastUpdatedUtc: string;
+
+}

@@ -1,0 +1,101 @@
+:host{
+
+    display:block;
+
+}
+
+.activity-card{
+
+    display:flex;
+
+    gap:12px;
+
+    align-items:flex-start;
+
+    padding:12px 14px;
+
+    background:rgb(11 14 55 / 75%);
+
+    border:1px solid rgba(255,255,255,.05);
+
+    border-radius:12px;
+
+    transition:.25s;
+
+    cursor:pointer;
+
+}
+
+.activity-card:hover{
+
+    transform:translateY(-3px);
+
+    border-color:#6366F1;
+
+    box-shadow:0 12px 30px rgba(99,102,241,.18);
+
+}
+
+.activity-icon{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:12px;
+
+    background:linear-gradient(135deg,#6366F1,#8B5CF6);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-shrink:0;
+
+}
+
+.activity-icon mat-icon{
+
+    color:white;
+
+}
+
+.activity-content{
+
+    flex:1;
+
+}
+
+.activity-time{
+
+    color:#94A3B8;
+
+    font-size:11px;
+
+}
+
+.activity-content h3{
+
+    margin:2px 0;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    color:white;
+
+}
+
+.activity-content p{
+
+    margin:0;
+
+    color:#CBD5E1;
+
+    font-size:13px;
+
+    line-height:1.35;
+
+}

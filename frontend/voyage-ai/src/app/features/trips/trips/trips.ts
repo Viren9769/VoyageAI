@@ -18,10 +18,6 @@ import { TripSummary } from './components/trip-summary/trip-summary';
 
 import { QuickActions } from './components/quick-actions/quick-actions';
 
-import {TripViewDialog} from './components/dialogs/trip-view-dialog/trip-view-dialog';
-
-import {TripEditDialog} from './components/dialogs/trip-edit-dialog/trip-edit-dialog';
-
 @Component({
   selector: 'app-trips',
 
@@ -33,9 +29,7 @@ import {TripEditDialog} from './components/dialogs/trip-edit-dialog/trip-edit-di
     TripFilters,
     TripCard,
     TripSummary,
-    QuickActions,
-    TripViewDialog,
-    TripEditDialog
+    QuickActions
   ],
 
   templateUrl: './trips.html',

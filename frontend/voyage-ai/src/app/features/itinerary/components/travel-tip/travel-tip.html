@@ -1,0 +1,60 @@
+<mat-card class="travel-tip-card">
+
+    <div class="header">
+
+        <div class="title">
+
+            <mat-icon>
+
+                {{ tip.icon }}
+
+            </mat-icon>
+
+            <h2>
+
+                {{ tip.title }}
+
+            </h2>
+
+        </div>
+
+    </div>
+
+    <img
+        class="tip-image"
+        [src]="tip.imageUrl"
+        alt="Travel Tip">
+
+    <div class="content">
+
+        <p>
+
+            {{ tip.description }}
+
+        </p>
+
+    </div>
+
+    <div class="footer">
+
+        <div class="weather">
+
+            <mat-icon>
+
+                wb_sunny
+
+            </mat-icon>
+
+            {{ tip.temperatureCelsius }}°C
+
+        </div>
+
+        <button>
+
+            Learn More
+
+        </button>
+
+    </div>
+
+</mat-card>

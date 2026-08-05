@@ -1,0 +1,235 @@
+:host {
+
+    display: block;
+
+    height: 100%;
+
+}
+
+.timeline-card {
+
+    background: rgb(11 14 55 / 75%);
+
+    border: 1px solid rgba(255,255,255,.06);
+
+    border-radius: 18px;
+
+    padding: 16px;
+
+    color: white;
+
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+.header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 14px;
+
+}
+
+.header h2 {
+
+    margin: 0;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+}
+
+.header span {
+
+    color: #94A3B8;
+
+    font-size: 12px;
+
+}
+
+.timeline {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+}
+
+.timeline-item {
+
+    display: flex;
+
+    gap: 12px;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+
+}
+
+.timeline-item:hover {
+
+    transform: translateX(5px);
+
+}
+
+.timeline-left {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+}
+
+.circle {
+
+    width: 34px;
+
+    height: 34px;
+
+    border-radius: 50%;
+
+    background: rgb(11 14 55 / 75%);
+
+    border: 2px solid #334155;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-weight: 700;
+
+    font-size: 14px;
+
+    transition: .25s;
+
+}
+
+.line {
+
+    width: 2px;
+
+    flex: 1;
+
+    min-height: 44px;
+
+    background: #334155;
+
+    margin-top: 8px;
+
+}
+
+.content {
+
+    flex: 1;
+
+    background: rgb(11 14 55 / 75%);
+
+    border-radius: 12px;
+
+    padding: 12px 14px;
+
+    transition: .25s;
+
+    border: 1px solid transparent;
+
+}
+
+.content h3 {
+
+    margin: 0;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+}
+
+.content p {
+
+    margin: 4px 0;
+
+    font-size: 13px;
+
+    color: #CBD5E1;
+
+}
+
+.content small {
+
+    color: #94A3B8;
+
+    font-size: 12px;
+
+}
+
+.timeline-item.active .circle {
+
+    background: linear-gradient(135deg,#6366F1,#8B5CF6);
+
+    border: none;
+
+    box-shadow: 0 0 18px rgba(99,102,241,.45);
+
+}
+
+.timeline-item.active .content {
+
+    background: rgb(17 20 70 / 78%);
+
+    border: 2px solid #6366F1;
+
+}
+
+.timeline-item:hover .content {
+
+    border-color: rgba(99,102,241,.35);
+
+}
+
+@media (max-width:1200px){
+
+    .header h2{
+
+        font-size:18px;
+
+    }
+
+}
+
+@media (max-width:768px){
+
+    .timeline-card{
+
+        padding:14px;
+
+    }
+
+    .content{
+
+        padding:12px;
+
+    }
+
+    .content h3{
+
+        font-size:16px;
+
+    }
+
+}

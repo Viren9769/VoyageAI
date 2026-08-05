@@ -1,0 +1,58 @@
+:host {
+	display: block;
+}
+
+.hero-header {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.hero-header h1 {
+	margin: 0;
+	font-size: 18px;
+	line-height: 1.1;
+	font-weight: 400;
+	color: #F8FAFC;
+}
+
+@media (max-width: 768px) {
+	.hero-header h1 {
+		font-size: 28px;
+	}
+}
+
+.hero-header p {
+	margin: 0;
+	color: #94A3B8;
+	font-size: 14px;
+}
+
+.switcher {
+	display: inline-flex;
+	margin-top: 8px;
+	gap: 8px;
+	border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.switcher button {
+	border: none;
+	background: transparent;
+	color: #94A3B8;
+	padding: 10px 14px;
+	border-radius: 10px 10px 0 0;
+	font-size: 12px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: color .2s ease, background .2s ease;
+}
+
+.switcher button:hover {
+	color: #E2E8F0;
+}
+
+.switcher button.active {
+	color: #F8FAFC;
+	background: rgba(99, 102, 241, 0.18);
+	box-shadow: inset 0 -2px 0 #6366F1;
+}

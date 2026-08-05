@@ -1,0 +1,99 @@
+<div class="itinerary-page">
+
+    <!-- ==========================================
+         Hero Header
+    =========================================== -->
+
+    <app-hero-header>
+
+    </app-hero-header>
+
+    <!-- ==========================================
+         Main Layout
+    =========================================== -->
+
+    <div class="main-layout">
+
+        <!-- ==========================================
+             Left Sidebar
+        =========================================== -->
+
+        <aside class="left-panel">
+
+            <app-trip-list
+                [trips]="trips"
+                [selectedTripId]="selectedTrip?.id ?? null"
+                (tripSelected)="onTripSelected($event)">
+
+            </app-trip-list>
+
+        </aside>
+
+        <section class="content-panel">
+
+            <div class="itinerary-main-card">
+
+                <div class="card-header-row">
+
+                    <app-itinerary-tabs>
+
+                    </app-itinerary-tabs>
+
+                    <app-share-button>
+
+                    </app-share-button>
+
+                </div>
+
+                <div class="card-content-row">
+
+                    <div class="timeline-wrapper">
+
+                        <app-day-timeline
+                            [days]="tripDays"
+                            [selectedDayNumber]="selectedDay?.dayNumber ?? null"
+                            (daySelected)="onDaySelected($event)">
+
+                        </app-day-timeline>
+
+                        @if (loading) {
+                            <p>Loading itinerary data...</p>
+                        }
+
+                        @if (error) {
+                            <p>{{ error }}</p>
+                        }
+
+                    </div>
+
+                    <div class="details-wrapper">
+
+                        <app-itinerary-details
+                            [activities]="activities">
+
+                        </app-itinerary-details>
+
+                    </div>
+
+                </div>
+
+                @if (travelTip) {
+
+                <div class="tip-wrapper">
+
+                    <app-travel-tip
+                        [tip]="travelTip">
+
+                    </app-travel-tip>
+
+                </div>
+
+                }
+
+            </div>
+
+        </section>
+
+    </div>
+
+</div>

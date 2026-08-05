@@ -1,0 +1,25 @@
+<section class="hero-header">
+
+	<h1>Itinerary</h1>
+
+	<p>View and manage your trip itineraries</p>
+
+	<div class="switcher">
+
+		<button
+			type="button"
+			[class.active]="activeView === 'My Trips'"
+			(click)="selectView('My Trips')">
+			My Trips
+		</button>
+
+		<button
+			type="button"
+			[class.active]="activeView === 'Shared With Me'"
+			(click)="selectView('Shared With Me')">
+			Shared With Me
+		</button>
+
+	</div>
+
+</section>

@@ -1,0 +1,107 @@
+<mat-card class="trip-list-card">
+
+    <!-- ==========================================
+         Header
+    =========================================== -->
+
+    <div class="header">
+
+        <h2>
+
+            All Trips ({{ trips.length }})
+
+        </h2>
+
+    </div>
+
+    <!-- ==========================================
+         Filters
+    =========================================== -->
+
+    <div class="filters">
+
+        <mat-form-field appearance="outline">
+
+            <mat-icon matPrefix>
+
+                search
+
+            </mat-icon>
+
+            <input
+                matInput
+                placeholder="Search trips...">
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+
+            <mat-select value="All">
+
+                <mat-option value="All">
+
+                    All Status
+
+                </mat-option>
+
+            </mat-select>
+
+        </mat-form-field>
+
+    </div>
+
+    <!-- ==========================================
+         Trip Cards
+    =========================================== -->
+
+    <div class="trip-scroll">
+
+      @for (trip of trips; track trip.id) {
+
+<div
+    class="trip-item"
+    [class.selected]="selectedTripId === trip.id"
+    (click)="selectTrip(trip)">
+
+    <img
+        [src]="trip.coverImageUrl"
+        [alt]="trip.name">
+
+    <div class="trip-info">
+
+        <h3>
+
+            {{ trip.name }}
+
+        </h3>
+
+        <span>
+
+            {{ trip.startDateUtc | date:'MMM d, y' }} - {{ trip.endDateUtc | date:'MMM d, y' }}
+
+        </span>
+
+        <small>
+
+            {{ trip.totalDays }} Days
+
+        </small>
+
+    </div>
+
+    <span
+        class="status"
+        [ngClass]="trip.status.toLowerCase()">
+
+        {{ trip.status }}
+
+    </span>
+
+</div>
+
+}
+
+    </div>
+
+
+</mat-card>

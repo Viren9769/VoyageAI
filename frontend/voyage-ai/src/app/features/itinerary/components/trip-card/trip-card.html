@@ -1,0 +1,48 @@
+<div class="trip-card">
+
+    <img
+        class="trip-image"
+        [src]="trip.image"
+        [alt]="trip.name">
+
+    <div class="trip-content">
+
+        <h3>
+
+            {{ trip.name }}
+
+        </h3>
+
+        <div class="trip-meta">
+
+            <span>
+
+                {{ trip.date }}
+
+            </span>
+
+            <span>
+
+                •
+
+            </span>
+
+            <span>
+
+                {{ trip.duration }}
+
+            </span>
+
+        </div>
+
+    </div>
+
+    <span
+        class="status"
+        [ngClass]="trip.status.toLowerCase()">
+
+        {{ trip.status }}
+
+    </span>
+
+</div>

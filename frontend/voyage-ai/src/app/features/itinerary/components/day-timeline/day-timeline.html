@@ -1,0 +1,64 @@
+<div class="timeline-card">
+
+    <div class="header">
+
+        <h2>Trip Timeline</h2>
+
+        <span>{{ days.length }} Days</span>
+
+    </div>
+
+    <div class="timeline">
+
+        @for(day of days; track day.dayNumber){
+
+        <div
+            class="timeline-item"
+            [class.active]="selectedDayNumber === day.dayNumber"
+            (click)="selectDay(day)">
+
+            <div class="timeline-left">
+
+                <div class="circle">
+
+                    {{ day.dayNumber }}
+
+                </div>
+
+                @if(day.dayNumber !== days.length){
+
+                    <div class="line"></div>
+
+                }
+
+            </div>
+
+            <div class="content">
+
+                <h3>
+
+                    Day {{ day.dayNumber }}
+
+                </h3>
+
+                <p>
+
+                    {{ day.title }}
+
+                </p>
+
+                <small>
+
+                    {{ day.date }}
+
+                </small>
+
+            </div>
+
+        </div>
+
+        }
+
+    </div>
+
+</div>

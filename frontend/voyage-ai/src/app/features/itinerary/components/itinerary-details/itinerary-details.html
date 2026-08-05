@@ -1,0 +1,43 @@
+<mat-card class="details-card">
+
+    <div class="header">
+
+        <div>
+
+            <h2>
+
+                Activities
+
+            </h2>
+
+            <p>
+
+                Planned items for selected day
+
+            </p>
+
+        </div>
+
+        <span class="badge">
+
+                {{ activities.length }} Activities
+
+        </span>
+
+    </div>
+
+        <div class="activity-list">
+
+        @for(activity of activities; track activity.id){
+
+        <app-activity-card
+
+            [activity]="activity">
+
+        </app-activity-card>
+
+    }
+
+</div>
+
+</mat-card>
