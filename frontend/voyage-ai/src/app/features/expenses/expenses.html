@@ -1,0 +1,36 @@
+<section class="expenses-page">
+	<div class="expenses-layout">
+		<app-trip-selector
+			[trips]="trips"
+			[selectedTripId]="selectedTripId"
+			(selectedTripIdChange)="onTripChange($event)">
+		</app-trip-selector>
+
+		<div class="expenses-main">
+			<app-expense-header
+				(exportCsv)="exportCsv()"
+				(exportPdf)="exportPdf()"
+				(addExpense)="openAddExpense()">
+			</app-expense-header>
+
+			<app-expense-summary [summary]="summary"></app-expense-summary>
+
+			<div class="middle-grid">
+				<app-spending-category
+					[categories]="categories"
+					[totalSpent]="summary.totalSpent">
+				</app-spending-category>
+
+				<app-budget-comparison [items]="budgetComparison"></app-budget-comparison>
+			</div>
+
+			<app-expense-list [expenses]="expenses"></app-expense-list>
+		</div>
+	</div>
+
+	<app-add-expense
+		[isOpen]="isAddExpenseOpen"
+		(close)="closeAddExpense()"
+		(save)="onAddExpense($event)">
+	</app-add-expense>
+</section>

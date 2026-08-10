@@ -1,0 +1,83 @@
+:host {
+	display: block;
+}
+
+.summary-grid {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 14px;
+}
+
+.summary-card {
+	display: flex;
+	gap: 14px;
+	align-items: flex-start;
+	padding: 18px;
+	border-radius: 16px;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	background: rgb(11 14 55 / 75%);
+}
+
+.icon {
+	width: 44px;
+	height: 44px;
+	border-radius: 12px;
+	display: grid;
+	place-items: center;
+	color: #fff;
+}
+
+.icon mat-icon {
+	width: 22px;
+	height: 22px;
+	font-size: 22px;
+}
+
+.icon.purple { background: #6a50d4; }
+.icon.blue { background: #4a68e4; }
+.icon.green { background: #397f52; }
+.icon.orange { background: #8a4f2e; }
+
+.summary-card p {
+	margin: 0;
+	color: #c7d2fe;
+	font-size: 13px;
+}
+
+.summary-card h3 {
+	margin: 4px 0;
+	color: #f8fafc;
+	font-size: clamp(26px, 1.6vw, 30px);
+}
+
+.summary-card small {
+	color: #94a3b8;
+	font-size: 12px;
+}
+
+.progress {
+	margin-top: 8px;
+	height: 7px;
+	border-radius: 999px;
+	background: rgba(148, 163, 184, 0.2);
+	overflow: hidden;
+}
+
+.progress span {
+	display: block;
+	height: 100%;
+	border-radius: inherit;
+	background: linear-gradient(90deg, #5b6dff, #7d57ff);
+}
+
+@media (max-width: 1400px) {
+	.summary-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 768px) {
+	.summary-grid {
+		grid-template-columns: 1fr;
+	}
+}

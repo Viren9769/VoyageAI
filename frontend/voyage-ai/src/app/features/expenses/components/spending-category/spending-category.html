@@ -1,0 +1,23 @@
+<section class="panel">
+	<h3>Spending by Category</h3>
+
+	<div class="content">
+		<div class="donut" [style.background]="chartGradient">
+			<div class="inner">
+				<strong>{{ totalSpent | currency:'USD':'symbol':'1.0-0' }}</strong>
+				<span>Total Spent</span>
+			</div>
+		</div>
+
+		<div class="legend">
+			<div class="legend-row" *ngFor="let item of categories">
+				<div class="name">
+					<span class="dot" [style.background]="item.color"></span>
+					{{ item.category }}
+				</div>
+				<div class="amount">{{ item.amount | currency:'USD':'symbol':'1.2-2' }}</div>
+				<div class="percent">{{ categoryPercent(item.amount) | number:'1.0-0' }}%</div>
+			</div>
+		</div>
+	</div>
+</section>

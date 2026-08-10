@@ -1,0 +1,38 @@
+<section class="summary-grid">
+	<article class="summary-card">
+		<div class="icon purple"><mat-icon>account_balance_wallet</mat-icon></div>
+		<div>
+			<p>Total Budget</p>
+			<h3>{{ summary.totalBudget | currency:'USD':'symbol':'1.2-2' }}</h3>
+			<small>Planned budget for this trip</small>
+		</div>
+	</article>
+
+	<article class="summary-card">
+		<div class="icon blue"><mat-icon>trending_up</mat-icon></div>
+		<div>
+			<p>Total Spent</p>
+			<h3>{{ summary.totalSpent | currency:'USD':'symbol':'1.2-2' }}</h3>
+			<small>{{ spentPercent | number:'1.0-1' }}% of total budget</small>
+			<div class="progress"><span [style.width.%]="spentPercent"></span></div>
+		</div>
+	</article>
+
+	<article class="summary-card">
+		<div class="icon green"><mat-icon>savings</mat-icon></div>
+		<div>
+			<p>Remaining</p>
+			<h3>{{ summary.remaining | currency:'USD':'symbol':'1.2-2' }}</h3>
+			<small>{{ remainingPercent | number:'1.0-1' }}% of total budget</small>
+		</div>
+	</article>
+
+	<article class="summary-card">
+		<div class="icon orange"><mat-icon>calendar_month</mat-icon></div>
+		<div>
+			<p>Daily Average</p>
+			<h3>{{ summary.dailyAverage | currency:'USD':'symbol':'1.2-2' }}</h3>
+			<small>Average per day</small>
+		</div>
+	</article>
+</section>

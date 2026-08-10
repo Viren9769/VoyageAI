@@ -1,0 +1,250 @@
+:host {
+	display: block;
+}
+
+.panel {
+	padding: 12px 14px;
+	border-radius: 16px;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	background: rgb(11 14 55 / 75%);
+}
+
+.panel-head {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 8px;
+	margin-bottom: 10px;
+}
+
+.title-wrap {
+	min-width: 0;
+}
+
+.panel-head h3 {
+	margin: 0;
+	color: #f8fafc;
+	font-size: 19px;
+	line-height: 1.1;
+}
+
+.toolbar {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	justify-content: flex-end;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.toolbar > * {
+	flex-shrink: 0;
+}
+
+.search {
+	height: 36px;
+	min-width: 210px;
+	max-width: 250px;
+	width: 100%;
+	padding: 0 12px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	border-radius: 9px;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	background: rgb(11 14 55 / 75%);
+}
+
+.search mat-icon {
+	color: #8192af;
+	font-size: 19px;
+	width: 19px;
+	height: 19px;
+}
+
+.search input,
+select {
+	border: none;
+	outline: none;
+	color: #d5def0;
+	background: transparent;
+	font-size: 12px;
+}
+
+.search input {
+	width: 100%;
+}
+
+.filter-control {
+	height: 36px;
+	border-radius: 9px;
+	padding: 0 12px;
+	min-width: 135px;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	background: rgb(11 14 55 / 75%);
+}
+
+.table-wrap {
+	margin-top: 2px;
+	overflow-x: auto;
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	min-width: 760px;
+}
+
+th,
+td {
+	padding: 10px 12px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+	text-align: left;
+	color: #d5def0;
+	font-size: 12.5px;
+	vertical-align: middle;
+}
+
+th {
+	color: #8fa0bc;
+	font-weight: 500;
+	background: rgb(11 14 55 / 75%);
+	white-space: nowrap;
+}
+
+td strong {
+	display: block;
+	color: #eef3ff;
+	font-weight: 600;
+}
+
+td p {
+	margin: 2px 0 0;
+	color: #94a3b8;
+	font-size: 11px;
+}
+
+.category-pill {
+	display: inline-flex;
+	align-items: center;
+	padding: 4px 10px;
+	border-radius: 999px;
+	font-size: 11px;
+	font-weight: 600;
+}
+
+.category-pill.transportation { background: rgba(78, 163, 255, 0.18); color: #68b2ff; }
+.category-pill.accommodation { background: rgba(109, 94, 252, 0.2); color: #8d7fff; }
+.category-pill.food-and-dining { background: rgba(88, 209, 122, 0.2); color: #67dc87; }
+.category-pill.activities { background: rgba(248, 163, 51, 0.2); color: #ffc46f; }
+.category-pill.shopping { background: rgba(245, 101, 133, 0.2); color: #fd86a7; }
+.category-pill.others { background: rgba(183, 194, 217, 0.2); color: #ced9ef; }
+
+.amount-col {
+	text-align: right;
+	white-space: nowrap;
+}
+
+.action-col {
+	text-align: center;
+}
+
+.icon-btn {
+	width: 28px;
+	height: 28px;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	border-radius: 7px;
+	color: #d2dbeb;
+	background: transparent;
+	cursor: pointer;
+}
+
+.icon-btn mat-icon {
+	font-size: 18px;
+	width: 18px;
+	height: 18px;
+}
+
+.empty-state {
+	text-align: center;
+	color: #94a3b8;
+	padding: 20px;
+}
+
+.footer {
+	margin-top: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 10px;
+	color: #8fa0bc;
+	font-size: 11.5px;
+}
+
+.footer p {
+	margin: 0;
+}
+
+.pagination {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.nav-btn,
+.page-btn {
+	width: 28px;
+	height: 28px;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	border-radius: 7px;
+	background: transparent;
+	color: #e2e8f0;
+	cursor: pointer;
+	font-size: 11px;
+	padding: 0;
+}
+
+.page-btn.active {
+	border-color: rgba(127, 94, 255, 0.9);
+	background: linear-gradient(90deg, #5b6dff, #7d57ff);
+	color: #fff;
+}
+
+.pagination button:disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
+}
+
+.page-size {
+	height: 30px;
+	border-radius: 7px;
+	padding: 0 9px;
+	min-width: 86px;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	background: rgb(11 14 55 / 75%);
+	color: #d5def0;
+}
+
+@media (max-width: 1100px) {
+	.panel-head {
+		align-items: stretch;
+	}
+
+	.toolbar {
+		justify-content: flex-start;
+	}
+
+	.search {
+		min-width: 200px;
+		max-width: none;
+	}
+}
+
+@media (max-width: 700px) {
+	.footer {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+}

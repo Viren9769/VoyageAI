@@ -1,0 +1,23 @@
+<section class="expense-header">
+	<div class="titles">
+		<h1>Expenses</h1>
+		<p>Track and manage your trip spending</p>
+	</div>
+
+	<div class="actions">
+		<button mat-stroked-button type="button" class="action-btn" (click)="exportCsv.emit()">
+			<mat-icon>description</mat-icon>
+			Export CSV
+		</button>
+
+		<button mat-stroked-button type="button" class="action-btn" (click)="exportPdf.emit()">
+			<mat-icon>article</mat-icon>
+			Export PDF
+		</button>
+
+		<button mat-flat-button type="button" class="add-btn" (click)="addExpense.emit()">
+			<mat-icon>add</mat-icon>
+			Add Expense
+		</button>
+	</div>
+</section>

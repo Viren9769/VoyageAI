@@ -64,12 +64,12 @@ export const routes: Routes = [
             .then(c => c.Itinerary)
       },
 
-      // {
-      //   path: 'expenses',
-      //   loadComponent: () =>
-      //     import('./features/expenses/expenses')
-      //       .then(c => c.Expenses)
-      // },
+      {
+        path: 'expenses',
+        loadComponent: () =>
+          import('./features/expenses/expenses')
+            .then(c => c.Expenses)
+      },
 
       // {
       //   path: 'travelers',

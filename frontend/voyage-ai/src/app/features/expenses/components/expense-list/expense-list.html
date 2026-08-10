@@ -1,0 +1,105 @@
+<section class="panel">
+	<div class="panel-head">
+		<div class="title-wrap">
+			<h3>Recent Expenses</h3>
+		</div>
+
+		<div class="toolbar">
+			<div class="search">
+				<mat-icon>search</mat-icon>
+				<input
+					type="text"
+					[(ngModel)]="searchTerm"
+					(ngModelChange)="onFilterInput()"
+					placeholder="Search expenses..." />
+			</div>
+
+			<select class="filter-control" [(ngModel)]="selectedCategory" (ngModelChange)="onFilterInput()" aria-label="Filter by category">
+				<option *ngFor="let option of categoryOptions" [value]="option">
+					{{ option === 'All' ? 'All Categories' : option }}
+				</option>
+			</select>
+
+			<select class="filter-control" [(ngModel)]="selectedPayment" (ngModelChange)="onFilterInput()" aria-label="Filter by payment method">
+				<option *ngFor="let option of paymentOptions" [value]="option">
+					{{ option === 'All' ? 'All Payment Methods' : option }}
+				</option>
+			</select>
+
+			<select class="filter-control" [(ngModel)]="selectedDateRange" (ngModelChange)="onFilterInput()" aria-label="Filter by date range">
+				<option value="all">All Dates</option>
+				<option value="last7">Last 7 Days</option>
+				<option value="last30">Last 30 Days</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="table-wrap">
+		<table>
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th>Description</th>
+					<th>Category</th>
+					<th>Payment Method</th>
+					<th class="amount-col">Amount</th>
+					<th class="action-col">Actions</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let expense of paginatedExpenses">
+					<td>{{ expense.date | date:'MMM d, y' }}</td>
+
+					<td>
+						<strong>{{ expense.description }}</strong>
+						<p>{{ expense.note }}</p>
+					</td>
+
+					<td>
+						<span class="category-pill" [class]="'category-pill ' + categoryClass(expense.category)">
+							{{ expense.category }}
+						</span>
+					</td>
+
+					<td>{{ expense.paymentMethod }}</td>
+
+					<td class="amount-col">{{ expense.amount | currency:'USD':'symbol':'1.2-2' }}</td>
+
+					<td class="action-col">
+						<button type="button" class="icon-btn" aria-label="Expense actions">
+							<mat-icon>more_vert</mat-icon>
+						</button>
+					</td>
+				</tr>
+
+				<tr *ngIf="!paginatedExpenses.length">
+					<td colspan="6" class="empty-state">No expenses found for the selected filters.</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="footer">
+		<p>Showing {{ paginatedExpenses.length ? ((currentPage - 1) * pageSize) + 1 : 0 }} to {{ ((currentPage - 1) * pageSize) + paginatedExpenses.length }} of {{ filteredExpenses.length }} expenses</p>
+
+		<div class="pagination">
+			<button type="button" class="nav-btn" (click)="previousPage()" [disabled]="currentPage === 1">&lt;</button>
+
+			<button
+				type="button"
+				class="page-btn"
+				*ngFor="let page of visiblePages"
+				[class.active]="currentPage === page"
+				(click)="goToPage(page)">
+				{{ page }}
+			</button>
+
+			<button type="button" class="nav-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
+
+			<select class="page-size" [ngModel]="pageSize" (ngModelChange)="changePageSize($event)">
+				<option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }} / page</option>
+			</select>
+		</div>
+	</div>
+</section>

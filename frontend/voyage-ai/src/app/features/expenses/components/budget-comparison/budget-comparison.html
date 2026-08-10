@@ -1,0 +1,23 @@
+<section class="panel">
+	<h3>Budget vs Actual</h3>
+
+	<div class="header-row">
+		<span></span>
+		<span>Budget</span>
+		<span>Spent</span>
+		<span>Remaining</span>
+	</div>
+
+	<div class="item" *ngFor="let item of items">
+		<div class="category-block">
+			<span class="category">{{ item.category }}</span>
+			<div class="bar">
+				<span [style.width.%]="spentPercent(item)"></span>
+			</div>
+		</div>
+
+		<div>{{ item.budget | currency:'USD':'symbol':'1.0-0' }}</div>
+		<div>{{ item.spent | currency:'USD':'symbol':'1.0-0' }}</div>
+		<div class="remaining">{{ remaining(item) | currency:'USD':'symbol':'1.0-0' }}</div>
+	</div>
+</section>
