@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
+
+export type ItineraryTab = 'Overview' | 'Itinerary' | 'Bookings' | 'Notes' | 'Map';
 
 @Component({
 
@@ -22,9 +24,13 @@ import { CommonModule } from '@angular/common';
 
 export class ItineraryTabs {
 
-    selectedTab = 'Itinerary';
+    @Input()
+    selectedTab: ItineraryTab = 'Itinerary';
 
-    tabs = [
+    @Output()
+    tabChanged = new EventEmitter<ItineraryTab>();
+
+    readonly tabs: ItineraryTab[] = [
 
         'Overview',
 
@@ -38,9 +44,14 @@ export class ItineraryTabs {
 
     ];
 
-    selectTab(tab: string): void {
+    selectTab(tab: ItineraryTab): void {
+
+        if (this.selectedTab === tab) {
+            return;
+        }
 
         this.selectedTab = tab;
+        this.tabChanged.emit(tab);
 
     }
 

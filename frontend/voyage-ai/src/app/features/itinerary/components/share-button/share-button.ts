@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
@@ -30,15 +30,21 @@ import { MatIconModule } from '@angular/material/icon';
 
 export class ShareButton {
 
+    @Output()
+    shareClicked = new EventEmitter<void>();
+
+    @Output()
+    exportPdfClicked = new EventEmitter<void>();
+
     share(): void {
 
-        console.log('Share Itinerary');
+        this.shareClicked.emit();
 
     }
 
     exportPdf(): void {
 
-        console.log('Export PDF');
+        this.exportPdfClicked.emit();
 
     }
 

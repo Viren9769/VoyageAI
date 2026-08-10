@@ -13,6 +13,8 @@ export class ItineraryService {
 
   constructor() { }
 
+  private readonly sharedTripIds = new Set<number>([2, 4, 6, 8]);
+
   private trips: Trip[] = [
     {
       id: 1,
@@ -204,8 +206,12 @@ export class ItineraryService {
   };
 
   // Keep method signatures API-ready so switching to HttpClient only changes this service.
-  getTrips(): Observable<Trip[]> {
-    return of(this.trips);
+  getTrips(scope: 'my' | 'shared' = 'my'): Observable<Trip[]> {
+    const filteredTrips = scope === 'shared'
+      ? this.trips.filter(trip => this.sharedTripIds.has(trip.id))
+      : this.trips.filter(trip => !this.sharedTripIds.has(trip.id));
+
+    return of(filteredTrips);
   }
 
   getTripDays(tripId: number): Observable<TripDay[]> {

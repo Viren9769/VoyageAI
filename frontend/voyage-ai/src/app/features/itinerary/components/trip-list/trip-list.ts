@@ -55,6 +55,68 @@ export class TripList {
     @Output()
     tripSelected = new EventEmitter<Trip>();
 
+    searchQuery = '';
+
+    selectedStatus: 'All' | Trip['status'] = 'All';
+
+    get statusOptions(): Array<'All' | Trip['status']> {
+
+        const statuses = new Set<Trip['status']>();
+
+        for (const trip of this.trips) {
+            statuses.add(trip.status);
+        }
+
+        return ['All', ...Array.from(statuses)];
+
+    }
+
+    get filteredTrips(): Trip[] {
+
+        const normalizedQuery = this.searchQuery.trim().toLowerCase();
+
+        return this.trips.filter(trip => {
+
+            const matchesStatus = this.selectedStatus === 'All' || trip.status === this.selectedStatus;
+
+            if (!matchesStatus) {
+                return false;
+            }
+
+            if (!normalizedQuery) {
+                return true;
+            }
+
+            const searchableText = [
+                trip.name,
+                trip.destinationCity,
+                trip.destinationCountry,
+                trip.status
+            ].join(' ').toLowerCase();
+
+            return searchableText.includes(normalizedQuery);
+        });
+
+    }
+
+    onSearchInput(event: Event): void {
+
+        const target = event.target as HTMLInputElement;
+        this.searchQuery = target.value;
+
+    }
+
+    onStatusChange(value: string | null): void {
+
+        if (!value) {
+            this.selectedStatus = 'All';
+            return;
+        }
+
+        this.selectedStatus = value as 'All' | Trip['status'];
+
+    }
+
     selectTrip(trip: Trip): void {
 
         this.tripSelected.emit(trip);

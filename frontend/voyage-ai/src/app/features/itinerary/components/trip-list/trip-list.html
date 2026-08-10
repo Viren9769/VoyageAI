@@ -8,7 +8,7 @@
 
         <h2>
 
-            All Trips ({{ trips.length }})
+            All Trips ({{ filteredTrips.length }})
 
         </h2>
 
@@ -30,19 +30,27 @@
 
             <input
                 matInput
+                [value]="searchQuery"
+                (input)="onSearchInput($event)"
                 placeholder="Search trips...">
 
         </mat-form-field>
 
         <mat-form-field appearance="outline">
 
-            <mat-select value="All">
+            <mat-select
+                [value]="selectedStatus"
+                (selectionChange)="onStatusChange($event.value)">
 
-                <mat-option value="All">
+                @for (status of statusOptions; track status) {
 
-                    All Status
+                    <mat-option [value]="status">
 
-                </mat-option>
+                        {{ status === 'All' ? 'All Status' : status }}
+
+                    </mat-option>
+
+                }
 
             </mat-select>
 
@@ -56,7 +64,7 @@
 
     <div class="trip-scroll">
 
-      @for (trip of trips; track trip.id) {
+    @for (trip of filteredTrips; track trip.id) {
 
 <div
     class="trip-item"
@@ -98,6 +106,16 @@
     </span>
 
 </div>
+
+}
+
+@if (filteredTrips.length === 0) {
+
+<p class="empty-state">
+
+    No trips match your filters.
+
+</p>
 
 }
 

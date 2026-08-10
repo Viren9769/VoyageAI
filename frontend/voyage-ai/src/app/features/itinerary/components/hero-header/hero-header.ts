@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+export type HeroView = 'My Trips' | 'Shared With Me';
 
 @Component({
   selector: 'app-hero-header',
@@ -11,10 +13,19 @@ import { CommonModule } from '@angular/common';
 })
 export class HeroHeader {
 
-  activeView: 'My Trips' | 'Shared With Me' = 'My Trips';
+  @Input()
+  activeView: HeroView = 'My Trips';
 
-  selectView(view: 'My Trips' | 'Shared With Me'): void {
+  @Output()
+  viewChanged = new EventEmitter<HeroView>();
+
+  selectView(view: HeroView): void {
+    if (this.activeView === view) {
+      return;
+    }
+
     this.activeView = view;
+    this.viewChanged.emit(view);
   }
 
 }

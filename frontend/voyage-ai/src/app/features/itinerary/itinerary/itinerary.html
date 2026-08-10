@@ -4,7 +4,9 @@
          Hero Header
     =========================================== -->
 
-    <app-hero-header>
+    <app-hero-header
+        [activeView]="activeView"
+        (viewChanged)="onViewChanged($event)">
 
     </app-hero-header>
 
@@ -35,15 +37,29 @@
 
                 <div class="card-header-row">
 
-                    <app-itinerary-tabs>
+                    <app-itinerary-tabs
+                        [selectedTab]="selectedTab"
+                        (tabChanged)="onTabChanged($event)">
 
                     </app-itinerary-tabs>
 
-                    <app-share-button>
+                    <app-share-button
+                        (shareClicked)="shareItinerary()"
+                        (exportPdfClicked)="exportPdf()">
 
                     </app-share-button>
 
                 </div>
+
+                @if (actionFeedback) {
+
+                    <p class="action-feedback">
+
+                        {{ actionFeedback }}
+
+                    </p>
+
+                }
 
                 <div class="card-content-row">
 
@@ -68,16 +84,178 @@
 
                     <div class="details-wrapper">
 
-                        <app-itinerary-details
-                            [activities]="activities">
+                        @if (selectedTab === 'Overview') {
 
-                        </app-itinerary-details>
+                            <section class="content-card">
+
+                                <h2>{{ activeScopeLabel }} overview</h2>
+
+                                <p class="section-subtitle">
+
+                                    Snapshot for {{ selectedTrip?.name ?? 'selected trip' }}.
+
+                                </p>
+
+                                <div class="stats-grid">
+
+                                    <article>
+                                        <h3>{{ confirmedActivitiesCount }}</h3>
+                                        <p>Confirmed</p>
+                                    </article>
+
+                                    <article>
+                                        <h3>{{ pendingActivitiesCount }}</h3>
+                                        <p>Pending</p>
+                                    </article>
+
+                                    <article>
+                                        <h3>{{ suggestedActivitiesCount }}</h3>
+                                        <p>Suggested</p>
+                                    </article>
+
+                                    <article>
+                                        <h3>{{ selectedTrip?.budgetCurrency ?? 'USD' }} {{ totalEstimatedCost }}</h3>
+                                        <p>Estimated day spend</p>
+                                    </article>
+
+                                </div>
+
+                            </section>
+
+                        } @else if (selectedTab === 'Itinerary') {
+
+                            <app-itinerary-details
+                                [activities]="activities">
+
+                            </app-itinerary-details>
+
+                        } @else if (selectedTab === 'Bookings') {
+
+                            <section class="content-card">
+
+                                <h2>Bookings</h2>
+
+                                <p class="section-subtitle">
+
+                                    Confirmed and transport-related reservations for this day.
+
+                                </p>
+
+                                @if (bookings.length === 0) {
+
+                                    <p class="empty-message">No bookings for the selected day.</p>
+
+                                }
+
+                                @for (booking of bookings; track booking.id) {
+
+                                    <div class="booking-item">
+                                        <div>
+                                            <h3>{{ booking.title }}</h3>
+                                            <p>{{ booking.locationName }} | {{ booking.startTime }} - {{ booking.endTime }}</p>
+                                        </div>
+                                        <span class="status-chip" [class]="'status-chip ' + booking.status.toLowerCase()">{{ booking.status }}</span>
+                                    </div>
+
+                                }
+
+                            </section>
+
+                        } @else if (selectedTab === 'Notes') {
+
+                            <section class="content-card">
+
+                                <h2>Notes</h2>
+
+                                <p class="section-subtitle">
+
+                                    Keep day-level notes and reminders for this itinerary.
+
+                                </p>
+
+                                <div class="note-editor">
+
+                                    <textarea
+                                        [value]="notesDraft"
+                                        (input)="onNotesInput($event)"
+                                        placeholder="Add note for this day..."></textarea>
+
+                                    <button
+                                        type="button"
+                                        class="primary-btn"
+                                        (click)="addNote()">
+                                        Add Note
+                                    </button>
+
+                                </div>
+
+                                @if (selectedDayNotes.length === 0) {
+
+                                    <p class="empty-message">No notes added yet.</p>
+
+                                }
+
+                                @for (note of selectedDayNotes; track $index) {
+
+                                    <div class="note-item">
+                                        <p>{{ note }}</p>
+                                        <button
+                                            type="button"
+                                            (click)="removeNote($index)">Remove</button>
+                                    </div>
+
+                                }
+
+                            </section>
+
+                        } @else {
+
+                            <section class="content-card">
+
+                                <h2>Map</h2>
+
+                                <p class="section-subtitle">
+
+                                    Open the selected day route locations in Google Maps.
+
+                                </p>
+
+                                <button
+                                    type="button"
+                                    class="primary-btn"
+                                    (click)="openMapForSelectedDay()">
+                                    Open First Stop In Map
+                                </button>
+
+                                @if (mapLocations.length === 0) {
+
+                                    <p class="empty-message">No map locations found for this day.</p>
+
+                                }
+
+                                @for (location of mapLocations; track location) {
+
+                                    <div class="map-item">
+                                        <span>{{ location }}</span>
+                                        <button
+                                            type="button"
+                                            (click)="openMap(location)">
+                                            Open
+                                        </button>
+                                    </div>
+
+                                }
+
+                            </section>
+
+                        }
+
 
                     </div>
 
                 </div>
 
-                @if (travelTip) {
+                @if (travelTip && selectedTab === 'Itinerary') {
 
                 <div class="tip-wrapper">
 

@@ -66,6 +66,18 @@
 
 }
 
+.action-feedback{
+
+    margin:0;
+    padding:10px 12px;
+    border-radius:10px;
+    background:rgba(99,102,241,.18);
+    border:1px solid rgba(129,140,248,.3);
+    color:#e2e8f0;
+    font-size:12px;
+
+}
+
 .card-header-row{
 
     display:grid;
@@ -95,6 +107,174 @@
 .tip-wrapper{
 
     min-width:0;
+
+}
+
+.content-card{
+
+    background:rgb(11 14 55 / 75%);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:16px;
+    padding:16px;
+
+}
+
+.content-card h2{
+
+    margin:0;
+    font-size:18px;
+
+}
+
+.section-subtitle{
+
+    margin:8px 0 14px;
+    color:#94a3b8;
+    font-size:13px;
+
+}
+
+.stats-grid{
+
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:10px;
+
+}
+
+.stats-grid article{
+
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:12px;
+    padding:12px;
+    background:rgba(255,255,255,.03);
+
+}
+
+.stats-grid h3{
+
+    margin:0;
+    font-size:20px;
+
+}
+
+.stats-grid p{
+
+    margin:6px 0 0;
+    color:#94a3b8;
+    font-size:12px;
+
+}
+
+.booking-item,
+.note-item,
+.map-item{
+
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    padding:10px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:10px;
+    background:rgba(255,255,255,.03);
+    margin-top:10px;
+
+}
+
+.booking-item h3,
+.note-item p{
+
+    margin:0;
+    font-size:14px;
+
+}
+
+.booking-item p{
+
+    margin:4px 0 0;
+    color:#94a3b8;
+    font-size:12px;
+
+}
+
+.status-chip{
+
+    border-radius:999px;
+    padding:4px 10px;
+    font-size:11px;
+    font-weight:600;
+
+}
+
+.status-chip.confirmed{
+
+    color:#22c55e;
+    background:rgba(34,197,94,.18);
+
+}
+
+.status-chip.pending{
+
+    color:#f59e0b;
+    background:rgba(245,158,11,.18);
+
+}
+
+.status-chip.suggested{
+
+    color:#818cf8;
+    background:rgba(99,102,241,.18);
+
+}
+
+.note-editor{
+
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+
+}
+
+.note-editor textarea{
+
+    min-height:110px;
+    resize:vertical;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,.15);
+    background:rgba(2,6,23,.55);
+    color:#f8fafc;
+    padding:10px;
+    font:inherit;
+
+}
+
+.primary-btn,
+.note-item button,
+.map-item button{
+
+    border:1px solid rgba(99,102,241,.55);
+    background:rgba(99,102,241,.2);
+    color:#e2e8f0;
+    border-radius:10px;
+    padding:7px 12px;
+    cursor:pointer;
+
+}
+
+.primary-btn:hover,
+.note-item button:hover,
+.map-item button:hover{
+
+    background:rgba(99,102,241,.35);
+
+}
+
+.empty-message{
+
+    margin:0;
+    color:#94a3b8;
+    font-size:13px;
 
 }
 
@@ -148,6 +328,12 @@
 
     .card-header-row,
     .card-content-row{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .stats-grid{
 
         grid-template-columns:1fr;
 
