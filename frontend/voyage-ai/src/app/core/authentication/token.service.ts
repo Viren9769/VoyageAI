@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 
 import { AppConstants } from '../constants/app.constants';
+import { JwtPayload } from '../../models/jwt-payload';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,27 @@ export class TokenService {
     const storage = rememberMe
       ? localStorage
       : sessionStorage;
+
+    storage.setItem(
+      AppConstants.Storage.AccessToken,
+      accessToken
+    );
+
+    storage.setItem(
+      AppConstants.Storage.RefreshToken,
+      refreshToken
+    );
+
+  }
+
+  saveRefreshedTokens(
+    accessToken: string,
+    refreshToken: string
+  ): void {
+
+    const storage = this.getCurrentTokenStorage();
+
+    this.clearTokens();
 
     storage.setItem(
       AppConstants.Storage.AccessToken,
@@ -72,7 +94,53 @@ export class TokenService {
 
   isLoggedIn(): boolean {
 
-    return !!this.getAccessToken();
+    const token = this.getAccessToken();
+    const refreshToken = this.getRefreshToken();
+
+    if (!token) {
+
+      return !!refreshToken;
+
+    }
+
+    if (this.isTokenExpired(token)) {
+
+      if (!refreshToken) {
+
+        this.clearTokens();
+
+      }
+
+      return !!refreshToken;
+
+    }
+
+    return true;
+
+  }
+
+  isTokenExpired(token: string): boolean {
+
+    try {
+
+      const payload = jwtDecode<JwtPayload>(token);
+
+      if (!payload.exp) {
+
+        return true;
+
+      }
+
+      const nowInSeconds = Math.floor(Date.now() / 1000);
+
+      return payload.exp <= nowInSeconds;
+
+    }
+    catch {
+
+      return true;
+
+    }
 
   }
 
@@ -86,7 +154,40 @@ export class TokenService {
 
     }
 
-    return jwtDecode(token);
+    if (this.isTokenExpired(token)) {
+      return null;
+
+    }
+
+    return jwtDecode<JwtPayload>(token);
+
+  }
+
+  private getCurrentTokenStorage(): Storage {
+
+    const localHasTokens =
+      !!localStorage.getItem(AppConstants.Storage.AccessToken)
+      ||
+      !!localStorage.getItem(AppConstants.Storage.RefreshToken);
+
+    if (localHasTokens) {
+
+      return localStorage;
+
+    }
+
+    const sessionHasTokens =
+      !!sessionStorage.getItem(AppConstants.Storage.AccessToken)
+      ||
+      !!sessionStorage.getItem(AppConstants.Storage.RefreshToken);
+
+    if (sessionHasTokens) {
+
+      return sessionStorage;
+
+    }
+
+    return localStorage;
 
   }
 

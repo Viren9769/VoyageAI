@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 
 import { authGuard } from './core/guards/auth.guard';
 import {MainLayout} from './layouts/main-layout/main-layout';
-import {Trips} from './features/trips/trips/trips';
 export const routes: Routes = [
 
   {
@@ -63,6 +62,20 @@ export const routes: Routes = [
           import('./features/itinerary/itinerary/itinerary')
             .then(c => c.Itinerary)
       },
+      
+      {
+        path: 'aiplanner',
+        loadComponent: () =>
+          import('./features/aiplanner/aiplanner')
+            .then(c => c.Aiplanner)
+      },
+
+      {
+        path: 'planner',
+        redirectTo: 'aiplanner',
+        pathMatch: 'full'
+      },
+
 
       {
         path: 'expenses',
@@ -71,26 +84,19 @@ export const routes: Routes = [
             .then(c => c.Expenses)
       },
 
-      // {
-      //   path: 'travelers',
-      //   loadComponent: () =>
-      //     import('./features/travelers/travelers')
-      //       .then(c => c.Travelers)
-      // },
+      {
+        path: 'travelers',
+        loadComponent: () =>
+          import('./features/travelers/travelers')
+            .then(c => c.Travelers)
+      },
 
-      // {
-      //   path: 'documents',
-      //   loadComponent: () =>
-      //     import('./features/documents/documents')
-      //       .then(c => c.Documents)
-      // },
-
-      // {
-      //   path: 'settings',
-      //   loadComponent: () =>
-      //     import('./features/settings/settings')
-      //       .then(c => c.Settings)
-      // }
+      {
+        path: 'settings',
+        loadComponent: () =>
+          import('./features/settings/settings')
+            .then(c => c.Settings)
+      }
 
     ]
 

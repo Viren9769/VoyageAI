@@ -116,7 +116,7 @@ export class Sidebar {
     {
       icon: 'auto_awesome',
       title: 'AI Planner',
-      route: '/planner'
+      route: '/aiplanner'
     },
 
     {
@@ -135,18 +135,6 @@ export class Sidebar {
       icon: 'groups',
       title: 'Travelers',
       route: '/travelers'
-    },
-
-    {
-      icon: 'description',
-      title: 'Documents',
-      route: '/documents'
-    },
-
-    {
-      icon: 'favorite',
-      title: 'Favorites',
-      route: '/favorites'
     },
 
     {

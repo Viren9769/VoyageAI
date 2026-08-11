@@ -7,7 +7,11 @@ import {
   Validators
 } from '@angular/forms';
 
-import { Router, RouterLink } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterLink
+} from '@angular/router';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -50,6 +54,8 @@ export class Login {
   private readonly fb = inject(FormBuilder);
 
   private readonly router = inject(Router);
+
+  private readonly activatedRoute = inject(ActivatedRoute);
 
   private readonly authService = inject(AuthService);
 
@@ -159,8 +165,12 @@ export class Login {
 
           console.log(response);
 
+          const returnUrl = this.activatedRoute.snapshot.queryParamMap.get(
+            'returnUrl'
+          );
+
           this.router.navigateByUrl(
-            '/dashboard',
+            returnUrl || '/dashboard',
             {
               replaceUrl: true
             }
