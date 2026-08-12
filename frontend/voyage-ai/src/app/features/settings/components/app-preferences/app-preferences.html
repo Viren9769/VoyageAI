@@ -1,0 +1,20 @@
+<section class="panel">
+	<h3 class="panel-title">App Preferences</h3>
+
+	<div class="toggle-row" *ngFor="let t of toggles">
+		<div class="toggle-info">
+			<span class="toggle-label">{{ t.label }}</span>
+			<span class="toggle-desc">{{ t.description }}</span>
+		</div>
+		<button
+			type="button"
+			class="toggle-btn"
+			[class.on]="model[t.key]"
+			(click)="toggle(t.key)"
+			[attr.aria-label]="t.label"
+			role="switch"
+			[attr.aria-checked]="model[t.key]">
+			<span class="thumb"></span>
+		</button>
+	</div>
+</section>

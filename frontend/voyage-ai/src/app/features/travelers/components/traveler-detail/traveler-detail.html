@@ -1,0 +1,57 @@
+<div class="overlay" *ngIf="isOpen && traveler" (click)="close.emit()">
+	<section class="modal" (click)="$event.stopPropagation()">
+		<header>
+			<h3>Traveler Details</h3>
+			<button type="button" class="close-btn" (click)="close.emit()" aria-label="Close">
+				<mat-icon>close</mat-icon>
+			</button>
+		</header>
+
+		<div class="profile-row">
+			<div class="avatar">{{ getInitials() }}</div>
+			<div class="profile-info">
+				<p class="full-name">
+					{{ traveler!.firstName }} {{ traveler!.lastName }}
+					<span *ngIf="traveler!.isPro" class="badge pro">Pro</span>
+				</p>
+				<p class="sub">{{ traveler!.email }}</p>
+			</div>
+		</div>
+
+		<div class="detail-grid">
+			<div class="detail-item">
+				<span class="detail-label">Phone</span>
+				<span class="detail-value">{{ traveler!.phone }}</span>
+			</div>
+			<div class="detail-item">
+				<span class="detail-label">Type</span>
+				<span class="detail-value">{{ typeLabel() }}</span>
+			</div>
+			<div class="detail-item">
+				<span class="detail-label">Trips</span>
+				<span class="detail-value">{{ traveler!.tripCount }} {{ traveler!.tripCount === 1 ? 'Trip' : 'Trips' }}</span>
+			</div>
+		</div>
+
+		<div class="trips-section">
+			<p class="section-label">Assigned Trips</p>
+			<div class="trip-chips" *ngIf="assignedTrips.length; else noTrips">
+				<span *ngFor="let trip of assignedTrips" class="trip-chip">
+					<mat-icon>flight_takeoff</mat-icon>
+					{{ trip.label }}
+				</span>
+			</div>
+			<ng-template #noTrips>
+				<p class="no-trips">No trips assigned yet.</p>
+			</ng-template>
+		</div>
+
+		<footer>
+			<button type="button" class="ghost" (click)="close.emit()">Close</button>
+			<button type="button" class="primary" (click)="edit.emit(traveler!)">
+				<mat-icon>edit</mat-icon>
+				Edit Traveler
+			</button>
+		</footer>
+	</section>
+</div>

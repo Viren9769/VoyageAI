@@ -1,1 +1,57 @@
-<p>settings works!</p>
+<section class="settings-page">
+
+	<!-- Page header -->
+	<div class="page-head">
+		<div class="titles">
+			<h1>Settings</h1>
+			<p>Manage your account, preferences and app settings</p>
+		</div>
+		<button mat-flat-button type="button" class="save-btn" (click)="saveChanges()">
+			<mat-icon>{{ saved ? 'check' : 'save' }}</mat-icon>
+			{{ saved ? 'Saved!' : 'Save Changes' }}
+		</button>
+	</div>
+
+	<!-- Tab bar -->
+	<nav class="tab-bar">
+		<button
+			*ngFor="let tab of tabs"
+			type="button"
+			class="tab-btn"
+			[class.active]="activeTab === tab.id"
+			(click)="setTab(tab.id)">
+			{{ tab.label }}
+		</button>
+	</nav>
+
+	<!-- Profile tab -->
+	<div class="panels-grid" *ngIf="activeTab === 'profile'">
+		<app-profile-info
+			[profile]="profile"
+			(profileChange)="onProfileChange($event)">
+		</app-profile-info>
+
+		<app-preferences-panel
+			[prefs]="prefs"
+			(prefsChange)="onPrefsChange($event)">
+		</app-preferences-panel>
+
+		<app-app-preferences
+			[prefs]="appPrefs"
+			(prefsChange)="onAppPrefsChange($event)">
+		</app-app-preferences>
+
+		<app-account-actions
+			(downloadData)="onDownloadData()"
+			(deleteAccount)="onDeleteAccount()"
+			(logOut)="onLogOut()">
+		</app-account-actions>
+	</div>
+
+	<!-- Stub tabs -->
+	<div class="coming-soon" *ngIf="activeTab !== 'profile'">
+		<mat-icon>construction</mat-icon>
+		<p>Coming soon</p>
+	</div>
+
+</section>

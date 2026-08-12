@@ -1,0 +1,11 @@
+:host {
+	display: block;
+	height: 100%;
+}
+
+.travelers-page {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	padding: 2px;
+}

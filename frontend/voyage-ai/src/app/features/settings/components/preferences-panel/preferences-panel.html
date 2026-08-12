@@ -1,0 +1,38 @@
+<section class="panel">
+	<h3 class="panel-title">Preferences</h3>
+
+	<div class="field">
+		<label>Default Currency</label>
+		<select name="currency" [(ngModel)]="model.currency" (ngModelChange)="onFieldChange()">
+			<option *ngFor="let c of currencies" [value]="c">{{ c }}</option>
+		</select>
+	</div>
+
+	<div class="field">
+		<label>Language</label>
+		<select name="language" [(ngModel)]="model.language" (ngModelChange)="onFieldChange()">
+			<option *ngFor="let l of languages" [value]="l">{{ l }}</option>
+		</select>
+	</div>
+
+	<div class="field">
+		<label>Date Format</label>
+		<select name="dateFormat" [(ngModel)]="model.dateFormat" (ngModelChange)="onFieldChange()">
+			<option *ngFor="let d of dateFormats" [value]="d">{{ d }}</option>
+		</select>
+	</div>
+
+	<div class="field">
+		<label>Time Format</label>
+		<select name="timeFormat" [(ngModel)]="model.timeFormat" (ngModelChange)="onFieldChange()">
+			<option *ngFor="let t of timeFormats" [value]="t">{{ t }}</option>
+		</select>
+	</div>
+
+	<div class="field">
+		<label>Theme</label>
+		<select name="theme" [(ngModel)]="model.theme" (ngModelChange)="onFieldChange()">
+			<option *ngFor="let t of themes" [value]="t">{{ t }}</option>
+		</select>
+	</div>
+</section>

@@ -1,0 +1,47 @@
+:host { display: block; }
+
+.traveler-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 16px;
+	padding: 8px 0 4px;
+}
+
+.titles h1 {
+	margin: 0;
+	color: #f8fafc;
+	font-size: clamp(28px, 2.1vw, 36px);
+	font-weight: 700;
+}
+
+.titles p {
+	margin: 8px 0 0;
+	color: #94a3b8;
+	font-size: 14px;
+}
+
+.actions {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.add-btn {
+	height: 54px;
+	border-radius: 14px !important;
+	padding: 0 20px !important;
+	background: linear-gradient(90deg, #6c67ff, #7f5eff) !important;
+	color: #ffffff !important;
+}
+
+@media (max-width: 640px) {
+	.traveler-header {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.add-btn {
+		width: 100%;
+	}
+}

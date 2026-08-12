@@ -97,12 +97,12 @@ export const routes: Routes = [
             .then(c => c.Expenses)
       },
 
-      // {
-      //   path: 'travelers',
-      //   loadComponent: () =>
-      //     import('./features/travelers/travelers')
-      //       .then(c => c.Travelers)
-      // },
+      {
+        path: 'travelers',
+        loadComponent: () =>
+          import('./features/travelers/travelers')
+            .then(c => c.Travelers)
+      },
 
       {
         path: 'settings',

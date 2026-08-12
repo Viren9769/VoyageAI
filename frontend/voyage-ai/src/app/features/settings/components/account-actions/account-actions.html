@@ -1,0 +1,27 @@
+<section class="panel">
+	<h3 class="panel-title">Account Actions</h3>
+
+	<button type="button" class="action-btn" (click)="downloadData.emit()">
+		<span class="action-icon blue"><mat-icon>download</mat-icon></span>
+		<span class="action-text">
+			<strong>Download My Data</strong>
+			<small>Export all your data</small>
+		</span>
+	</button>
+
+	<button type="button" class="action-btn danger" (click)="deleteAccount.emit()">
+		<span class="action-icon red"><mat-icon>delete_forever</mat-icon></span>
+		<span class="action-text">
+			<strong>Delete Account</strong>
+			<small>Permanently delete your account</small>
+		</span>
+	</button>
+
+	<button type="button" class="action-btn" (click)="logOut.emit()">
+		<span class="action-icon grey"><mat-icon>logout</mat-icon></span>
+		<span class="action-text">
+			<strong>Log Out</strong>
+			<small>Sign out from your account</small>
+		</span>
+	</button>
+</section>

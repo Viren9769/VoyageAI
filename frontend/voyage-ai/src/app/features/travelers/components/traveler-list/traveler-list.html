@@ -1,0 +1,108 @@
+<section class="panel" (click)="closeMenus()">
+	<div class="panel-head">
+		<h3>All Travelers</h3>
+
+		<div class="toolbar">
+			<div class="search">
+				<mat-icon>search</mat-icon>
+				<input
+					type="text"
+					[(ngModel)]="searchTerm"
+					(ngModelChange)="onFilterInput()"
+					placeholder="Search travelers..." />
+			</div>
+
+			<select class="filter-control" [(ngModel)]="selectedTripId" (ngModelChange)="onFilterInput()" aria-label="Filter by trip">
+				<option *ngFor="let trip of tripOptions" [value]="trip.id">{{ trip.label }}</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="table-wrap">
+		<table>
+			<thead>
+				<tr>
+					<th>Traveler</th>
+					<th>Phone</th>
+					<th>Type</th>
+					<th>Trips</th>
+					<th class="action-col"></th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let traveler of paginated">
+					<td class="traveler-cell">
+						<div class="avatar">{{ getInitials(traveler) }}</div>
+						<div class="traveler-info">
+							<span class="traveler-name">
+								{{ traveler.firstName }} {{ traveler.lastName }}
+								<span *ngIf="traveler.isPro" class="badge pro">Pro</span>
+							</span>
+							<span class="traveler-email">{{ traveler.email }}</span>
+						</div>
+					</td>
+					<td>{{ traveler.phone }}</td>
+					<td>
+						<span class="type-pill" [class.child]="traveler.type === 'Child'">
+							{{ typeLabel(traveler) }}
+						</span>
+					</td>
+					<td>{{ traveler.tripCount }} {{ traveler.tripCount === 1 ? 'Trip' : 'Trips' }}</td>
+
+					<td class="action-col">
+						<div class="menu-wrap">
+							<button
+								type="button"
+								class="icon-btn"
+								aria-label="Traveler actions"
+								(click)="toggleMenu(traveler.id, $event)">
+								<mat-icon>more_vert</mat-icon>
+							</button>
+
+							<div class="dropdown" *ngIf="openMenuId === traveler.id" (click)="$event.stopPropagation()">
+								<button type="button" (click)="onView(traveler)">
+									<mat-icon>visibility</mat-icon> View
+								</button>
+								<button type="button" (click)="onEdit(traveler)">
+									<mat-icon>edit</mat-icon> Edit
+								</button>
+								<button type="button" class="danger" (click)="onDelete(traveler)">
+									<mat-icon>delete</mat-icon> Delete
+								</button>
+							</div>
+						</div>
+					</td>
+				</tr>
+
+				<tr *ngIf="!paginated.length">
+					<td colspan="5" class="empty-state">No travelers found.</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="pagination-bar">
+		<span class="showing-text">
+			Showing {{ showingFrom }} to {{ showingTo }} of {{ filtered.length }} travelers
+		</span>
+
+		<div class="pages" *ngIf="totalPages > 1">
+			<button class="page-btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+				<mat-icon>chevron_left</mat-icon>
+			</button>
+
+			<button
+				*ngFor="let page of visiblePages"
+				class="page-btn"
+				[class.active]="page === currentPage"
+				(click)="goToPage(page)">
+				{{ page }}
+			</button>
+
+			<button class="page-btn" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+				<mat-icon>chevron_right</mat-icon>
+			</button>
+		</div>
+	</div>
+</section>

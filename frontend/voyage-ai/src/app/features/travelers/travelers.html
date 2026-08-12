@@ -1,1 +1,30 @@
-<p>travelers works!</p>
+<section class="travelers-page">
+	<app-traveler-header (addTraveler)="onAddTraveler()"></app-traveler-header>
+
+	<app-traveler-stats [stats]="stats"></app-traveler-stats>
+
+	<app-traveler-list
+		[travelers]="travelers"
+		[tripOptions]="tripOptions"
+		(viewTraveler)="onView($event)"
+		(editTraveler)="onEdit($event)"
+		(deleteTraveler)="onDelete($event)">
+	</app-traveler-list>
+
+	<app-traveler-form
+		[isOpen]="isFormOpen"
+		[editTarget]="editTarget"
+		[tripOptions]="tripOptions"
+		(close)="onFormClose()"
+		(save)="onFormSave($event)">
+	</app-traveler-form>
+
+	<app-traveler-detail
+		[isOpen]="isDetailOpen"
+		[traveler]="detailTarget"
+		[tripOptions]="tripOptions"
+		(close)="onDetailClose()"
+		(edit)="onEdit($event)">
+	</app-traveler-detail>
+</section>
+

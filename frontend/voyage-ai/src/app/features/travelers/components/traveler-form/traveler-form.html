@@ -1,0 +1,67 @@
+<div class="overlay" *ngIf="isOpen" (click)="onClose()">
+	<section class="modal" (click)="$event.stopPropagation()">
+		<header>
+			<h3>{{ title }}</h3>
+			<button type="button" class="close-btn" (click)="onClose()" aria-label="Close">
+				<mat-icon>close</mat-icon>
+			</button>
+		</header>
+
+		<form (ngSubmit)="onSave()">
+			<div class="split">
+				<div class="field">
+					<label>First Name</label>
+					<input type="text" name="firstName" [(ngModel)]="model.firstName" placeholder="e.g. Nikita" required />
+				</div>
+				<div class="field">
+					<label>Last Name</label>
+					<input type="text" name="lastName" [(ngModel)]="model.lastName" placeholder="e.g. Sharma" required />
+				</div>
+			</div>
+
+			<div class="field">
+				<label>Email</label>
+				<input type="email" name="email" [(ngModel)]="model.email" placeholder="name@example.com" required />
+			</div>
+
+			<div class="field">
+				<label>Phone</label>
+				<input type="tel" name="phone" [(ngModel)]="model.phone" placeholder="+1 (555) 000-0000" />
+			</div>
+
+			<div class="split">
+				<div class="field">
+					<label>Type</label>
+					<select name="type" [(ngModel)]="model.type">
+						<option *ngFor="let t of types" [value]="t">{{ t }}</option>
+					</select>
+				</div>
+
+				<div class="field" *ngIf="model.type === 'Child'">
+					<label>Age</label>
+					<input type="number" name="age" min="0" max="17" [(ngModel)]="model.age" placeholder="e.g. 8" />
+				</div>
+			</div>
+
+			<div class="field trip-field">
+				<label>Assign to Trips</label>
+				<div class="trip-chips">
+					<button
+						*ngFor="let trip of assignableTripOptions"
+						type="button"
+						class="trip-chip"
+						[class.selected]="isTripSelected(trip.id)"
+						(click)="toggleTrip(trip.id)">
+						<mat-icon>{{ isTripSelected(trip.id) ? 'check' : 'add' }}</mat-icon>
+						{{ trip.label }}
+					</button>
+				</div>
+			</div>
+
+			<footer>
+				<button type="button" class="ghost" (click)="onClose()">Cancel</button>
+				<button type="submit" class="primary">{{ title }}</button>
+			</footer>
+		</form>
+	</section>
+</div>

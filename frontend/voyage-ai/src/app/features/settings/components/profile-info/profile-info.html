@@ -1,0 +1,74 @@
+<section class="panel">
+	<h3 class="panel-title">Profile Information</h3>
+
+	<div class="avatar-row">
+		<div class="avatar-wrap">
+			<div class="avatar" *ngIf="!model.profileImageUrl">{{ initials }}</div>
+			<img *ngIf="model.profileImageUrl" [src]="model.profileImageUrl" class="avatar-img" alt="Profile" />
+			<button type="button" class="avatar-edit" aria-label="Change photo">
+				<mat-icon>photo_camera</mat-icon>
+			</button>
+		</div>
+	</div>
+
+	<div class="field">
+		<label>Full Name</label>
+		<div class="split">
+			<input
+				type="text"
+				name="firstName"
+				[(ngModel)]="model.firstName"
+				(ngModelChange)="onFieldChange()"
+				placeholder="First name" />
+			<input
+				type="text"
+				name="lastName"
+				[(ngModel)]="model.lastName"
+				(ngModelChange)="onFieldChange()"
+				placeholder="Last name" />
+		</div>
+	</div>
+
+	<div class="field">
+		<label>Email Address</label>
+		<input
+			type="email"
+			name="email"
+			[(ngModel)]="model.email"
+			(ngModelChange)="onFieldChange()"
+			placeholder="you@example.com" />
+	</div>
+
+	<div class="field">
+		<label>Phone Number</label>
+		<input
+			type="tel"
+			name="phone"
+			[(ngModel)]="model.phone"
+			(ngModelChange)="onFieldChange()"
+			placeholder="+1 (555) 000-0000" />
+	</div>
+
+	<div class="field">
+		<label>Date of Birth</label>
+		<input
+			type="date"
+			name="dateOfBirth"
+			[(ngModel)]="model.dateOfBirth"
+			(ngModelChange)="onFieldChange()" />
+	</div>
+
+	<div class="field">
+		<label>Bio</label>
+		<div class="textarea-wrap">
+			<textarea
+				name="bio"
+				rows="3"
+				[maxlength]="bioMaxLength"
+				[(ngModel)]="model.bio"
+				(ngModelChange)="onFieldChange()"
+				placeholder="Tell us a bit about yourself..."></textarea>
+			<span class="char-count">{{ bioLength }}/{{ bioMaxLength }}</span>
+		</div>
+	</div>
+</section>
