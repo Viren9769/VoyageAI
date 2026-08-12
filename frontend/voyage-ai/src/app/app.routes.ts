@@ -1,6 +1,12 @@
 import { Routes } from '@angular/router';
 
-import { authGuard } from './core/guards/auth.guard';
+import {
+  authChildGuard,
+  authGuard,
+  authMatchGuard,
+  guestGuard,
+  guestMatchGuard
+} from './core/guards/auth.guard';
 import {MainLayout} from './layouts/main-layout/main-layout';
 export const routes: Routes = [
 
@@ -12,6 +18,8 @@ export const routes: Routes = [
 
   {
     path: 'login',
+    canMatch: [guestMatchGuard],
+    canActivate: [guestGuard],
     loadComponent: () =>
       import('./features/auth/login/login')
         .then(c => c.Login)
@@ -19,6 +27,8 @@ export const routes: Routes = [
 
   {
     path: 'register',
+    canMatch: [guestMatchGuard],
+    canActivate: [guestGuard],
     loadComponent: () =>
       import('./features/auth/register/register')
         .then(c => c.Register)
@@ -32,7 +42,10 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayout,
+    canMatch: [authMatchGuard],
     canActivate: [authGuard],
+    canActivateChild: [authChildGuard],
+    runGuardsAndResolvers: 'always',
 
     children: [
 
@@ -84,18 +97,23 @@ export const routes: Routes = [
             .then(c => c.Expenses)
       },
 
-      {
-        path: 'travelers',
-        loadComponent: () =>
-          import('./features/travelers/travelers')
-            .then(c => c.Travelers)
-      },
+      // {
+      //   path: 'travelers',
+      //   loadComponent: () =>
+      //     import('./features/travelers/travelers')
+      //       .then(c => c.Travelers)
+      // },
 
       {
         path: 'settings',
         loadComponent: () =>
           import('./features/settings/settings')
             .then(c => c.Settings)
+      },
+
+      {
+        path: '**',
+        redirectTo: 'dashboard'
       }
 
     ]

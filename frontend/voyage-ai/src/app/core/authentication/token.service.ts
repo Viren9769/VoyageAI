@@ -15,6 +15,8 @@ export class TokenService {
     rememberMe: boolean = true
   ): void {
 
+    this.clearTokens();
+
     const storage = rememberMe
       ? localStorage
       : sessionStorage;

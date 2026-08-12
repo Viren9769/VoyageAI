@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { DashboardData } from '../../models/dashboard';
+import { AppConstants } from '../constants/app.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,15 @@ export class DashboardService {
   getDashboard(): Observable<DashboardData> {
 
     const user = JSON.parse(
-      localStorage.getItem('voyage_user') ?? '{}'
+      localStorage.getItem(AppConstants.Storage.CurrentUser)
+      ??
+      sessionStorage.getItem(AppConstants.Storage.CurrentUser)
+      ??
+      localStorage.getItem('voyage_user')
+      ??
+      sessionStorage.getItem('voyage_user')
+      ??
+      '{}'
     );
 
     const firstName = user.firstName ?? 'Traveler';

@@ -24,6 +24,7 @@ import { finalize } from 'rxjs';
 
 import { AuthService } from '../../../core/services/auth.service';
 import { TokenService } from '../../../core/authentication/token.service';
+import { AppConstants } from '../../../core/constants/app.constants';
 
 import { LoginRequest } from '../../../models/auth/login-request';
 
@@ -142,14 +143,37 @@ export class Login {
 
         next: (response) => {
 
+          const rememberMe =
+            this.loginForm.controls.rememberMe.value;
+
+          const userStorage = rememberMe
+            ? localStorage
+            : sessionStorage;
+
+          const alternateStorage = rememberMe
+            ? sessionStorage
+            : localStorage;
+
           //==================================
           // Save User
           //==================================
 
-          localStorage.setItem(
+          userStorage.setItem(
+            AppConstants.Storage.CurrentUser,
+            JSON.stringify(response.user)
+          );
+
+          // Keep backward compatibility for existing reads.
+          userStorage.setItem(
             'voyage_user',
             JSON.stringify(response.user)
           );
+
+          alternateStorage.removeItem(
+            AppConstants.Storage.CurrentUser
+          );
+
+          alternateStorage.removeItem('voyage_user');
 
           //==================================
           // Save Tokens
@@ -158,7 +182,7 @@ export class Login {
           this.tokenService.saveTokens(
             response.accessToken,
             response.refreshToken,
-            this.loginForm.controls.rememberMe.value
+            rememberMe
           );
 
           console.log('Login Successful');

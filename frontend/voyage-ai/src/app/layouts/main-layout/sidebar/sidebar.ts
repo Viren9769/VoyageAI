@@ -8,6 +8,8 @@ import {
   RouterLinkActive
 } from '@angular/router';
 
+import { AppConstants } from '../../../core/constants/app.constants';
+
 import { MatIconModule } from '@angular/material/icon';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -39,7 +41,14 @@ export class Sidebar {
     // Load User
     //====================================
 
-    const user = localStorage.getItem('voyage_user');
+    const user =
+      localStorage.getItem(AppConstants.Storage.CurrentUser)
+      ??
+      sessionStorage.getItem(AppConstants.Storage.CurrentUser)
+      ??
+      localStorage.getItem('voyage_user')
+      ??
+      sessionStorage.getItem('voyage_user');
 
     if (user) {
 
