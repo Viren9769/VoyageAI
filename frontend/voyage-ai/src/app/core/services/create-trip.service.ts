@@ -1,12 +1,26 @@
 import { Injectable, inject } from '@angular/core';
-
 import { HttpClient } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
 
-import { Observable } from 'rxjs';
+import { ApiConfig } from '../configuration/api.config';
 
 import { CreateTrip } from '../../models/create-trip';
-
 import { TripData } from '../../models/trip';
+
+interface GetTripResponse {
+  tripId: string;
+  tripName: string;
+  destinationCountry: string;
+  destinationCity: string;
+  startDate: string;
+  endDate: string;
+  budget: number;
+  currency: string;
+  travelStyle: string;
+  description?: string | null;
+  coverImageUrl?: string | null;
+  status: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +29,7 @@ export class CreateTripService {
 
   private http = inject(HttpClient);
 
-  /**
-   * Change this to your backend URL
-   * Example:
-   * http://localhost:5000/api
-   */
-  private readonly apiUrl = 'https://localhost:5001/api/trips';
+  private readonly apiUrl = ApiConfig.baseUrl + ApiConfig.trips.base;
 
   constructor() { }
 
@@ -29,14 +38,10 @@ export class CreateTripService {
   // POST: /api/trips
   // ============================================================
 
-  createTrip(request: CreateTrip): Observable<any> {
+  createTrip(request: CreateTrip): Observable<TripData> {
 
-    return this.http.post<any>(
-
-      this.apiUrl,
-
-      request
-
+    return this.http.post<GetTripResponse>(this.apiUrl, request).pipe(
+      map(response => this.mapTrip(response, 0))
     );
 
   }
@@ -48,10 +53,8 @@ export class CreateTripService {
 
   getTrips(): Observable<TripData[]> {
 
-    return this.http.get<TripData[]>(
-
-      this.apiUrl
-
+    return this.http.get<GetTripResponse[]>(this.apiUrl).pipe(
+      map(trips => trips.map((trip, index) => this.mapTrip(trip, index + 1)))
     );
 
   }
@@ -63,10 +66,8 @@ export class CreateTripService {
 
   getTrip(id: number): Observable<TripData> {
 
-    return this.http.get<TripData>(
-
-      `${this.apiUrl}/${id}`
-
+    return this.getTrips().pipe(
+      map(trips => trips.find(trip => trip.id === id) as TripData)
     );
 
   }
@@ -79,14 +80,10 @@ export class CreateTripService {
   updateTrip(
     id: number,
     request: CreateTrip
-  ): Observable<any> {
+  ): Observable<TripData> {
 
-    return this.http.put<any>(
-
-      `${this.apiUrl}/${id}`,
-
-      request
-
+    return this.http.put<GetTripResponse>(`${this.apiUrl}/${id}`, request).pipe(
+      map(response => this.mapTrip(response, id))
     );
 
   }
@@ -98,12 +95,60 @@ export class CreateTripService {
 
   deleteTrip(id: number): Observable<void> {
 
-    return this.http.delete<void>(
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
 
-      `${this.apiUrl}/${id}`
+  }
 
-    );
+  private mapTrip(response: GetTripResponse, fallbackId: number): TripData {
+    const startDate = new Date(response.startDate);
+    const endDate = new Date(response.endDate);
+    const days = Math.max(1, Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)) + 1);
 
+    return {
+      id: fallbackId || Date.now(),
+      backendId: response.tripId,
+      title: response.tripName,
+      destination: response.destinationCountry,
+      image: response.coverImageUrl || 'images/default-trip.jpg',
+      startDate: startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      endDate: endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      days,
+      travelers: 0,
+      progress: this.getProgress(response.status),
+      budget: response.budget,
+      currency: response.currency,
+      status: this.getStatus(response.status)
+    };
+  }
+
+  private getStatus(status: string): TripData['status'] {
+    switch (status.toLowerCase()) {
+      case 'active':
+      case 'confirmed':
+        return 'Active';
+      case 'completed':
+        return 'Completed';
+      case 'upcoming':
+      case 'planning':
+        return 'Upcoming';
+      default:
+        return 'Draft';
+    }
+  }
+
+  private getProgress(status: string): number {
+    switch (status.toLowerCase()) {
+      case 'completed':
+        return 100;
+      case 'active':
+      case 'confirmed':
+        return 75;
+      case 'upcoming':
+      case 'planning':
+        return 0;
+      default:
+        return 0;
+    }
   }
 
 }

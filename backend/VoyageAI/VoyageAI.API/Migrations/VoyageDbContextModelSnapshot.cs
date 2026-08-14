@@ -167,6 +167,82 @@ namespace VoyageAI.API.Migrations
                     b.ToTable("Activities");
                 });
 
+            modelBuilder.Entity("VoyageAI.API.Models.Entities.Expense", b =>
+                {
+                    b.Property<Guid>("ExpenseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("gen_random_uuid()");
+
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<DateTime>("ExpenseDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<Guid>("LastModifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<Guid>("TripId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.HasKey("ExpenseId");
+
+                    b.HasIndex("Category");
+
+                    b.HasIndex("ExpenseDate");
+
+                    b.HasIndex("PaymentMethod");
+
+                    b.HasIndex("TripId");
+
+                    b.HasIndex("TripId", "IsDeleted");
+
+                    b.ToTable("Expenses");
+                });
+
             modelBuilder.Entity("VoyageAI.API.Models.Entities.ItineraryDay", b =>
                 {
                     b.Property<Guid>("DayId")
@@ -597,6 +673,17 @@ namespace VoyageAI.API.Migrations
                         .IsRequired();
 
                     b.Navigation("ItineraryDay");
+                });
+
+            modelBuilder.Entity("VoyageAI.API.Models.Entities.Expense", b =>
+                {
+                    b.HasOne("VoyageAI.API.Models.Entities.Trip", "Trip")
+                        .WithMany()
+                        .HasForeignKey("TripId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Trip");
                 });
 
             modelBuilder.Entity("VoyageAI.API.Models.Entities.ItineraryDay", b =>

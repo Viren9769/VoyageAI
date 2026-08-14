@@ -13,6 +13,7 @@ namespace VoyageAI.API.Data
         public DbSet<Traveler> Travelers { get; set; }
         public DbSet<ItineraryDay> ItineraryDays { get; set; }
         public DbSet<Activity> Activities { get; set; }
+        public DbSet<Expense> Expenses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -200,6 +201,33 @@ namespace VoyageAI.API.Data
                 entity.HasOne(e => e.ItineraryDay)
                     .WithMany(id => id.Activities)
                     .HasForeignKey(e => e.DayId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // Expense Entity Configuration
+            modelBuilder.Entity<Expense>(entity =>
+            {
+                entity.HasKey(e => e.ExpenseId);
+                entity.Property(e => e.ExpenseId).HasDefaultValueSql("gen_random_uuid()");
+                entity.Property(e => e.ExpenseDate).IsRequired();
+                entity.Property(e => e.Description).HasMaxLength(255).IsRequired();
+                entity.Property(e => e.Note).HasMaxLength(1000);
+                entity.Property(e => e.Category).HasMaxLength(50).IsRequired();
+                entity.Property(e => e.PaymentMethod).HasMaxLength(50).IsRequired();
+                entity.Property(e => e.Amount).HasPrecision(10, 2);
+                entity.Property(e => e.IsDeleted).HasDefaultValue(false);
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.HasIndex(e => e.TripId);
+                entity.HasIndex(e => e.Category);
+                entity.HasIndex(e => e.PaymentMethod);
+                entity.HasIndex(e => e.ExpenseDate);
+                entity.HasIndex(e => new { e.TripId, e.IsDeleted });
+
+                entity.HasOne(e => e.Trip)
+                    .WithMany()
+                    .HasForeignKey(e => e.TripId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
         }

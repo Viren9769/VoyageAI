@@ -24,6 +24,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 // This binds the configuration to the JwtSettings class
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 
+// Configure WeatherApiOptions from appsettings.json WeatherApi section
+builder.Services.Configure<WeatherApiOptions>(builder.Configuration.GetSection("WeatherApi"));
+
 // ============================================================
 // 2. DATABASE CONTEXT
 // ============================================================
@@ -55,6 +58,9 @@ builder.Services.AddScoped<IItineraryRepository, ItineraryRepository>();
 // Register activity repository
 builder.Services.AddScoped<IActivityRepository, ActivityRepository>();
 
+// Register expense repository
+builder.Services.AddScoped<IExpenseRepository, ExpenseRepository>();
+
 // ============================================================
 // 4. SERVICE LAYER
 // ============================================================
@@ -66,6 +72,9 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 // Register trip service
 builder.Services.AddScoped<ITripService, TripService>();
 
+// Register dashboard service
+builder.Services.AddScoped<IDashboardService, DashboardService>();
+
 // Register traveler service
 builder.Services.AddScoped<ITravelerService, TravelerService>();
 
@@ -74,6 +83,14 @@ builder.Services.AddScoped<IItineraryService, ItineraryService>();
 
 // Register activity service
 builder.Services.AddScoped<IActivityService, ActivityService>();
+
+// Register expense service
+builder.Services.AddScoped<IExpenseService, ExpenseService>();
+
+// Register weather service with a dedicated HttpClient for the weather API
+// In-memory cache backs the short-lived weather cache in WeatherService
+builder.Services.AddMemoryCache();
+builder.Services.AddHttpClient<IWeatherService, WeatherService>();
 
 // ============================================================
 // 5. VALIDATION (FluentValidation)
@@ -269,6 +286,14 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<VoyageDbContext>();
+    await dbContext.Database.MigrateAsync();
+    await EnsureExpensesTableAsync(dbContext);
+    await DatabaseSeeder.SeedAsync(dbContext);
+}
+
 // ============================================================
 // MIDDLEWARE PIPELINE
 // ============================================================
@@ -316,3 +341,34 @@ app.MapControllers();
 // ============================================================
 
 app.Run();
+
+static async Task EnsureExpensesTableAsync(VoyageDbContext dbContext)
+{
+    var createExpensesTableSql = """
+        CREATE TABLE IF NOT EXISTS "Expenses" (
+            "ExpenseId" uuid NOT NULL DEFAULT gen_random_uuid(),
+            "TripId" uuid NOT NULL,
+            "ExpenseDate" timestamp with time zone NOT NULL,
+            "Description" character varying(255) NOT NULL,
+            "Note" character varying(1000) NOT NULL,
+            "Category" character varying(50) NOT NULL,
+            "PaymentMethod" character varying(50) NOT NULL,
+            "Amount" numeric(10,2) NOT NULL,
+            "CreatedAt" timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            "UpdatedAt" timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            "CreatedBy" uuid NOT NULL,
+            "LastModifiedBy" uuid NOT NULL,
+            "IsDeleted" boolean NOT NULL DEFAULT false,
+            "DeletedAt" timestamp with time zone NULL,
+            CONSTRAINT "PK_Expenses" PRIMARY KEY ("ExpenseId"),
+            CONSTRAINT "FK_Expenses_Trips_TripId" FOREIGN KEY ("TripId") REFERENCES "Trips"("TripId") ON DELETE CASCADE
+        )
+        """;
+
+    await dbContext.Database.ExecuteSqlRawAsync(createExpensesTableSql);
+    await dbContext.Database.ExecuteSqlRawAsync("CREATE INDEX IF NOT EXISTS \"IX_Expenses_Category\" ON \"Expenses\" (\"Category\")");
+    await dbContext.Database.ExecuteSqlRawAsync("CREATE INDEX IF NOT EXISTS \"IX_Expenses_ExpenseDate\" ON \"Expenses\" (\"ExpenseDate\")");
+    await dbContext.Database.ExecuteSqlRawAsync("CREATE INDEX IF NOT EXISTS \"IX_Expenses_PaymentMethod\" ON \"Expenses\" (\"PaymentMethod\")");
+    await dbContext.Database.ExecuteSqlRawAsync("CREATE INDEX IF NOT EXISTS \"IX_Expenses_TripId\" ON \"Expenses\" (\"TripId\")");
+    await dbContext.Database.ExecuteSqlRawAsync("CREATE INDEX IF NOT EXISTS \"IX_Expenses_TripId_IsDeleted\" ON \"Expenses\" (\"TripId\", \"IsDeleted\")");
+}

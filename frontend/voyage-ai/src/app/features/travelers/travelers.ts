@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { TravelerService, TripOption } from '../../core/services/traveler.service';
 import { Traveler, TravelerFormPayload, TravelerStats } from '../../models/traveler';
@@ -26,11 +26,15 @@ export class Travelers implements OnInit {
   editTarget: Traveler | null = null;
   detailTarget: Traveler | null = null;
 
-  constructor(private readonly travelerService: TravelerService) {}
+  private readonly travelerService = inject(TravelerService);
 
   ngOnInit(): void {
-    this.reload();
-    this.travelerService.getTripOptions().subscribe((o) => (this.tripOptions = o));
+    this.travelerService.loadData().subscribe((result: { travelers: Traveler[]; stats: TravelerStats; tripOptions: TripOption[] }) => {
+      const { travelers, stats, tripOptions } = result;
+      this.travelers = travelers;
+      this.stats = stats;
+      this.tripOptions = tripOptions;
+    });
   }
 
   onAddTraveler(): void {
@@ -76,7 +80,11 @@ export class Travelers implements OnInit {
   }
 
   private reload(): void {
-    this.travelerService.getTravelers().subscribe((t) => (this.travelers = t));
-    this.travelerService.getStats().subscribe((s) => (this.stats = s));
+    this.travelerService.loadData().subscribe((result: { travelers: Traveler[]; stats: TravelerStats; tripOptions: TripOption[] }) => {
+      const { travelers, stats, tripOptions } = result;
+      this.travelers = travelers;
+      this.stats = stats;
+      this.tripOptions = tripOptions;
+    });
   }
 }

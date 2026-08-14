@@ -1,0 +1,49 @@
+Enhancement in the VoyageAi
+
+Security 
+if I am click anything on the other pages then it is taking me to the login page but when I am click back arrow of the chrome it is taking me to the same page I was earlier so need to fix that 
+
+Changes 
+in the side bar remove the documents and the favorites  
+The bell icon on the top of the page it should show that someone has shared the itenary and suggestion and also many things 
+
+DashBoard 
+1. How do we calculate the points for the voyages 
+2. Whenever any of the trips are clicked on the Dashboard it should take them to Trips page
+3. Get the overall expenses for each ayear or whichever year is selected 
+4. Upcoming reminder it should be from the particular trip or just randomly showing 
+5. Remove the percentrage from each kpi like total trips, countries visited etc
+6. add the image of the user 
+
+TRIPS 
+1. when clicking on the trips view Details then the popup opens the background should get blur and also whenever clikcing on any function like View full itinerary then it should open and redirect to the pages and same for the others 
+2. also some of the kpis should change automatically as the date is changing you get like the new event, weather etc 
+3. in the whole trips the trip status automatically should change 
+4. I should be able to add more photos and also add other comment session if any 
+5. Need to more brainstrom on the Edit trip what should be there and what all not and same for the create trip 
+6. Add a option create trip by AI in the Trip pages
+7. Also when adding trip is done once the user clicked on the save changes only when the the user create trip then there should be on small popup should be opened of create itinerary and add the tralvelors name and the emali all so that they should get the itinerary and the trip in mail and pdf form whatever is fine 
+8. add  a heart which shoulb be colorless when it is clicked to favourite then it should be red
+9. When a trip is created and then we will add the travelr and then it will mail the travelr
+
+Itinerary 
+1. There should be AI in the itinerary to create for the user if they want and it should calculate it from the others itinerary 
+2. there should be an but add the activites or itiinerary for the trips as well 
+3. there should be category in the itinerary like booking adventure and all that 
+4. which shared with me when someone shared it then is should be there 
+5. you can add the tickets and hotel or any booking so that it can add that ion the itineray and remind you and also add a reminder notification for that knowing that you have a flight or whatever it is 
+
+
+Expenses 
+1. most imporatnat make it automatically to add the expenses directly 
+2. if manual then add the category as well in the adding the expenses 
+3.  there is a Action function in the table make sure think about it and it is working 
+4. in the Select trip there is some css requiremetn and fix that 
+
+Traveler Page 
+
+
+
+
+
+

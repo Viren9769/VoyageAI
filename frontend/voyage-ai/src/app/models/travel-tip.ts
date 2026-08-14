@@ -2,7 +2,7 @@ export interface TravelTip {
 
     id: number;
 
-    tripId: number;
+    tripId: string;
 
     dayNumber: number;
 

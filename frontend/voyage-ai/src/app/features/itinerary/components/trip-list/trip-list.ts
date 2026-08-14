@@ -50,7 +50,15 @@ export class TripList {
     trips: Trip[] = [];
 
     @Input()
-    selectedTripId: number | null = null;
+    selectedTripId: string | number | null = null;
+
+    get selectedTripIdText(): string | null {
+        if (this.selectedTripId === null || this.selectedTripId === undefined) {
+            return null;
+        }
+
+        return String(this.selectedTripId);
+    }
 
     @Output()
     tripSelected = new EventEmitter<Trip>();

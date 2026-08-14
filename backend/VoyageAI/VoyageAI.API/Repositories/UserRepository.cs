@@ -98,6 +98,14 @@ namespace VoyageAI.API.Repositories
         }
 
         /// <summary>
+        /// Retrieves a user from the database by user ID.
+        /// </summary>
+        public async Task<User?> GetByIdAsync(Guid userId, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Users.FirstOrDefaultAsync(user => user.UserId == userId, cancellationToken);
+        }
+
+        /// <summary>
         /// Creates a new user record in the database.
         /// 
         /// Implementation Details:

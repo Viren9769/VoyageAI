@@ -2,6 +2,8 @@ export interface TripData {
 
     id: number;
 
+    backendId?: string;
+
     title: string;
 
     destination: string;
@@ -18,13 +20,19 @@ export interface TripData {
 
     progress: number;
 
+    budget?: number;
+
+    currency?: string;
+
     status: 'Active' | 'Upcoming' | 'Completed' | 'Draft';
 
 }
 
 export interface Trip {
 
-    id: number;
+    id: string;
+
+    backendId?: string;
 
     name: string;
 

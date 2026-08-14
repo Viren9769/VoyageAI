@@ -171,6 +171,15 @@ namespace VoyageAI.API.Services.Interfaces
             CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Retrieves a travel tip for a specific itinerary day.
+        /// </summary>
+        Task<ApiResponse<TravelTipResponse>> GetTravelTipAsync(
+            Guid userId,
+            Guid tripId,
+            int dayNumber,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Retrieves a specific itinerary day.
         /// 
         /// Business Logic:

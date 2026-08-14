@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
@@ -36,19 +36,23 @@ import { QuickActions } from './components/quick-actions/quick-actions';
 
   styleUrl: './trips.scss'
 })
-export class Trips {
+export class Trips implements OnInit {
 
   /**
    * Observable of filtered trips
    */
   filteredTrips$: Observable<TripData[]>;
 
-  constructor(
-    public tripService: TripService
-  ) {
+  readonly tripService = inject(TripService);
+
+  constructor() {
 
     this.filteredTrips$ = this.tripService.filteredTrips$;
 
+  }
+
+  ngOnInit(): void {
+    this.tripService.loadTrips().subscribe();
   }
 
 }

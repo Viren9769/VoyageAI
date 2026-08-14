@@ -251,6 +251,57 @@ namespace VoyageAI.API.Controllers
         }
 
         /// <summary>
+        /// Retrieves a travel tip for a specific itinerary day.
+        /// </summary>
+        [HttpGet("day/{dayNumber:int}/travel-tip")]
+        [ProducesResponseType(typeof(ApiResponse<TravelTipResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ApiResponse<TravelTipResponse>>> GetTravelTip(
+            Guid tripId,
+            int dayNumber,
+            CancellationToken cancellationToken)
+        {
+            _logger.LogInformation("GET /api/trips/{TripId}/itinerary/day/{DayNumber}/travel-tip - Getting travel tip", tripId, dayNumber);
+
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier) ?? User.FindFirst("sub");
+            if (userIdClaim == null)
+            {
+                return Unauthorized(new ApiResponse<TravelTipResponse>
+                {
+                    Success = false,
+                    Message = "User ID not found in token"
+                });
+            }
+
+            if (!Guid.TryParse(userIdClaim.Value, out var userId))
+            {
+                return Unauthorized(new ApiResponse<TravelTipResponse>
+                {
+                    Success = false,
+                    Message = "Invalid user ID format"
+                });
+            }
+
+            var response = await _itineraryService.GetTravelTipAsync(userId, tripId, dayNumber, cancellationToken);
+
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+
+            if (response.Message?.Contains("not found", StringComparison.OrdinalIgnoreCase) == true)
+                return NotFound(response);
+
+            if (response.Message?.Contains("permission", StringComparison.OrdinalIgnoreCase) == true)
+                return Forbid();
+
+            return BadRequest(response);
+        }
+
+        /// <summary>
         /// Retrieves a specific itinerary day.
         /// 
         /// HTTP: GET /api/trips/{tripId}/itinerary/{dayId}

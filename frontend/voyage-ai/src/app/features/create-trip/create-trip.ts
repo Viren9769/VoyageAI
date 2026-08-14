@@ -19,6 +19,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CreateTrip } from '../../models/create-trip';
+import { CreateTripService } from '../../core/services/create-trip.service';
 import { BasicInfoComponent } from './components/basic-info/basic-info';
 import { TravelDetailsComponent } from './components/travel-details/travel-details';
 import { BudgetComponent } from './components/budget/budget';
@@ -53,6 +54,7 @@ export class CreateTripComponent implements OnInit {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
+  private createTripService = inject(CreateTripService);
 
   tripForm!: FormGroup;
   duration = 0;
@@ -238,24 +240,20 @@ export class CreateTripComponent implements OnInit {
     this.isSubmitting = true;
     this.showToast('Creating trip...', 'trip-toast-info', 1600);
 
-    try {
-      const payload = this.buildBackendPayload();
-      console.log('CreateTrip payload (frontend dummy mode):', payload);
+    const payload = this.buildBackendPayload();
 
-      this.showToast(
-        'Trip created successfully. API call is disabled in frontend dummy mode.',
-        'trip-toast-success',
-        4200
-      );
-    } catch {
-      this.showToast(
-        'Trip creation failed. Please try again.',
-        'trip-toast-error',
-        4200
-      );
-    } finally {
-      this.isSubmitting = false;
-    }
+    this.createTripService.createTrip(payload).subscribe({
+      next: () => {
+        this.showToast('Trip created successfully.', 'trip-toast-success', 3200);
+        this.router.navigate(['/trips']);
+      },
+      error: () => {
+        this.showToast('Trip creation failed. Please try again.', 'trip-toast-error', 4200);
+      },
+      complete: () => {
+        this.isSubmitting = false;
+      }
+    });
   }
 
   cancel(): void {

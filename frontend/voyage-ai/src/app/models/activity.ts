@@ -2,7 +2,7 @@ export interface Activity {
 
     id: number;
 
-    tripId: number;
+    tripId: string;
 
     dayNumber: number;
 

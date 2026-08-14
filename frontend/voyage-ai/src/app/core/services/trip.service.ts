@@ -1,10 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, combineLatest, forkJoin, map, of, switchMap, tap } from 'rxjs';
 
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { ApiConfig } from '../configuration/api.config';
 
-import { map } from 'rxjs/operators';
-
+import { CreateTrip } from '../../models/create-trip';
 import { TripData } from '../../models/trip';
+
+interface GetTripResponse {
+  tripId: string;
+  tripName: string;
+  destinationCountry: string;
+  destinationCity: string;
+  startDate: string;
+  endDate: string;
+  budget: number;
+  currency: string;
+  travelStyle: string;
+  description?: string | null;
+  coverImageUrl?: string | null;
+  status: string;
+}
 
 export type TripFilter =
   | 'All Trips'
@@ -18,296 +34,258 @@ export type TripFilter =
 })
 export class TripService {
 
-  // ============================================================
-  // Dummy Data
-  // Replace with API response later
-  // ============================================================
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl = ApiConfig.baseUrl + ApiConfig.trips.base;
 
-  private tripsSubject = new BehaviorSubject<TripData[]>([
-
-    {
-      id: 1,
-      title: 'Switzerland Escape',
-      destination: 'Switzerland',
-      image: 'images/switzerland.jpg',
-      startDate: 'Jun 18, 2026',
-      endDate: 'Jun 26, 2026',
-      days: 8,
-      travelers: 4,
-      progress: 75,
-      status: 'Active'
-    },
-
-    {
-      id: 2,
-      title: 'Tokyo Explorer',
-      destination: 'Japan',
-      image: 'images/tokyo.jpeg',
-      startDate: 'Jul 20, 2026',
-      endDate: 'Jul 27, 2026',
-      days: 8,
-      travelers: 3,
-      progress: 0,
-      status: 'Upcoming'
-    },
-
-    {
-      id: 3,
-      title: 'Bali Adventure',
-      destination: 'Indonesia',
-      image: 'images/bali.jpeg',
-      startDate: 'Apr 5, 2026',
-      endDate: 'Apr 12, 2026',
-      days: 8,
-      travelers: 2,
-      progress: 100,
-      status: 'Completed'
-    },
-
-    {
-      id: 4,
-      title: 'Paris Getaway',
-      destination: 'France',
-      image: 'images/paris.jpeg',
-      startDate: 'May 15, 2026',
-      endDate: 'May 22, 2026',
-      days: 7,
-      travelers: 2,
-      progress: 100,
-      status: 'Completed'
-    },
-
-    {
-      id: 5,
-      title: 'Iceland Road Trip',
-      destination: 'Iceland',
-      image: 'images/iceland.jpeg',
-      startDate: 'Sep 10, 2026',
-      endDate: 'Sep 17, 2026',
-      days: 7,
-      travelers: 4,
-      progress: 0,
-      status: 'Draft'
-    }
-
-  ]);
-
-  // ============================================================
-  // Filter State
-  // ============================================================
-
-  private filterSubject =
-    new BehaviorSubject<TripFilter>('All Trips');
-
-  private sortSubject =
-    new BehaviorSubject<string>('Recently Updated');
-
-  // ============================================================
-  // Public Observables
-  // ============================================================
+  private tripsSubject = new BehaviorSubject<TripData[]>([]);
+  private filterSubject = new BehaviorSubject<TripFilter>('All Trips');
+  private sortSubject = new BehaviorSubject<string>('Recently Updated');
 
   trips$ = this.tripsSubject.asObservable();
-
   filter$ = this.filterSubject.asObservable();
-
   sort$ = this.sortSubject.asObservable();
-
-  // ============================================================
-  // Filtered Trips
-  // ============================================================
 
   filteredTrips$ = combineLatest([
     this.trips$,
     this.filter$,
     this.sort$
   ]).pipe(
-
     map(([trips, filter, sort]) => {
-
       let filtered = [...trips];
 
       switch (filter) {
-
         case 'Upcoming':
           filtered = filtered.filter(x => x.status === 'Upcoming');
           break;
-
         case 'Ongoing':
           filtered = filtered.filter(x => x.status === 'Active');
           break;
-
         case 'Completed':
           filtered = filtered.filter(x => x.status === 'Completed');
           break;
-
         case 'Drafts':
           filtered = filtered.filter(x => x.status === 'Draft');
           break;
-
       }
 
       switch (sort) {
-
         case 'Newest':
           filtered.reverse();
           break;
-
         case 'Oldest':
           break;
-
         case 'Recently Updated':
         default:
           break;
-
       }
 
       return filtered;
-
     })
-
   );
 
-  // ============================================================
-  // Filter
-  // ============================================================
-
-  setFilter(filter: TripFilter): void {
-
-    this.filterSubject.next(filter);
-
-  }
-
-  // ============================================================
-  // Sort
-  // ============================================================
-
-  setSort(sort: string): void {
-
-    this.sortSubject.next(sort);
-
-  }
-
-  // ============================================================
-  // Load Trips
-  // ============================================================
-
-  loadTrips(trips: TripData[]): void {
-
-    this.tripsSubject.next(trips);
-
-  }
-
-  // ============================================================
-  // Add Trip
-  // ============================================================
-
-  addTrip(trip: TripData): void {
-
-    this.tripsSubject.next([
-      trip,
-      ...this.tripsSubject.value
-    ]);
-
-  }
-
-  // ============================================================
-  // Update Trip
-  // ============================================================
-
-  updateTrip(updatedTrip: TripData): void {
-
-    const updatedTrips = this.tripsSubject.value.map(trip =>
-
-      trip.id === updatedTrip.id
-        ? updatedTrip
-        : trip
-
-    );
-
-    this.tripsSubject.next(updatedTrips);
-
-  }
-
-  // ============================================================
-  // Delete Trip
-  // ============================================================
-
-  deleteTrip(id: number): void {
-
-    const updatedTrips = this.tripsSubject.value.filter(
-
-      trip => trip.id !== id
-
-    );
-
-    this.tripsSubject.next(updatedTrips);
-
-  }
-
-  // ============================================================
-  // Duplicate Trip
-  // ============================================================
-
-  duplicateTrip(trip: TripData): void {
-
-    const duplicatedTrip: TripData = {
-
-      ...trip,
-
-      id: Date.now(),
-
-      title: `${trip.title} (Copy)`,
-
-      status: 'Draft',
-
-      progress: 0
-
-    };
-
-    this.tripsSubject.next([
-
-      duplicatedTrip,
-
-      ...this.tripsSubject.value
-
-    ]);
-
-  }
-
-  // ============================================================
-  // Dashboard Summary
-  // ============================================================
-
   tripSummary = [
+    { title: 'Total Trips', value: 0, icon: 'luggage', color: '#8B5CF6' },
+    { title: 'Upcoming', value: 0, icon: 'calendar_month', color: '#3B82F6' },
+    { title: 'Completed', value: 0, icon: 'check_circle', color: '#22C55E' },
+    { title: 'Drafts', value: 0, icon: 'description', color: '#F59E0B' }
+  ];
 
-    {
-      title: 'Total Trips',
-      value: 18,
-      icon: 'luggage',
-      color: '#8B5CF6'
-    },
+  loadTrips(): Observable<TripData[]> {
+    return this.http.get<GetTripResponse[]>(this.apiUrl).pipe(
+      switchMap(trips => {
+        const mappedTrips = trips.map((trip, index) => this.mapTrip(trip, index + 1));
 
-    {
-      title: 'Upcoming',
-      value: 6,
-      icon: 'calendar_month',
-      color: '#3B82F6'
-    },
+        const travelerCountRequests = mappedTrips.map(trip => {
+          if (!trip.backendId) {
+            return of(0);
+          }
 
-    {
-      title: 'Completed',
-      value: 9,
-      icon: 'check_circle',
-      color: '#22C55E'
-    },
+          return this.http.get<unknown[]>(`${this.apiUrl}/${trip.backendId}/travelers`).pipe(
+            map(travelers => travelers.length),
+            tap(count => {
+              trip.travelers = count;
+            })
+          );
+        });
 
-    {
-      title: 'Drafts',
-      value: 3,
-      icon: 'description',
-      color: '#F59E0B'
+        if (travelerCountRequests.length === 0) {
+          return of(mappedTrips);
+        }
+
+        return forkJoin(travelerCountRequests).pipe(
+          map(() => mappedTrips)
+        );
+      }),
+      tap(trips => {
+        this.tripsSubject.next(trips);
+        this.tripSummary = this.buildSummary(trips);
+      })
+    );
+  }
+
+  getTrips(scope: 'my' | 'shared' = 'my'): Observable<TripData[]> {
+    if (scope === 'shared') {
+      return of([]);
     }
 
-  ];
+    return this.trips$;
+  }
+
+  setFilter(filter: TripFilter): void {
+    this.filterSubject.next(filter);
+  }
+
+  setSort(sort: string): void {
+    this.sortSubject.next(sort);
+  }
+
+  addTrip(request: CreateTrip): Observable<TripData> {
+    return this.http.post<GetTripResponse>(this.apiUrl, request).pipe(
+      map(response => this.mapTrip(response, Date.now())),
+      tap(created => {
+        this.tripsSubject.next([created, ...this.tripsSubject.value]);
+        this.tripSummary = this.buildSummary(this.tripsSubject.value);
+      })
+    );
+  }
+
+  updateTrip(updatedTrip: TripData): Observable<TripData> {
+    if (!updatedTrip.backendId) {
+      throw new Error('Trip backend id is missing');
+    }
+
+    const payload = this.buildUpdatePayload(updatedTrip);
+
+    return this.http.put<GetTripResponse>(`${this.apiUrl}/${updatedTrip.backendId}`, payload).pipe(
+      map(response => this.mapTrip(response, updatedTrip.id)),
+      tap(saved => {
+        const updatedTrips = this.tripsSubject.value.map(trip => trip.id === saved.id ? saved : trip);
+        this.tripsSubject.next(updatedTrips);
+        this.tripSummary = this.buildSummary(updatedTrips);
+      })
+    );
+  }
+
+  deleteTrip(id: number): Observable<void> {
+    const trip = this.tripsSubject.value.find(entry => entry.id === id);
+
+    if (!trip?.backendId) {
+      throw new Error('Trip backend id is missing');
+    }
+
+    return this.http.delete<void>(`${this.apiUrl}/${trip.backendId}`).pipe(
+      tap(() => {
+        const updatedTrips = this.tripsSubject.value.filter(entry => entry.id !== id);
+        this.tripsSubject.next(updatedTrips);
+        this.tripSummary = this.buildSummary(updatedTrips);
+      })
+    );
+  }
+
+  duplicateTrip(trip: TripData): Observable<TripData> {
+    const request: CreateTrip = {
+      tripName: `${trip.title} (Copy)`,
+      destinationCountry: trip.destination,
+      destinationCity: trip.destination,
+      startDate: this.toApiDate(trip.startDate),
+      endDate: this.toApiDate(trip.endDate),
+      budget: trip.budget ?? 0,
+      currency: trip.currency ?? 'USD',
+      travelStyle: 'Adventure',
+      description: '',
+      coverImageUrl: trip.image,
+      status: 'Draft'
+    };
+
+    return this.addTrip(request);
+  }
+
+  refreshSummary(): void {
+    this.tripSummary = this.buildSummary(this.tripsSubject.value);
+  }
+
+  private mapTrip(response: GetTripResponse, fallbackId: number): TripData {
+    const startDate = new Date(response.startDate);
+    const endDate = new Date(response.endDate);
+    const days = Math.max(1, Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)) + 1);
+
+    return {
+      id: fallbackId,
+      backendId: response.tripId,
+      title: response.tripName,
+      destination: response.destinationCountry,
+      image: response.coverImageUrl || 'images/default-trip.jpg',
+      startDate: startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      endDate: endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      days,
+      travelers: 0,
+      progress: this.getProgress(response.status),
+      budget: response.budget,
+      currency: response.currency,
+      status: this.getStatus(response.status)
+    };
+  }
+
+  private buildUpdatePayload(trip: TripData): CreateTrip {
+    return {
+      tripName: trip.title,
+      destinationCountry: trip.destination,
+      destinationCity: trip.destination,
+      startDate: this.toApiDate(trip.startDate),
+      endDate: this.toApiDate(trip.endDate),
+      budget: trip.budget ?? 0,
+      currency: trip.currency ?? 'USD',
+      travelStyle: 'Adventure',
+      description: '',
+      coverImageUrl: trip.image,
+      status: trip.status
+    };
+  }
+
+  private buildSummary(trips: TripData[]) {
+    return [
+      { title: 'Total Trips', value: trips.length, icon: 'luggage', color: '#8B5CF6' },
+      { title: 'Upcoming', value: trips.filter(trip => trip.status === 'Upcoming').length, icon: 'calendar_month', color: '#3B82F6' },
+      { title: 'Completed', value: trips.filter(trip => trip.status === 'Completed').length, icon: 'check_circle', color: '#22C55E' },
+      { title: 'Drafts', value: trips.filter(trip => trip.status === 'Draft').length, icon: 'description', color: '#F59E0B' }
+    ];
+  }
+
+  private getStatus(status: string): TripData['status'] {
+    switch (status.toLowerCase()) {
+      case 'active':
+      case 'confirmed':
+        return 'Active';
+      case 'completed':
+        return 'Completed';
+      case 'upcoming':
+      case 'planning':
+        return 'Upcoming';
+      default:
+        return 'Draft';
+    }
+  }
+
+  private getProgress(status: string): number {
+    switch (status.toLowerCase()) {
+      case 'completed':
+        return 100;
+      case 'active':
+      case 'confirmed':
+        return 75;
+      default:
+        return 0;
+    }
+  }
+
+  private toApiDate(value: string): string {
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return value;
+    }
+
+    return date.toISOString();
+  }
 
 }

@@ -67,6 +67,11 @@ namespace VoyageAI.API.Repositories.Interfaces
         Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Retrieves a user from the database by user ID.
+        /// </summary>
+        Task<User?> GetByIdAsync(Guid userId, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Creates a new user in the database.
         /// 
         /// Purpose:

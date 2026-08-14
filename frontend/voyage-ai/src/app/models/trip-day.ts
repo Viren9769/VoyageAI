@@ -2,7 +2,7 @@ export interface TripDay {
 
     id: number;
 
-    tripId: number;
+    tripId: string;
 
     dayNumber: number;
 

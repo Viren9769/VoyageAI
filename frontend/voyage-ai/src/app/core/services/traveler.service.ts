@@ -1,7 +1,39 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, forkJoin, map, of, switchMap, tap } from 'rxjs';
+
+import { ApiConfig } from '../configuration/api.config';
 
 import { Traveler, TravelerFormPayload, TravelerStats } from '../../models/traveler';
+
+interface GetTripResponse {
+  tripId: string;
+  tripName: string;
+}
+
+interface TravelerResponse {
+  travelerId: string;
+  tripId: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth?: string | null;
+  gender?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  nationality?: string | null;
+  passportNumber?: string | null;
+  passportCountry?: string | null;
+  passportExpiry?: string | null;
+  emergencyContactName?: string | null;
+  emergencyContactPhone?: string | null;
+  relationship?: string | null;
+  dietaryPreference?: string | null;
+  specialRequirements?: string | null;
+  frequentFlyerNumber?: string | null;
+  knownTravelerNumber?: string | null;
+  isPrimaryTraveler: boolean;
+  age?: number | null;
+}
 
 export interface TripOption {
   id: string;
@@ -10,80 +42,43 @@ export interface TripOption {
 
 @Injectable({ providedIn: 'root' })
 export class TravelerService {
-  private nextId = 7;
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl = ApiConfig.baseUrl + ApiConfig.trips.base;
 
-  private travelers: Traveler[] = [
-    {
-      id: 't1',
-      firstName: 'Nikita',
-      lastName: 'Vishwakarma',
-      email: 'nikita@example.com',
-      phone: '+1 (281) 555-0100',
-      type: 'Adult',
-      tripCount: 3,
-      isPro: true,
-      assignedTripIds: ['trip-1', 'trip-2', 'trip-3'],
-    },
-    {
-      id: 't2',
-      firstName: 'Rahul',
-      lastName: 'Vishwakarma',
-      email: 'rahul@example.com',
-      phone: '+1 (832) 555-0145',
-      type: 'Adult',
-      tripCount: 2,
-      assignedTripIds: ['trip-1', 'trip-2'],
-    },
-    {
-      id: 't3',
-      firstName: 'Priya',
-      lastName: 'Sharma',
-      email: 'priya@example.com',
-      phone: '+1 (713) 555-0189',
-      type: 'Adult',
-      tripCount: 1,
-      assignedTripIds: ['trip-3'],
-    },
-    {
-      id: 't4',
-      firstName: 'Aarav',
-      lastName: 'Vishwakarma',
-      email: 'aarav@example.com',
-      phone: '+1 (281) 555-0190',
-      type: 'Child',
-      age: 10,
-      tripCount: 2,
-      assignedTripIds: ['trip-1', 'trip-2'],
-    },
-    {
-      id: 't5',
-      firstName: 'Diya',
-      lastName: 'Vishwakarma',
-      email: 'diya@example.com',
-      phone: '+1 (281) 555-0181',
-      type: 'Child',
-      age: 7,
-      tripCount: 2,
-      assignedTripIds: ['trip-1', 'trip-2'],
-    },
-    {
-      id: 't6',
-      firstName: 'Meera',
-      lastName: 'Sharma',
-      email: 'meera@example.com',
-      phone: '+1 (713) 555-0192',
-      type: 'Adult',
-      tripCount: 1,
-      assignedTripIds: ['trip-3'],
-    },
-  ];
+  private travelers: Traveler[] = [];
+  private tripOptions: TripOption[] = [];
 
-  private readonly tripOptions: TripOption[] = [
-    { id: 'all', label: 'All Trips' },
-    { id: 'trip-1', label: 'Switzerland Escape' },
-    { id: 'trip-2', label: 'Bali Retreat' },
-    { id: 'trip-3', label: 'Paris Getaway' },
-  ];
+  loadData(): Observable<{ travelers: Traveler[]; stats: TravelerStats; tripOptions: TripOption[] }> {
+    return this.http.get<GetTripResponse[]>(this.apiUrl).pipe(
+      switchMap(trips => {
+        this.tripOptions = [{ id: 'all', label: 'All Trips' }, ...trips.map(trip => ({ id: trip.tripId, label: trip.tripName }))];
+
+        const travelerRequests = trips.map(trip =>
+          this.http.get<TravelerResponse[]>(`${this.apiUrl}/${trip.tripId}/travelers`).pipe(
+            map(travelers => travelers.map(traveler => this.mapTraveler(traveler, trip.tripId)))
+          )
+        );
+
+        if (travelerRequests.length === 0) {
+          this.travelers = [];
+          const stats = this.computeStats();
+          return of({ travelers: [], stats, tripOptions: [...this.tripOptions] });
+        }
+
+        return forkJoin(travelerRequests).pipe(
+          map(results => results.flat()),
+          tap(travelers => {
+            this.travelers = travelers;
+          }),
+          map(travelers => ({
+            travelers,
+            stats: this.computeStats(),
+            tripOptions: [...this.tripOptions]
+          }))
+        );
+      })
+    );
+  }
 
   getTravelers(): Observable<Traveler[]> {
     return of([...this.travelers]);
@@ -94,39 +89,114 @@ export class TravelerService {
   }
 
   getTripOptions(): Observable<TripOption[]> {
-    return of(this.tripOptions);
+    return of([...this.tripOptions]);
   }
 
   addTraveler(payload: TravelerFormPayload): Observable<Traveler> {
-    const traveler: Traveler = {
-      ...payload,
-      id: `t${this.nextId++}`,
-      tripCount: payload.assignedTripIds.length,
-    };
-    this.travelers = [...this.travelers, traveler];
-    return of(traveler);
+    const tripId = this.resolveTripId(payload.assignedTripIds);
+    const request = this.mapPayload(payload);
+
+    return this.http.post<TravelerResponse>(`${this.apiUrl}/${tripId}/travelers`, request).pipe(
+      map(traveler => this.mapTraveler(traveler, tripId)),
+      tap(created => {
+        this.travelers = [created, ...this.travelers];
+      })
+    );
   }
 
   editTraveler(id: string, payload: TravelerFormPayload): Observable<Traveler> {
-    this.travelers = this.travelers.map((t) =>
-      t.id === id
-        ? { ...t, ...payload, tripCount: payload.assignedTripIds.length }
-        : t,
+    const existing = this.travelers.find(traveler => traveler.id === id);
+    const tripId = existing?.assignedTripIds[0] ?? this.resolveTripId(payload.assignedTripIds);
+    const request = this.mapPayload(payload);
+
+    return this.http.put<TravelerResponse>(`${this.apiUrl}/${tripId}/travelers/${id}`, request).pipe(
+      map(traveler => this.mapTraveler(traveler, tripId)),
+      tap(updated => {
+        this.travelers = this.travelers.map(traveler => traveler.id === id ? updated : traveler);
+      })
     );
-    return of(this.travelers.find((t) => t.id === id)!);
   }
 
   deleteTraveler(id: string): Observable<void> {
-    this.travelers = this.travelers.filter((t) => t.id !== id);
-    return of(void 0);
+    const existing = this.travelers.find(traveler => traveler.id === id);
+    const tripId = existing?.assignedTripIds[0] ?? this.tripOptions.find(option => option.id !== 'all')?.id;
+
+    if (!tripId) {
+      return of(void 0);
+    }
+
+    return this.http.delete<void>(`${this.apiUrl}/${tripId}/travelers/${id}`).pipe(
+      tap(() => {
+        this.travelers = this.travelers.filter(traveler => traveler.id !== id);
+      })
+    );
+  }
+
+  private mapTraveler(response: TravelerResponse, tripId: string): Traveler {
+    return {
+      id: response.travelerId,
+      firstName: response.firstName,
+      lastName: response.lastName,
+      email: response.email ?? '',
+      phone: response.phone ?? '',
+      type: response.age && response.age < 18 ? 'Child' : 'Adult',
+      age: response.age ?? undefined,
+      tripCount: 1,
+      avatarUrl: undefined,
+      isPro: response.isPrimaryTraveler,
+      assignedTripIds: [tripId]
+    };
+  }
+
+  private mapPayload(payload: TravelerFormPayload) {
+    const request: {
+      firstName: string;
+      lastName: string;
+      email: string;
+      phone: string;
+      isPrimaryTraveler: boolean;
+      dateOfBirth?: string;
+    } = {
+      firstName: payload.firstName,
+      lastName: payload.lastName,
+      email: payload.email,
+      phone: payload.phone,
+      isPrimaryTraveler: false
+    };
+
+    if (payload.type === 'Child' && typeof payload.age === 'number') {
+      const birthYear = new Date().getFullYear() - payload.age;
+      request.dateOfBirth = new Date(birthYear, 0, 1).toISOString();
+    }
+
+    return request;
+  }
+
+  private resolveTripId(assignedTripIds: string[]): string {
+    const selected = assignedTripIds.find(id => id && id !== 'all');
+    if (selected) {
+      return selected;
+    }
+
+    const firstTrip = this.tripOptions.find(option => option.id !== 'all');
+    if (firstTrip) {
+      return firstTrip.id;
+    }
+
+    throw new Error('No trip available for traveler operation');
   }
 
   private computeStats(): TravelerStats {
+    const totalTravelers = this.travelers.length;
+    const children = this.travelers.filter(traveler => traveler.type === 'Child').length;
+    const adults = totalTravelers - children;
+    const upcomingTrips = Math.max(0, this.tripOptions.length - 1);
+
     return {
-      totalTravelers: this.travelers.length,
-      adults: this.travelers.filter((t) => t.type === 'Adult').length,
-      children: this.travelers.filter((t) => t.type === 'Child').length,
-      upcomingTrips: 3,
+      totalTravelers,
+      adults,
+      children,
+      upcomingTrips,
     };
   }
 }

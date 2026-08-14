@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 
 import {
   MAT_DIALOG_DATA,
@@ -14,10 +14,13 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 
 import { CommonModule } from '@angular/common';
+import { forkJoin } from 'rxjs';
 
 import { TripData } from '../../../../../../models/trip';
 
 import { TripEditDialog } from '../trip-edit-dialog/trip-edit-dialog';
+import { ItineraryService } from '../../../../../../core/services/itinerary.service';
+import { ExpenseService } from '../../../../../../core/services/expense.service';
 
 @Component({
   selector: 'app-trip-view-dialog',
@@ -34,28 +37,18 @@ import { TripEditDialog } from '../trip-edit-dialog/trip-edit-dialog';
 })
 export class TripViewDialog {
 
-  readonly itinerary = [
-    { day: 1, date: 'Jun 18', activity: 'Arrival and evening city walk' },
-    { day: 2, date: 'Jun 19', activity: 'Mountain rail and old town exploration' },
-    { day: 3, date: 'Jun 20', activity: 'Adventure trail and local food spots' },
-    { day: 4, date: 'Jun 21', activity: 'Scenic lake cruise and photo session' }
-  ];
+  private readonly itineraryService = inject(ItineraryService);
+  private readonly expenseService = inject(ExpenseService);
 
-  readonly recentActivity = [
-    { text: 'Rahul Sharma uploaded a new document', time: '2h ago' },
-    { text: 'Priya Patel added an expense', time: '5h ago' },
-    { text: 'You updated itinerary for Day 4', time: '1d ago' },
-    { text: 'John Doe booked a hotel for Day 3', time: '2d ago' }
-  ];
+  itinerary: Array<{ day: number; date: string; activity: string }> = [];
 
-  readonly budgetShares = [
-    { name: 'Flights', share: 39 },
-    { name: 'Hotels', share: 30 },
-    { name: 'Food', share: 15 },
-    { name: 'Activities', share: 9 },
-    { name: 'Transport', share: 4 },
-    { name: 'Other', share: 3 }
-  ];
+  recentActivity: Array<{ text: string; time: string }> = [];
+
+  budgetShares: Array<{ name: string; share: number }> = [];
+
+  private totalBudgetValue?: number;
+  private spentBudgetValue?: number;
+  private remainingBudgetValue?: number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -64,7 +57,11 @@ export class TripViewDialog {
     private dialog: MatDialog,
 
     private dialogRef: MatDialogRef<TripViewDialog>
-  ) {}
+  ) {
+    if (this.trip.backendId) {
+      this.loadLiveData(this.trip.backendId);
+    }
+  }
 
   get tripId(): string {
 
@@ -74,19 +71,19 @@ export class TripViewDialog {
 
   get totalBudget(): number {
 
-    return Math.max(1500, (this.trip.days * 280) + (this.trip.travelers * 170));
+    return this.totalBudgetValue ?? this.trip.budget ?? Math.max(1500, (this.trip.days * 280) + (this.trip.travelers * 170));
 
   }
 
   get spentBudget(): number {
 
-    return Math.round((this.totalBudget * this.trip.progress) / 100);
+    return this.spentBudgetValue ?? Math.round((this.totalBudget * this.trip.progress) / 100);
 
   }
 
   get remainingBudget(): number {
 
-    return Math.max(0, this.totalBudget - this.spentBudget);
+    return this.remainingBudgetValue ?? Math.max(0, this.totalBudget - this.spentBudget);
 
   }
 
@@ -180,6 +177,50 @@ export class TripViewDialog {
 
     });
 
+  }
+
+  private loadLiveData(tripId: string): void {
+    forkJoin({
+      days: this.itineraryService.getTripDays(tripId),
+      expenses: this.expenseService.getDashboardData(tripId),
+    }).subscribe({
+      next: ({ days, expenses }) => {
+        this.itinerary = days.slice(0, 5).map(day => ({
+          day: day.dayNumber,
+          date: day.date,
+          activity: day.title || day.theme,
+        }));
+
+        this.budgetShares = expenses.categories
+          .map(category => {
+            const share = this.totalBudget > 0
+              ? Math.round((category.amount / this.totalBudget) * 100)
+              : 0;
+
+            return {
+              name: category.category,
+              share,
+            };
+          })
+          .filter(item => item.share > 0);
+
+        this.totalBudgetValue = expenses.summary.totalBudget;
+        this.spentBudgetValue = expenses.summary.totalSpent;
+        this.remainingBudgetValue = expenses.summary.remaining;
+
+        this.recentActivity = expenses.expenses
+          .slice(0, 4)
+          .map(expense => ({
+            text: `${expense.description} (${expense.category})`,
+            time: expense.date,
+          }));
+      },
+      error: () => {
+        this.itinerary = [];
+        this.budgetShares = [];
+        this.recentActivity = [];
+      }
+    });
   }
 
 }

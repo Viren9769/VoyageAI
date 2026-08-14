@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
@@ -48,7 +48,8 @@ export class Dashboard implements OnInit {
   isLoading = true;
 
   constructor(
-    private dashboardService: DashboardService
+    private dashboardService: DashboardService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -58,29 +59,23 @@ export class Dashboard implements OnInit {
   }
 
   private loadDashboard(): void {
-
+    console.log('Dashboard: Starting to load dashboard...');
     this.dashboardService
       .getDashboard()
       .subscribe({
-
         next: (response) => {
-
+          console.log('Dashboard: API Response received:', response);
           this.dashboard = response;
-
           this.isLoading = false;
-
+          this.cdr.markForCheck();
+          console.log('Dashboard: isLoading set to false, dashboard assigned, markForCheck called');
         },
-
         error: (error) => {
-
-          console.error(error);
-
+          console.error('Dashboard: Error loading dashboard:', error);
           this.isLoading = false;
-
+          this.cdr.markForCheck();
         }
-
       });
-
   }
 
 }
